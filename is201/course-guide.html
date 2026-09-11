@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IS 201 — Course Guide</title>
+<style>
+  :root{
+    --bg:#EEF2F8;
+    --paper:#FFFFFF;
+    --ink:#1B2333;
+    --ink-soft:#4A5568;
+    --sidebar:#16243E;
+    --sidebar-hover:#22385F;
+    --sidebar-text:#C6D2E8;
+    --sidebar-text-dim:#7E93B8;
+    --accent:#2F5D9C;
+    --accent-deep:#1E3F6E;
+    --gold:#A9822F;
+    --border:#DAE1EC;
+    --correct:#1E7B57;
+    --correct-bg:#E5F4EC;
+    --incorrect:#B03B33;
+    --incorrect-bg:#FBEAE8;
+    --neutral:#8A6D1E;
+    --neutral-bg:#FBF3E1;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"IBM Plex Sans", -apple-system, Segoe UI, Roboto, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{
+    font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+    color:var(--ink);
+    line-height:1.25;
+    font-weight:600;
+  }
+  a{color:var(--accent-deep);}
+  a:hover{color:var(--accent);}
+
+  /* Layout */
+  .layout{
+    display:flex;
+    min-height:100vh;
+    width:100%;
+  }
+  nav.sidebar{
+    width:280px;
+    flex-shrink:0;
+    background:var(--sidebar);
+    color:var(--sidebar-text);
+    padding:28px 22px 40px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  nav.sidebar::-webkit-scrollbar{width:8px;}
+  nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
+
+  .sidebar .kicker{
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:6px;
+  }
+  .sidebar .course-title{
+    font-family:"Source Serif 4", Georgia, serif;
+    font-size:21px;
+    color:#fff;
+    margin:0 0 4px;
+  }
+  .sidebar .course-topic{
+    font-size:13.5px;
+    color:var(--sidebar-text);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin:0 0 18px;
+  }
+  .sidebar .nav-heading{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin:18px 0 6px;
+  }
+  .sidebar .nav-heading:first-of-type{ margin-top:0; }
+  .sidebar ol{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:section;
+  }
+  .sidebar > ol > li{
+    counter-increment:section;
+    margin-bottom:2px;
+  }
+  .sidebar a.toc-link{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    text-decoration:none;
+    color:var(--sidebar-text);
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:14px;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .sidebar a.toc-link::before{
+    content:counter(section, decimal-leading-zero);
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:11px;
+    color:var(--sidebar-text-dim);
+    padding-top:2px;
+  }
+  .sidebar a.toc-link:hover, .sidebar a.toc-link.active{
+    background:var(--sidebar-hover);
+    color:#fff;
+  }
+  .sidebar ul.sub{
+    list-style:none;
+    margin:2px 0 8px 26px;
+    padding:0;
+    border-left:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar ul.sub li a{
+    display:block;
+    text-decoration:none;
+    color:var(--sidebar-text-dim);
+    font-size:12.5px;
+    padding:5px 0 5px 14px;
+    transition:color 0.15s ease;
+  }
+  .sidebar ul.sub li a:hover{color:#fff;}
+
+  main{
+    flex:1;
+    min-width:0;
+    padding:0 0 100px;
+  }
+  .hero{
+    background:linear-gradient(155deg, var(--accent-deep) 0%, var(--sidebar) 65%);
+    color:#fff;
+    padding:64px 56px 46px;
+  }
+  .hero .kicker{
+    text-transform:uppercase;
+    letter-spacing:0.16em;
+    font-size:12px;
+    color:#AFC3E4;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    color:#fff;
+    font-size:38px;
+    margin:0 0 10px;
+    max-width:640px;
+  }
+  .hero p.dek{
+    max-width:560px;
+    color:#D6E0F1;
+    font-size:16px;
+    margin:0 0 22px;
+  }
+  .hero .byline{
+    font-size:14px;
+    color:#AFC3E4;
+    border-top:1px solid rgba(255,255,255,0.18);
+    padding-top:14px;
+    display:inline-block;
+  }
+  .hero .byline strong{color:#fff; font-weight:600;}
+
+  .content-inner{
+    padding:0 56px;
+    max-width:960px;
+  }
+
+  section.chapter{
+    padding-top:52px;
+    scroll-margin-top:24px;
+  }
+  section.chapter:first-of-type{padding-top:40px;}
+
+  .chapter .eyebrow{
+    font-size:13px;
+    color:var(--accent);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .chapter h2{
+    font-size:27px;
+    margin:0 0 16px;
+    padding-bottom:14px;
+    border-bottom:2px solid var(--border);
+  }
+  .chapter h3{
+    font-size:19px;
+    margin:30px 0 10px;
+    color:var(--accent-deep);
+  }
+  .chapter h4{
+    font-size:15.5px;
+    margin:20px 0 8px;
+    color:var(--accent-deep);
+  }
+  .chapter p{
+    font-size:15.5px;
+    color:var(--ink);
+    margin:0 0 14px;
+  }
+  .chapter ul, .chapter ol.plain{
+    padding-left:22px;
+    margin:0 0 16px;
+  }
+  .chapter li{
+    font-size:15.5px;
+    margin-bottom:6px;
+  }
+  .lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    border-left:3px solid var(--gold);
+    padding-left:16px;
+    margin:0 0 22px;
+  }
+
+  blockquote.def{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--accent);
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+  blockquote.def strong{color:var(--ink); font-family:"Source Serif 4", serif;}
+
+  table.compare{
+    width:100%;
+    border-collapse:collapse;
+    margin:8px 0 20px;
+    font-size:14.5px;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  table.compare th{
+    background:var(--sidebar);
+    color:#fff;
+    text-align:left;
+    padding:10px 14px;
+    font-weight:600;
+    font-size:13px;
+  }
+  table.compare td{
+    padding:10px 14px;
+    border-top:1px solid var(--border);
+    vertical-align:top;
+  }
+  table.compare tr:nth-child(even) td{background:#F6F8FC;}
+  table.compare td.num{ font-weight:600; color:var(--accent-deep); white-space:nowrap; }
+  table.compare tr.deadline td{ background:var(--neutral-bg); color:var(--neutral); font-style:italic; }
+  table.compare tr.lowgrade td{ background:var(--incorrect-bg); color:var(--incorrect); font-weight:600; }
+
+  .scholar-card{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+    margin-bottom:18px;
+    scroll-margin-top:24px;
+  }
+  .scholar-card h4{
+    margin:0 0 4px;
+    font-size:16.5px;
+    color:var(--ink);
+  }
+  .scholar-card .tag{
+    display:inline-block;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:#EAF0FA;
+    padding:2px 8px;
+    border-radius:4px;
+    margin-bottom:10px;
+  }
+  .scholar-card p{margin:0 0 6px; font-size:14.5px;}
+  .scholar-card .fic-links{ margin:10px 0 0; padding-left:18px; font-size:14px; }
+  .scholar-card .fic-links li{ margin-bottom:3px; }
+
+  .commandments{
+    counter-reset:cmd;
+    padding:0;
+    list-style:none;
+    margin:0 0 20px;
+    display:grid;
+    gap:8px;
+  }
+  .commandments li{
+    counter-increment:cmd;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 14px 12px 44px;
+    position:relative;
+    font-size:14.5px;
+  }
+  .commandments li::before{
+    content:counter(cmd);
+    position:absolute;
+    left:12px;
+    top:10px;
+    font-family:"Source Serif 4", serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--gold);
+  }
+
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:center;
+    margin:6px 0 22px;
+  }
+  .flow .step{
+    background:var(--accent-deep);
+    color:#fff;
+    padding:8px 13px;
+    border-radius:20px;
+    font-size:13.5px;
+    white-space:nowrap;
+  }
+  .flow .arrow{color:var(--ink-soft); font-size:15px;}
+
+  /* Reference / requirement box */
+  .refbox{
+    background:#F4F7FC;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 22px;
+  }
+  .refbox .refbox-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent-deep);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .refbox ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .refbox li{
+    font-size:14px;
+    margin-bottom:4px;
+  }
+  .refbox a{
+    text-decoration:none;
+    border-bottom:1px dotted var(--accent);
+  }
+  .refbox a:hover{border-bottom-style:solid;}
+
+  /* Requirement weight cards, reusing scholar-card look */
+  .req-card{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:12px;
+  }
+  .req-card .pct{
+    font-family:"Source Serif 4", serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--accent-deep);
+    flex:0 0 62px;
+    text-align:center;
+  }
+  .req-card .pct sub{ font-size:13px; font-weight:400; color:var(--ink-soft); }
+  .req-card h4{ margin:0 0 4px; font-size:15.5px; }
+  .req-card p{ margin:0; font-size:14px; color:var(--ink-soft); }
+
+  .keyidea{
+    background:linear-gradient(155deg, var(--accent-deep), var(--sidebar));
+    color:#fff;
+    border-radius:12px;
+    padding:28px 30px;
+    margin:8px 0 10px;
+  }
+  .keyidea h3{color:#fff; margin-top:0;}
+  .keyidea p{ color:#E3EAF6; }
+  .keyidea .qgrid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 24px;
+    margin-top:14px;
+  }
+  .keyidea .qgrid .col{ flex:1 1 220px; }
+  .keyidea .qgrid .col-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#AFC3E4;
+    margin-bottom:6px;
+  }
+  .keyidea .qgrid ul{margin:0; padding-left:18px;}
+  .keyidea .qgrid li{font-size:14px; margin-bottom:5px; color:#E3EAF6;}
+
+  .callout{
+    background:var(--incorrect-bg);
+    border:1px solid #F0C6C1;
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 20px;
+    font-size:14.5px;
+    color:var(--incorrect);
+  }
+  .callout strong{ color:var(--incorrect); }
+
+  .quotes{
+    list-style:none;
+    padding:0;
+    margin:10px 0 0;
+    display:grid;
+    gap:12px;
+  }
+  .quotes li{
+    border-left:3px solid var(--gold);
+    padding:2px 0 2px 16px;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .quotes li span{
+    display:block;
+    font-style:normal;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-top:3px;
+  }
+
+  .ai-note{
+    margin-top:26px;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  .ai-note.page-note{
+    max-width:820px;
+    margin:36px auto 0;
+    padding:16px 56px 0;
+    text-align:center;
+    border-top:1px solid var(--border);
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 10px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+
+  @media (max-width: 880px){
+    .layout{flex-direction:column;}
+    nav.sidebar{
+      position:relative;
+      width:100%;
+      height:auto;
+      max-height:none;
+    }
+    .hero{padding:40px 24px 32px;}
+    .content-inner{padding:0 22px;}
+    .req-card{ flex-wrap:wrap; }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <div class="kicker">IS 201 · Computer Ethics</div>
+    <div class="course-title">Course Guide</div>
+    <p class="course-topic">First Semester, AY 2026–2027</p>
+
+    <div class="nav-heading">Course Info</div>
+    <ol id="toc">
+      <li><a class="toc-link" href="#welcome">Welcome</a></li>
+      <li><a class="toc-link" href="#outcomes">Learning Outcomes</a></li>
+      <li><a class="toc-link" href="#expectations">What Your Professor Expects</a></li>
+    </ol>
+
+    <div class="nav-heading">Course Content</div>
+    <ol id="toc2">
+      <li><a class="toc-link" href="#schedule">Study Schedule</a></li>
+    </ol>
+
+    <div class="nav-heading">Requirements &amp; Grading</div>
+    <ol id="toc3">
+      <li><a class="toc-link" href="#requirements">Course Requirements</a></li>
+      <li><a class="toc-link" href="#grading">Grading Scheme</a></li>
+    </ol>
+
+    <div class="nav-heading">Class Policies</div>
+    <ol id="toc4">
+      <li><a class="toc-link" href="#submission">Submission Policy</a></li>
+      <li><a class="toc-link" href="#integrity">Academic Integrity</a></li>
+      <li><a class="toc-link" href="#ai-usage">AI Usage Policy</a></li>
+      <li><a class="toc-link" href="#communication">Communication Policy</a></li>
+      <li><a class="toc-link" href="#conduct">Respect &amp; Conduct</a></li>
+      <li><a class="toc-link" href="#withdrawal">Course Withdrawal</a></li>
+    </ol>
+
+    <div class="nav-heading">Closing</div>
+    <ol id="toc5">
+      <li><a class="toc-link" href="#postlude">Postlude</a></li>
+      <li><a class="toc-link" href="#fic">About the FIC</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="kicker">Master in Information Systems · UP Open University</div>
+      <h1>IS 201: Computer Ethics</h1>
+      <p class="dek">Everything you need for the semester ahead — course focus, study schedule, requirements, grading scheme, and class policies, all in one guide.</p>
+      <span class="byline">Faculty-in-Charge: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027</span>
+    </div>
+
+    <div class="content-inner">
+
+      <!-- Welcome -->
+      <section class="chapter" id="welcome">
+        <div class="eyebrow">Introduction</div>
+        <h2>Welcome to IS 201!</h2>
+        <p class="lede">In this course, we will explore the ethical questions that arise from the development and use of computers, digital technologies, and artificial intelligence.</p>
+        <p>We will examine not only what technology can do, but also what we should do as computing professionals, developers, researchers, and users of technology. Throughout the semester, we will discuss topics such as professional responsibility, privacy and digital rights, cyberethics, AI ethics, software development ethics, equity and social justice, technology governance, responsible innovation, and sustainable computing.</p>
+        <p>More importantly, this course is about learning to think critically about the consequences of our technological choices. Many ethical issues in computing do not have simple right-or-wrong answers. You will be encouraged to examine different perspectives, justify your decisions, and consider how technology affects individuals, communities, and society.</p>
+      </section>
+
+      <!-- Outcomes -->
+      <section class="chapter" id="outcomes">
+        <div class="eyebrow">Course Info</div>
+        <h2>Learning Outcomes</h2>
+        <p>After completing this course, you should be able to:</p>
+        <ol class="commandments">
+          <li>Define ethics and explain major ethical theories and approaches.</li>
+          <li>Define computer ethics and explain its relevance to computing and information technology.</li>
+          <li>Describe the philosophical challenges involved in computer ethics.</li>
+          <li>Analyze ethical problems arising from computers, digital technologies, and the wider world of information technology.</li>
+          <li>Reflect on your own ethical responsibilities as an IT professional and as a member of an online community.</li>
+        </ol>
+      </section>
+
+      <!-- Expectations -->
+      <section class="chapter" id="expectations">
+        <div class="eyebrow">Read Carefully</div>
+        <h2>What Your Professor Expects From You</h2>
+
+        <blockquote class="def"><strong>As a UPOU student</strong> — you should be able to learn independently. Take ownership of your learning. The asynchronous format gives you flexibility, but it also requires self-discipline and initiative. There is no spoon-feeding here — engage with the materials, use the available resources, and take responsibility for your progress.</blockquote>
+
+        <blockquote class="def"><strong>As a UP student</strong> — you should uphold academic integrity. Your work should reflect your own thinking, understanding, and effort. Cheating, plagiarism, and other forms of academic dishonesty will not be tolerated. Use sources and tools responsibly, and ensure the credit you earn reflects what you have actually learned.</blockquote>
+
+        <blockquote class="def"><strong>As a Master's student</strong> — you should demonstrate academic maturity. Go beyond memorization. Critically analyze concepts, synthesize different perspectives, apply theories to real-world situations, and contribute meaningful insights.</blockquote>
+
+        <blockquote class="def"><strong>As a Computer Ethics student</strong> — you should think ethically and critically about technology. Ethical issues in computing rarely have simple answers. Examine different perspectives, consider consequences, question your assumptions, and justify your positions through sound ethical reasoning.</blockquote>
+      </section>
+
+      <!-- Schedule -->
+      <section class="chapter" id="schedule">
+        <div class="eyebrow">Course Content</div>
+        <h2>Study Schedule</h2>
+        <p>The required readings will be posted on our MyPortal course site. This study schedule is a guide to help you pace yourself and stay on track. Feel free to explore ahead, but actively engage with your classmates in discussions to maximize your learning experience.</p>
+
+        <h3 id="ch1">Chapter 1 — Foundations and Ethical Reasoning</h3>
+        <table class="compare">
+          <thead><tr><th>Week</th><th>Topic</th><th>Inclusive Dates</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Topic 0: Course Familiarization<br>Topic 1: Foundations of Computer Ethics</td><td>Sept 14–20</td></tr>
+            <tr><td class="num">2–3</td><td>Topic 2: Ethical Frameworks and Professional Responsibility</td><td>Sept 21–Oct 4</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="ch2">Chapter 2 — Ethical Issues in Computing</h3>
+        <table class="compare">
+          <thead><tr><th>Week</th><th>Topic</th><th>Inclusive Dates</th></tr></thead>
+          <tbody>
+            <tr><td class="num">4–5</td><td>Topic 3: Privacy, Data, and Digital Rights</td><td>Oct 5–18</td></tr>
+            <tr><td class="num">6–7</td><td>Topic 4: Cyberethics</td><td>Oct 19–Nov 1</td></tr>
+            <tr><td class="num">8–9</td><td>Topic 5: AI Ethics</td><td>Nov 2–15</td></tr>
+            <tr><td class="num">10</td><td>Topic 6: Software Development Ethics</td><td>Nov 16–22</td></tr>
+            <tr class="deadline"><td></td><td>Deadline of Midterm Reports and Presentation</td><td>Nov 22</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="ch3">Chapter 3 — Computing, Society, and Governance</h3>
+        <table class="compare">
+          <thead><tr><th>Week</th><th>Topic</th><th>Inclusive Dates</th></tr></thead>
+          <tbody>
+            <tr><td class="num">11</td><td>Topic 7: Equity and Social Justice</td><td>Nov 23–29</td></tr>
+            <tr><td class="num">12</td><td>Topic 8: Technology Governance and Responsible Innovation</td><td>Nov 30–Dec 6</td></tr>
+            <tr><td class="num">13</td><td>Topic 9: Computing and Sustainability</td><td>Dec 7–12</td></tr>
+            <tr class="deadline"><td></td><td>Deadline of Final Reports and Presentation</td><td>Dec 12</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Requirements -->
+      <section class="chapter" id="requirements">
+        <div class="eyebrow">Deliverables</div>
+        <h2>Course Requirements</h2>
+
+        <div class="req-card">
+          <div class="pct">10<sub>%</sub></div>
+          <div><h4>End-of-Topic Quizzes</h4><p>Individual automated quizzes administered at the end of selected topics. The quizzes assess understanding of key concepts, ethical frameworks, professional responsibilities, and issues discussed in the course.</p></div>
+        </div>
+        <div class="req-card">
+          <div class="pct">25<sub>%</sub></div>
+          <div><h4>Midterm Report</h4><p>A written group report analyzing a selected computer ethics issue or case. The report should identify key ethical concerns and stakeholders, apply relevant ethical frameworks, and present a well-supported position. All groups submit a Midterm Report.</p></div>
+        </div>
+        <div class="req-card">
+          <div class="pct">25<sub>%</sub></div>
+          <div><h4>Final Report</h4><p>Another written group report providing an in-depth ethical analysis of a contemporary computing issue, technology, system, practice, or policy. The report should integrate concepts from the course and provide evidence-based recommendations. All groups submit a Final Report.</p></div>
+        </div>
+        <div class="req-card">
+          <div class="pct">40<sub>%</sub></div>
+          <div><h4>Seminar Presentation</h4><p>Each group prepares one recorded seminar presentation based on either its Midterm or Final Report. Half of the groups participate in the Midterm Seminar, the rest in the Final Seminar. All group members must contribute meaningfully; non-presenting students engage through the designated discussion activities.</p></div>
+        </div>
+      </section>
+
+      <!-- Grading -->
+      <section class="chapter" id="grading">
+        <div class="eyebrow">Requirements &amp; Grading</div>
+        <h2>Grading Scheme</h2>
+        <p>The grading system follows the standard numerical scale of 5.00 to 1.00, in increments of 0.25. Numerical scores map to UP grades as follows:</p>
+
+        <table class="compare">
+          <thead><tr><th>Total Grade</th><th>Equivalent</th></tr></thead>
+          <tbody>
+            <tr><td>99 – 100</td><td class="num">1.00</td></tr>
+            <tr><td>96 – 98</td><td class="num">1.25</td></tr>
+            <tr><td>93 – 95</td><td class="num">1.50</td></tr>
+            <tr><td>90 – 92</td><td class="num">1.75</td></tr>
+            <tr><td>87 – 89</td><td class="num">2.00</td></tr>
+            <tr><td>84 – 86</td><td class="num">2.25</td></tr>
+            <tr><td>80 – 83</td><td class="num">2.50</td></tr>
+            <tr><td>77 – 79</td><td class="num">2.75</td></tr>
+            <tr><td>75 – 76</td><td class="num">3.00</td></tr>
+            <tr class="lowgrade"><td>Below 75</td><td class="num">5.00</td></tr>
+          </tbody>
+        </table>
+
+        <div class="refbox">
+          <div class="refbox-label">What the key grades mean</div>
+          <ul>
+            <li><strong>5.00</strong> → Failure</li>
+            <li><strong>3.00</strong> → Minimum passing grade for course credit (i.e., 75% here in IS 201)</li>
+            <li><strong>2.00</strong> → Required minimum GWA to qualify for the MIS Comprehensive Exam</li>
+            <li><strong>1.00</strong> → Highest grade</li>
+          </ul>
+        </div>
+
+        <p><strong>Please note:</strong> No grade of EXT or 4.00 will be given in this course.</p>
+      </section>
+
+      <!-- Policies -->
+      <section class="chapter" id="submission">
+        <div class="eyebrow">Class Policies &amp; Guidelines</div>
+        <h2>Submission Policy</h2>
+        <p>All course requirements <strong>must be submitted exclusively through the MyPortal</strong> course site. Submissions via email are strictly prohibited unless prior authorization has been granted by the professor. Students are likewise required to upload the required files directly to MyPortal; external links may not be used as substitutes for file uploads unless expressly permitted.</p>
+        <div class="callout"><strong>Non-compliant submissions will not be considered for grading.</strong></div>
+      </section>
+
+      <section class="chapter" id="integrity">
+        <div class="eyebrow">Class Policies &amp; Guidelines</div>
+        <h2>Academic Integrity Policy</h2>
+        <p><strong>All work submitted must be your own</strong>, reflecting your independent thought, analysis, and understanding. Academic dishonesty is strictly prohibited and may result in disciplinary action, including failure of the requirement, failure of the course, or further university sanctions. Integrity is not only about avoiding misconduct; it is also about building trust and growing as a scholar.</p>
+        <p><strong>Properly cite all sources</strong> used in forum posts, submissions, and projects. Include a reference list in APA style at the end of each submission where applicable. If in doubt about what constitutes academic dishonesty or proper citation, consult your professors immediately. <strong>Ignorance of the rules is not a valid excuse for violations.</strong></p>
+      </section>
+
+      <section class="chapter" id="ai-usage">
+        <div class="eyebrow">Class Policies &amp; Guidelines</div>
+        <h2>AI Usage Policy</h2>
+        <p class="lede">This course adopts an AI-positive approach.</p>
+        <p>Students may freely use AI tools to support learning and problem solving. The use of AI is permitted and will not be penalized, provided that it is <strong>ethical, transparent, and consistent</strong> with course requirements.</p>
+        <blockquote class="def">AI tools (e.g., ChatGPT, Google Gemini, Grammarly, Google Translate) can be valuable aids, but <strong>they are not infallible</strong>. LLMs may produce inaccurate or fabricated information, while writing and translation tools may distort meaning or omit important context. Approach all AI-generated outputs with appropriate skepticism and critical judgment.</blockquote>
+        <p>Any AI-generated content should be carefully reviewed, verified, and meaningfully integrated into the final output. <strong>Students remain fully responsible</strong> for any AI-generated outputs they use or submit. Work that relies primarily on AI without substantial personal input is unacceptable.</p>
+        <p>When AI tools are used for a course requirement, <strong>students should document</strong> the tool(s) used, how they were used, and the rationale for their use. This promotes transparency, accountability, and academic integrity.</p>
+      </section>
+
+      <section class="chapter" id="communication">
+        <div class="eyebrow">Class Policies &amp; Guidelines</div>
+        <h2>Communication Policy</h2>
+        <h4>Forums</h4>
+        <p>Use the course forums to post relevant questions and initiate discussions for the benefit of all. The earlier you engage, the sooner you can tap into the collective knowledge of your professor, tutors, and classmates.</p>
+        <h4>Personal Correspondence</h4>
+        <p>If you prefer to ask questions privately, you may email your assigned tutor and professors. Always include IS 201 in the subject line for proper identification.</p>
+        <h4>Official Channels Only</h4>
+        <p>All communication must be conducted exclusively through MyPortal forums or official email addresses. Inquiries via social media, SMS, phone calls, or any other platforms will not be entertained.</p>
+      </section>
+
+      <section class="chapter" id="conduct">
+        <div class="eyebrow">Class Policies &amp; Guidelines</div>
+        <h2>Respect and Conduct Policy</h2>
+        <p>Maintain <strong>respectful and professional</strong> communication in all interactions. Whether addressing your classmates, tutors, or professor, always be courteous, constructive, and considerate. Please review the <a href="http://www.albion.com/netiquette/corerules.html" target="_blank" rel="noopener">netiquette guidelines</a> for reference.</p>
+        <p>Your professors reserve the right to moderate forum posts and remove any content that includes, but is not limited to: spamming, duplicate posts, off-topic discussions, NSFW material, profanity, disrespectful remarks, or any irrelevant content that disrupts the learning environment.</p>
+        <div class="callout"><strong>The IS 201 Course Site is a Respect Zone.</strong> We value mutual respect and strongly condemn any form of cyberviolence, including but not limited to insults, threats, exclusion, harassment, discrimination, and hate speech. Serious violations may be reported to the Office of Student Affairs for appropriate action.</div>
+      </section>
+
+      <section class="chapter" id="withdrawal">
+        <div class="eyebrow">Class Policies &amp; Guidelines</div>
+        <h2>Course Withdrawal Policy</h2>
+        <p>The deadline to officially and voluntarily drop IS 201 and other courses this semester is <strong>5 December 2026</strong>. Students who successfully process their course withdrawal by this deadline will receive a grade of DRP (Official). Students who discontinue participation without officially dropping the course will receive a failing grade of 5.00.</p>
+      </section>
+
+      <!-- Postlude -->
+      <section class="chapter" id="postlude">
+        <div class="eyebrow">Closing</div>
+        <h2>Postlude</h2>
+        <div class="keyidea">
+          <h3>With dedication and perseverance, you have what it takes to succeed.</h3>
+          <p>Challenges may arise, but they are part of learning. Stay focused, keep learning, and give your best effort every step of the way!</p>
+        </div>
+
+        <h3>Quotable Quotes</h3>
+        <ul class="quotes">
+          <li>"He that walketh uprightly walketh surely: but he that perverteth his ways shall be known."<span>— Proverbs 10:9 (KJV)</span></li>
+          <li>"Rather fail with honour than succeed by fraud."<span>— Sophocles</span></li>
+          <li>"A dream does not become reality through magic; it takes sweat, determination, and hard work."<span>— Colin Powell</span></li>
+        </ul>
+      </section>
+
+      <!-- FIC -->
+      <section class="chapter" id="fic">
+        <div class="eyebrow">Closing</div>
+        <h2>About the FIC</h2>
+        <div class="scholar-card">
+          <span class="tag">Faculty-in-Charge</span>
+          <h4>Dr. Reinald Adrian Pugoy — "Doc Rein"</h4>
+          <p>Associate Professor at the Faculty of Information and Communication Studies (FICS) and currently Director of the ICT Development Office (ICTDO). With the UP Open University since 2015. Educated both in UP and Taiwan, specializing in Artificial Intelligence: Core AI (Natural Language Processing, Machine Learning), Applied AI (AI in Education), and Human-Centered AI (Critical AI Literacy).</p>
+          <ul class="fic-links">
+            <li>Email: <a href="mailto:rdpugoy@up.edu.ph">rdpugoy@up.edu.ph</a></li>
+            <li>Website: <a href="https://url.upou.edu.ph/reinald" target="_blank" rel="noopener">url.upou.edu.ph/reinald</a></li>
+            <li>Google Scholar: <a href="https://scholar.google.com/citations?user=qMisiiAAAAAJ&hl=en&oi=ao" target="_blank" rel="noopener">scholar.google.com/citations</a></li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<p class="ai-note page-note">This course guide was refined with the assistance of ChatGPT and Claude to enhance readability and organization.</p>
+
+<footer>IS 201: Computer Ethics · Course Guide · Master in Information Systems, UP Open University · First Semester, AY 2026–2027</footer>
+
+<script>
+  const sections = document.querySelectorAll('section.chapter');
+  const tocLinks = document.querySelectorAll('.toc-link');
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        tocLinks.forEach(link=>{
+          link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+
+  sections.forEach(sec => observer.observe(sec));
+</script>
+
+</body>
+</html>

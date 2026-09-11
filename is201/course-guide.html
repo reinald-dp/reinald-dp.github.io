@@ -56,20 +56,20 @@
      .toc-link.active (added by the IntersectionObserver script at the
      bottom of the page skeleton) highlights the section in view. -------- */
   .layout{
-    display:flex;
     min-height:100vh;
     width:100%;
   }
   nav.sidebar{
     width:280px;
-    flex-shrink:0;
     background:var(--sidebar);
     color:var(--sidebar-text);
     padding:28px 22px 40px;
-    position:sticky;
+    position:fixed;
     top:0;
+    left:0;
     height:100vh;
     overflow-y:auto;
+    z-index:10;
   }
   nav.sidebar::-webkit-scrollbar{width:8px;}
   nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
@@ -151,9 +151,8 @@
   .sidebar ul.sub li a:hover{color:#fff;}
 
   main{
-    flex:1;
-    min-width:0;
-    padding:0 0 100px;
+    margin-left:280px;
+    padding:0 0 40px;
   }
   /* ---- Hero banner (top of main, above the content column) -----------
      <div class="hero">
@@ -499,6 +498,12 @@
     color:var(--incorrect);
   }
   .callout strong{ color:var(--incorrect); }
+  .callout.info{
+    background:var(--neutral-bg);
+    border-color:#E8D9AE;
+    color:var(--neutral);
+  }
+  .callout.info strong{ color:var(--neutral); }
 
   /* ---- Pull-quote list ---------------------------------------------------
      <ul class="quotes"><li>"Quote text"<span>— Attribution</span></li></ul>
@@ -555,13 +560,13 @@
   }
 
   @media (max-width: 880px){
-    .layout{flex-direction:column;}
     nav.sidebar{
       position:relative;
       width:100%;
       height:auto;
       max-height:none;
     }
+    main{ margin-left:0; }
     .hero{padding:40px 24px 32px;}
     .content-inner{padding:0 22px;}
     .req-card{ flex-wrap:wrap; }
@@ -603,6 +608,7 @@
       <li><a class="toc-link" href="#communication">Communication Policy</a></li>
       <li><a class="toc-link" href="#conduct">Respect &amp; Conduct</a></li>
       <li><a class="toc-link" href="#withdrawal">Course Withdrawal</a></li>
+      <li><a class="toc-link" href="#solicitation">Grade Solicitation</a></li>
     </ol>
 
     <div class="nav-heading">Closing</div>
@@ -629,6 +635,7 @@
         <p class="lede">In this course, we will explore the ethical questions that arise from the development and use of computers, digital technologies, and artificial intelligence.</p>
         <p>We will examine not only what technology can do, but also what we should do as computing professionals, developers, researchers, and users of technology. Throughout the semester, we will discuss topics such as professional responsibility, privacy and digital rights, cyberethics, AI ethics, software development ethics, equity and social justice, technology governance, responsible innovation, and sustainable computing.</p>
         <p>More importantly, this course is about learning to think critically about the consequences of our technological choices. Many ethical issues in computing do not have simple right-or-wrong answers. You will be encouraged to examine different perspectives, justify your decisions, and consider how technology affects individuals, communities, and society.</p>
+        <div class="callout info">Like most courses at the UP Open University, IS 201 is conducted <strong>asynchronously</strong>. Please note that studying online does not necessarily mean attending classes via Zoom. There are no fixed class hours, and you may study at your own pace within each week's schedule. All course materials, activities, submissions, and discussions take place on our MyPortal course site.</div>
       </section>
 
       <!-- Outcomes -->
@@ -652,11 +659,13 @@
 
         <blockquote class="def"><strong>As a UPOU student</strong> — you should be able to learn independently. Take ownership of your learning. The asynchronous format gives you flexibility, but it also requires self-discipline and initiative. There is no spoon-feeding here — engage with the materials, use the available resources, and take responsibility for your progress.</blockquote>
 
-        <blockquote class="def"><strong>As a UP student</strong> — you should uphold academic integrity. Your work should reflect your own thinking, understanding, and effort. Cheating, plagiarism, and other forms of academic dishonesty will not be tolerated. Use sources and tools responsibly, and ensure the credit you earn reflects what you have actually learned.</blockquote>
+        <blockquote class="def"><strong>As a UP student</strong> — you should uphold academic integrity. Your work should reflect your own thinking, understanding, and effort. Cheating, plagiarism, and other forms of academic dishonesty will not be condoned.</blockquote>
 
         <blockquote class="def"><strong>As a Master's student</strong> — you should demonstrate academic maturity. Go beyond memorization. Critically analyze concepts, synthesize different perspectives, apply theories to real-world situations, and contribute meaningful insights.</blockquote>
 
         <blockquote class="def"><strong>As a Computer Ethics student</strong> — you should think ethically and critically about technology. Ethical issues in computing rarely have simple answers. Examine different perspectives, consider consequences, question your assumptions, and justify your positions through sound ethical reasoning.</blockquote>
+
+        <blockquote class="def"><strong>As a human being</strong> — you should demonstrate respect and professionalism at all times. Maintain respectful and professional communication in all forums, emails, and class discussions.</blockquote>
       </section>
 
       <!-- Schedule -->
@@ -760,26 +769,27 @@
       <section class="chapter" id="submission">
         <div class="eyebrow">Class Policies &amp; Guidelines</div>
         <h2>Submission Policy</h2>
-        <p>All course requirements must be submitted exclusively through the MyPortal course site. Submissions via email are strictly prohibited unless prior authorization has been granted by the professor. Required files must be uploaded directly to MyPortal; external links may not be used as substitutes unless expressly permitted.</p>
-        <div class="callout"><strong>Late submissions will not be accepted.</strong></div>
-        <div class="callout"><strong>Non-compliant submissions will not be considered for grading.</strong></div>
+        <p>Submit all course requirements through our MyPortal course site by the stated deadline. Required files must be uploaded directly to MyPortal unless otherwise specified. Submissions sent by email will not be accepted.</p>
+        <div class="callout"><strong>Late or non-compliant submissions will not be accepted for grading.</strong></div>
       </section>
 
       <section class="chapter" id="integrity">
         <div class="eyebrow">Class Policies &amp; Guidelines</div>
         <h2>Academic Integrity Policy</h2>
-        <p><strong>All work submitted must be your own</strong>, reflecting your independent thought, analysis, and understanding. Academic dishonesty is strictly prohibited and may result in disciplinary action, including failure of the requirement, failure of the course, or further university sanctions. Integrity is not only about avoiding misconduct; it is also about building trust and growing as a scholar.</p>
-        <p><strong>Properly cite all sources</strong> used in forum posts, submissions, and projects. Include a reference list in APA style at the end of each submission where applicable. If in doubt about what constitutes academic dishonesty or proper citation, consult your professors immediately. <strong>Ignorance of the rules is not a valid excuse for violations.</strong></p>
+        <p>Academic integrity is fundamental to this course. All submitted work should reflect your own thinking, understanding, and effort, with appropriate acknowledgment of the ideas and contributions of others.</p>
+        <p>Properly cite all sources used in forum posts, reports, presentations, and other course requirements. Include a reference list in APA style where applicable. When using AI tools, follow the course's AI Usage Policy, particularly its requirements on transparency, verification, and responsible use.</p>
+        <p>Students are expected to understand and observe the University's standards on academic integrity. If you are uncertain about proper citation, attribution, collaboration, or acceptable use of sources, consult your professor before submitting your work.</p>
+        <div class="callout"><strong>Cheating, plagiarism, fabrication, misrepresentation, and other forms of academic dishonesty</strong> may result in failure of the requirement, failure of the course, and/or further disciplinary action under University rules.</div>
       </section>
 
       <section class="chapter" id="ai-usage">
         <div class="eyebrow">Class Policies &amp; Guidelines</div>
         <h2>AI Usage Policy</h2>
         <p class="lede">This course adopts an AI-positive approach.</p>
-        <p>Students may freely use AI tools to support learning and problem solving. The use of AI is permitted and will not be penalized, provided that it is <strong>ethical, transparent, and consistent</strong> with course requirements.</p>
-        <blockquote class="def">AI tools (e.g., ChatGPT, Google Gemini, Grammarly, Google Translate) can be valuable aids, but <strong>they are not infallible</strong>. LLMs may produce inaccurate or fabricated information, while writing and translation tools may distort meaning or omit important context. Approach all AI-generated outputs with appropriate skepticism and critical judgment.</blockquote>
-        <p>Any AI-generated content should be carefully reviewed, verified, and meaningfully integrated into the final output. <strong>Students remain fully responsible</strong> for any AI-generated outputs they use or submit. Work that relies primarily on AI without substantial personal input is unacceptable.</p>
-        <p>When AI tools are used for a course requirement, <strong>students should document</strong> the tool(s) used, how they were used, and the rationale for their use. This promotes transparency, accountability, and academic integrity.</p>
+        <p>Students may freely use AI tools to support learning and problem solving. The use of AI is permitted and will not be penalized, provided that it is ethical, transparent, and consistent with course requirements.</p>
+        <blockquote class="def">AI tools (e.g., ChatGPT, Google Gemini, Grammarly, Google Translate) can be valuable aids, but they are not infallible. LLMs may produce inaccurate or fabricated information, while writing and translation tools may distort meaning or omit important context. Approach all AI-generated outputs with appropriate skepticism and critical judgment.</blockquote>
+        <p>Any AI-generated content should be carefully reviewed, verified, and meaningfully integrated into the final output. Students remain fully responsible for any AI-generated outputs they use or submit. Work that relies primarily on AI without substantial personal input is unacceptable.</p>
+        <p>When AI tools are used for a course requirement, students should document the tool(s) used, how they were used, and the rationale for their use. This promotes transparency, accountability, and academic integrity.</p>
       </section>
 
       <section class="chapter" id="communication">
@@ -788,7 +798,7 @@
         <h4>Forums</h4>
         <p>Use the course forums to post relevant questions and initiate discussions for the benefit of all. The earlier you engage, the sooner you can tap into the collective knowledge of your professor, tutors, and classmates.</p>
         <h4>Personal Correspondence</h4>
-        <p>If you prefer to ask questions privately, you may email your assigned tutor and professors. Always include IS 201 in the subject line for proper identification.</p>
+        <p>If you prefer to ask questions privately, you may email your assigned tutor and professor. Always include IS 201 in the subject line for proper identification.</p>
         <h4>Official Channels Only</h4>
         <p>All communication must be conducted exclusively through MyPortal forums or official email addresses. Inquiries via social media, SMS, phone calls, or any other platforms will not be entertained.</p>
       </section>
@@ -796,15 +806,22 @@
       <section class="chapter" id="conduct">
         <div class="eyebrow">Class Policies &amp; Guidelines</div>
         <h2>Respect and Conduct Policy</h2>
-        <p>Maintain <strong>respectful and professional</strong> communication in all interactions. Whether addressing your classmates, tutors, or professor, always be courteous, constructive, and considerate. Please review the <a href="http://www.albion.com/netiquette/corerules.html" target="_blank" rel="noopener">netiquette guidelines</a> for reference.</p>
-        <p>Your professors reserve the right to moderate forum posts and remove any content that includes, but is not limited to: spamming, duplicate posts, off-topic discussions, NSFW material, profanity, disrespectful remarks, or any irrelevant content that disrupts the learning environment.</p>
-        <div class="callout"><strong>The IS 201 Course Site is a Respect Zone.</strong> We value mutual respect and strongly condemn any form of cyberviolence, including but not limited to insults, threats, exclusion, harassment, discrimination, and hate speech. Serious violations may be reported to the Office of Student Affairs for appropriate action.</div>
+        <p>IS 201 is a Respect Zone. Maintain respectful and professional communication in all course interactions, including forums, emails, and discussions. Address your classmates, tutors, and professor properly, using appropriate titles and names, and engage with differing perspectives courteously and constructively.</p>
+        <p>Students are expected to observe appropriate <a href="http://www.albion.com/netiquette/corerules.html" target="_blank" rel="noopener">netiquette</a> and help maintain a learning environment where everyone can participate meaningfully. Forum posts may be moderated or removed when they are off-topic, disruptive, inappropriate, or inconsistent with these expectations.</p>
+        <div class="callout"><strong>Cyberviolence and other forms of serious misconduct</strong>, including insults, threats, harassment, discrimination, and hate speech, will not be tolerated. Serious violations may be referred to the Office of Student Affairs for appropriate action.</div>
       </section>
 
       <section class="chapter" id="withdrawal">
         <div class="eyebrow">Class Policies &amp; Guidelines</div>
         <h2>Course Withdrawal Policy</h2>
         <p>The deadline to officially and voluntarily drop IS 201 and other courses this semester is <strong>5 December 2026</strong>. Students who successfully process their course withdrawal by this deadline will receive a grade of DRP (Official). Students who discontinue participation without officially dropping the course will receive a failing grade of 5.00.</p>
+      </section>
+
+      <section class="chapter" id="solicitation">
+        <div class="eyebrow">Class Policies &amp; Guidelines</div>
+        <h2>UP Code Against Grade Solicitation</h2>
+        <p>Per <strong>Article 377 of the UP Code</strong>, students are reminded that grade solicitation is a serious offense under University rules.</p>
+        <blockquote class="def">No student of the University shall solicit directly or indirectly any grade from his/her professor. Any student violating this rule shall lose credit in the subject(s) regarding which such solicitation is made, without prejudice to the filing of a case for disciplinary action.</blockquote>
       </section>
 
       <!-- Postlude -->
@@ -841,12 +858,12 @@
       </section>
 
     </div>
+
+    <p class="ai-note page-note">This course guide was refined with the assistance of ChatGPT and Claude to enhance readability and organization.</p>
+
+    <footer>IS 201: Computer Ethics · Course Guide · Master in Information Systems, UP Open University · First Semester, AY 2026–2027</footer>
   </main>
 </div>
-
-<p class="ai-note page-note">This course guide was refined with the assistance of ChatGPT and Claude to enhance readability and organization.</p>
-
-<footer>IS 201: Computer Ethics · Course Guide · Master in Information Systems, UP Open University · First Semester, AY 2026–2027</footer>
 
 <script>
   const sections = document.querySelectorAll('section.chapter');

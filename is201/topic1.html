@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IS 201 — Topic 1: Foundations of Computer Ethics</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   IS 201 — Shared Course Page Theme
+   ==========================================================================
+   One stylesheet for every IS 201 page (course guide, topic readings, etc.)
+   so they all look and feel the same.
+
+   HOW TO USE ON A NEW PAGE
+   --------------------------------------------------------------------------
+   1. Link this file in <head>:
+        <link rel="stylesheet" href="theme.css">
+   2. (Optional) For pixel-perfect type, load the two fonts referenced in
+      the font stacks below — IBM Plex Sans and Source Serif 4. Without
+      them the page falls back to system fonts and still looks correct:
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+   3. Copy the page skeleton below and fill in your own sidebar links and
+      <section class="chapter"> blocks.
+   4. Reuse the component classes documented in each section of this file
+      (blockquote.def, table.compare, .req-card, .scholar-card, .keyidea,
+      .callout, .quotes, .commandments, .refbox, .flow) instead of writing
+      new CSS — that's what keeps every page consistent.
+
+   PAGE SKELETON
+   --------------------------------------------------------------------------
+   <div class="layout">
+     <nav class="sidebar" aria-label="Table of contents">
+       <div class="kicker">IS 201 · Computer Ethics</div>
+       <div class="course-title">Page Title</div>
+       <p class="course-topic">Subtitle / term</p>
+
+       <div class="nav-heading">Section Group</div>
+       <ol>
+         <li><a class="toc-link" href="#anchor">Link label</a></li>
+       </ol>
+     </nav>
+
+     <main>
+       <div class="hero">
+         <div class="kicker">Eyebrow text</div>
+         <h1>Page Title</h1>
+         <p class="dek">One or two sentence description.</p>
+         <span class="byline">Faculty-in-Charge: <strong>Name</strong></span>
+       </div>
+
+       <div class="content-inner">
+         <section class="chapter" id="anchor">
+           <div class="eyebrow">Section Group</div>
+           <h2>Section Title</h2>
+           <p>Body copy…</p>
+         </section>
+       </div>
+     </main>
+   </div>
+
+   <p class="ai-note page-note">Optional closing footnote.</p>
+   <footer>Page footer text</footer>
+   ========================================================================== */
+
+/* ---- Design tokens -------------------------------------------------------
+   Change colors/fonts for the whole site by editing these variables only. */
+:root{
+    --bg:#EEF2F8;
+    --paper:#FFFFFF;
+    --ink:#1B2333;
+    --ink-soft:#4A5568;
+    --sidebar:#16243E;
+    --sidebar-hover:#22385F;
+    --sidebar-text:#C6D2E8;
+    --sidebar-text-dim:#7E93B8;
+    --accent:#2F5D9C;
+    --accent-deep:#1E3F6E;
+    --gold:#A9822F;
+    --border:#DAE1EC;
+    --correct:#1E7B57;
+    --correct-bg:#E5F4EC;
+    --incorrect:#B03B33;
+    --incorrect-bg:#FBEAE8;
+    --neutral:#8A6D1E;
+    --neutral-bg:#FBF3E1;
+  }
+  /* ---- Base & typography ---------------------------------------------- */
+*{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"IBM Plex Sans", -apple-system, Segoe UI, Roboto, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{
+    font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+    color:var(--ink);
+    line-height:1.25;
+    font-weight:600;
+  }
+  a{color:var(--accent-deep);}
+  a:hover{color:var(--accent);}
+
+  /* ---- Page layout: sidebar + main ------------------------------------
+     .layout wraps everything; nav.sidebar is the sticky dark TOC column.
+     Sidebar TOC markup:
+       <div class="nav-heading">Group label</div>
+       <ol><li><a class="toc-link" href="#id">Label</a></li></ol>
+     Optional sub-links under a toc-link:
+       <ul class="sub"><li><a href="#id">…</a></li></ul>
+     .toc-link.active (added by the IntersectionObserver script at the
+     bottom of the page skeleton) highlights the section in view. -------- */
+  .layout{
+    display:flex;
+    min-height:100vh;
+    width:100%;
+  }
+  nav.sidebar{
+    width:280px;
+    flex-shrink:0;
+    background:var(--sidebar);
+    color:var(--sidebar-text);
+    padding:28px 22px 40px;
+    position:sticky;
+    top:0;
+    height:100vh;
+    overflow-y:auto;
+  }
+  nav.sidebar::-webkit-scrollbar{width:8px;}
+  nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
+
+  .sidebar .kicker{
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:6px;
+  }
+  .sidebar .course-title{
+    font-family:"Source Serif 4", Georgia, serif;
+    font-size:21px;
+    color:#fff;
+    margin:0 0 4px;
+  }
+  .sidebar .course-topic{
+    font-size:13.5px;
+    color:var(--sidebar-text);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin:0 0 18px;
+  }
+  .sidebar .nav-heading{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin:18px 0 6px;
+  }
+  .sidebar .nav-heading:first-of-type{ margin-top:0; }
+  .sidebar ol{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:section;
+  }
+  .sidebar > ol > li{
+    counter-increment:section;
+    margin-bottom:2px;
+  }
+  .sidebar a.toc-link{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    text-decoration:none;
+    color:var(--sidebar-text);
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:14px;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .sidebar a.toc-link::before{
+    content:counter(section, decimal-leading-zero);
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:11px;
+    color:var(--sidebar-text-dim);
+    padding-top:2px;
+  }
+  .sidebar a.toc-link:hover, .sidebar a.toc-link.active{
+    background:var(--sidebar-hover);
+    color:#fff;
+  }
+  .sidebar ul.sub{
+    list-style:none;
+    margin:2px 0 8px 26px;
+    padding:0;
+    border-left:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar ul.sub li a{
+    display:block;
+    text-decoration:none;
+    color:var(--sidebar-text-dim);
+    font-size:12.5px;
+    padding:5px 0 5px 14px;
+    transition:color 0.15s ease;
+  }
+  .sidebar ul.sub li a:hover{color:#fff;}
+
+  main{
+    flex:1;
+    min-width:0;
+    padding:0 0 100px;
+  }
+  /* ---- Hero banner (top of main, above the content column) -----------
+     <div class="hero">
+       <div class="kicker">Eyebrow</div>
+       <h1>Title</h1>
+       <p class="dek">Description</p>
+       <span class="byline">Faculty-in-Charge: <strong>Name</strong></span>
+     </div> ------------------------------------------------------------- */
+  .hero{
+    background:linear-gradient(155deg, var(--accent-deep) 0%, var(--sidebar) 65%);
+    color:#fff;
+    padding:64px 56px 46px;
+  }
+  .hero .kicker{
+    text-transform:uppercase;
+    letter-spacing:0.16em;
+    font-size:12px;
+    color:#AFC3E4;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    color:#fff;
+    font-size:38px;
+    margin:0 0 10px;
+    max-width:640px;
+  }
+  .hero p.dek{
+    max-width:560px;
+    color:#D6E0F1;
+    font-size:16px;
+    margin:0 0 22px;
+  }
+  .hero .byline{
+    font-size:14px;
+    color:#AFC3E4;
+    border-top:1px solid rgba(255,255,255,0.18);
+    padding-top:14px;
+    display:inline-block;
+  }
+  .hero .byline strong{color:#fff; font-weight:600;}
+
+  /* ---- Content column --------------------------------------------------
+     .content-inner is the comfortable-reading-width wrapper inside <main>.
+     Each page section is a <section class="chapter" id="anchor"> with an
+     .eyebrow label (group name, matches the sidebar nav-heading) and an h2.
+     Use .lede for an intro paragraph with a gold left rule. --------------- */
+  .content-inner{
+    padding:0 56px;
+    max-width:960px;
+  }
+
+  section.chapter{
+    padding-top:52px;
+    scroll-margin-top:24px;
+  }
+  section.chapter:first-of-type{padding-top:40px;}
+
+  .chapter .eyebrow{
+    font-size:13px;
+    color:var(--accent);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .chapter h2{
+    font-size:27px;
+    margin:0 0 16px;
+    padding-bottom:14px;
+    border-bottom:2px solid var(--border);
+  }
+  .chapter h3{
+    font-size:19px;
+    margin:30px 0 10px;
+    color:var(--accent-deep);
+  }
+  .chapter h4{
+    font-size:15.5px;
+    margin:20px 0 8px;
+    color:var(--accent-deep);
+  }
+  .chapter p{
+    font-size:15.5px;
+    color:var(--ink);
+    margin:0 0 14px;
+  }
+  .chapter ul, .chapter ol.plain{
+    padding-left:22px;
+    margin:0 0 16px;
+  }
+  .chapter li{
+    font-size:15.5px;
+    margin-bottom:6px;
+  }
+  .lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    border-left:3px solid var(--gold);
+    padding-left:16px;
+    margin:0 0 22px;
+  }
+
+  /* ---- Definition / emphasis callout ------------------------------------
+     <blockquote class="def"><strong>Term</strong> — explanation…</blockquote>
+     ------------------------------------------------------------------- */
+  blockquote.def{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--accent);
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+  blockquote.def strong{color:var(--ink); font-family:"Source Serif 4", serif;}
+
+  /* ---- Data table --------------------------------------------------------
+     <table class="compare">
+       <thead><tr><th>Col</th><th>Col</th></tr></thead>
+       <tbody><tr><td class="num">Value</td><td>...</td></tr></tbody>
+     </table>
+     Row modifiers: tr.deadline (amber highlight), tr.lowgrade (red highlight)
+     td.num bolds/colors a key figure (grade, week number, percentage). ---- */
+  table.compare{
+    width:100%;
+    border-collapse:collapse;
+    margin:8px 0 20px;
+    font-size:14.5px;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  table.compare th{
+    background:var(--sidebar);
+    color:#fff;
+    text-align:left;
+    padding:10px 14px;
+    font-weight:600;
+    font-size:13px;
+  }
+  table.compare td{
+    padding:10px 14px;
+    border-top:1px solid var(--border);
+    vertical-align:top;
+  }
+  table.compare tr:nth-child(even) td{background:#F6F8FC;}
+  table.compare td.num{ font-weight:600; color:var(--accent-deep); white-space:nowrap; }
+  table.compare tr.deadline td{ background:var(--neutral-bg); color:var(--neutral); font-style:italic; }
+  table.compare tr.lowgrade td{ background:var(--incorrect-bg); color:var(--incorrect); font-weight:600; }
+
+  /* ---- Bio / reference card ------------------------------------------
+     <div class="scholar-card">
+       <span class="tag">Label</span>
+       <h4>Name</h4>
+       <p>Bio text…</p>
+       <ul class="fic-links"><li>Email: <a href="mailto:...">...</a></li></ul>
+     </div> ------------------------------------------------------------- */
+  .scholar-card{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+    margin-bottom:18px;
+    scroll-margin-top:24px;
+  }
+  .scholar-card h4{
+    margin:0 0 4px;
+    font-size:16.5px;
+    color:var(--ink);
+  }
+  .scholar-card .tag{
+    display:inline-block;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:#EAF0FA;
+    padding:2px 8px;
+    border-radius:4px;
+    margin-bottom:10px;
+  }
+  .scholar-card p{margin:0 0 6px; font-size:14.5px;}
+  .scholar-card .fic-links{ margin:10px 0 0; padding-left:18px; font-size:14px; }
+  .scholar-card .fic-links li{ margin-bottom:3px; }
+
+  /* ---- Numbered list (learning outcomes, rules, steps) ----------------
+     <ol class="commandments"><li>Item text</li></ol>
+     Numbers are auto-generated in gold via a CSS counter. ---------------- */
+  .commandments{
+    counter-reset:cmd;
+    padding:0;
+    list-style:none;
+    margin:0 0 20px;
+    display:grid;
+    gap:8px;
+  }
+  .commandments li{
+    counter-increment:cmd;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 14px 12px 44px;
+    position:relative;
+    font-size:14.5px;
+  }
+  .commandments li::before{
+    content:counter(cmd);
+    position:absolute;
+    left:12px;
+    top:10px;
+    font-family:"Source Serif 4", serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--gold);
+  }
+
+  /* ---- Process/flow chips -----------------------------------------------
+     <div class="flow">
+       <span class="step">Step A</span><span class="arrow">→</span>
+       <span class="step">Step B</span>
+     </div> ------------------------------------------------------------- */
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:center;
+    margin:6px 0 22px;
+  }
+  .flow .step{
+    background:var(--accent-deep);
+    color:#fff;
+    padding:8px 13px;
+    border-radius:20px;
+    font-size:13.5px;
+    white-space:nowrap;
+  }
+  .flow .arrow{color:var(--ink-soft); font-size:15px;}
+
+  /* Reference / requirement box */
+  /* ---- Reference / notes box ---------------------------------------------
+     <div class="refbox">
+       <div class="refbox-label">Heading</div>
+       <ul><li><strong>Key</strong> → meaning</li></ul>
+     </div> ------------------------------------------------------------- */
+  .refbox{
+    background:#F4F7FC;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 22px;
+  }
+  .refbox .refbox-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent-deep);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .refbox ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .refbox li{
+    font-size:14px;
+    margin-bottom:4px;
+  }
+  .refbox a{
+    text-decoration:none;
+    border-bottom:1px dotted var(--accent);
+  }
+  .refbox a:hover{border-bottom-style:solid;}
+
+  /* ---- Weighted requirement row (percentage + description) --------------
+     <div class="req-card">
+       <div class="pct">25<sub>%</sub></div>
+       <div><h4>Title</h4><p>Description…</p></div>
+     </div> ------------------------------------------------------------- */
+  .req-card{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:12px;
+  }
+  .req-card .pct{
+    font-family:"Source Serif 4", serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--accent-deep);
+    flex:0 0 62px;
+    text-align:center;
+  }
+  .req-card .pct sub{ font-size:13px; font-weight:400; color:var(--ink-soft); }
+  .req-card h4{ margin:0 0 4px; font-size:15.5px; }
+  .req-card p{ margin:0; font-size:14px; color:var(--ink-soft); }
+
+  /* ---- Highlighted key-idea panel (gradient, for closing/summary blocks)
+     <div class="keyidea">
+       <h3>Headline</h3>
+       <p>Supporting text…</p>
+       Optional two-column list: <div class="qgrid"><div class="col">
+       <div class="col-label">Label</div><ul><li>Item</li></ul></div></div>
+     </div> ------------------------------------------------------------- */
+  .keyidea{
+    background:linear-gradient(155deg, var(--accent-deep), var(--sidebar));
+    color:#fff;
+    border-radius:12px;
+    padding:28px 30px;
+    margin:8px 0 10px;
+  }
+  .keyidea h3{color:#fff; margin-top:0;}
+  .keyidea p{ color:#E3EAF6; }
+  .keyidea .qgrid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 24px;
+    margin-top:14px;
+  }
+  .keyidea .qgrid .col{ flex:1 1 220px; }
+  .keyidea .qgrid .col-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#AFC3E4;
+    margin-bottom:6px;
+  }
+  .keyidea .qgrid ul{margin:0; padding-left:18px;}
+  .keyidea .qgrid li{font-size:14px; margin-bottom:5px; color:#E3EAF6;}
+
+  /* ---- Warning / important-notice callout (red) -----------------------
+     <div class="callout"><strong>Heads up.</strong> Notice text…</div> --- */
+  .callout{
+    background:var(--incorrect-bg);
+    border:1px solid #F0C6C1;
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 20px;
+    font-size:14.5px;
+    color:var(--incorrect);
+  }
+  .callout strong{ color:var(--incorrect); }
+
+  /* ---- Pull-quote list ---------------------------------------------------
+     <ul class="quotes"><li>"Quote text"<span>— Attribution</span></li></ul>
+     ------------------------------------------------------------------- */
+  .quotes{
+    list-style:none;
+    padding:0;
+    margin:10px 0 0;
+    display:grid;
+    gap:12px;
+  }
+  .quotes li{
+    border-left:3px solid var(--gold);
+    padding:2px 0 2px 16px;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .quotes li span{
+    display:block;
+    font-style:normal;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-top:3px;
+  }
+
+  /* ---- Page-level footnote & footer --------------------------------------
+     <p class="ai-note page-note">Footnote text, placed outside all
+       <section> elements, right before <footer>.</p>
+     <footer>Page footer text</footer>
+     .ai-note (without .page-note) can also be used inside a section as a
+     smaller inline note with just a top rule. --------------------------- */
+  .ai-note{
+    margin-top:26px;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  .ai-note.page-note{
+    max-width:820px;
+    margin:36px auto 0;
+    padding:16px 56px 0;
+    text-align:center;
+    border-top:1px solid var(--border);
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 10px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+  }
+
+  @media (max-width: 880px){
+    .layout{flex-direction:column;}
+    nav.sidebar{
+      position:relative;
+      width:100%;
+      height:auto;
+      max-height:none;
+    }
+    .hero{padding:40px 24px 32px;}
+    .content-inner{padding:0 22px;}
+    .req-card{ flex-wrap:wrap; }
+  }
+
+  /* ---- Page-specific additions (quiz, progress bar) ---- */
+  .sidebar .instructor{
+    font-size:12.5px;
+    color:var(--sidebar-text-dim);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin-bottom:18px;
+  }
+  .sidebar .progress-wrap{
+    margin-top:22px;
+    padding-top:16px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar .progress-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:8px;
+  }
+  .progress-track{
+    width:100%;
+    height:6px;
+    background:rgba(255,255,255,0.1);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--gold), #D8B65A);
+    transition:width 0.4s ease;
+  }
+  .progress-count{
+    margin-top:6px;
+    font-size:12px;
+    color:var(--sidebar-text-dim);
+  }
+  .hero-inner{
+    max-width:904px;
+  }
+
+  /* Quiz component (not part of the shared theme) */
+  .quiz{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--gold);
+    border-radius:8px;
+    padding:20px 22px;
+    margin:8px 0 28px;
+  }
+  .quiz .quiz-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .quiz p.q-prompt{
+    font-size:15.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin:0 0 12px;
+  }
+  .quiz .options{
+    display:grid;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .quiz label.opt{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:14.5px;
+    color:var(--ink);
+    padding:8px 10px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .quiz label.opt:hover{border-color:var(--accent); background:#F4F7FC;}
+  .quiz input[type="radio"]{margin-top:3px;}
+  .quiz button.check-btn{
+    background:var(--accent-deep);
+    color:#fff;
+    border:none;
+    padding:9px 18px;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .quiz button.check-btn:hover{background:var(--accent);}
+  .quiz .feedback{
+    margin-top:14px;
+    padding:12px 14px;
+    border-radius:6px;
+    font-size:14px;
+    display:none;
+  }
+  .quiz .feedback.show{display:block;}
+  .feedback-correct{background:var(--correct-bg); color:var(--correct); border:1px solid #BFE3CF;}
+  .feedback-incorrect{background:var(--incorrect-bg); color:var(--incorrect); border:1px solid #F0C6C1;}
+  .feedback-neutral{background:var(--neutral-bg); color:var(--neutral); border:1px solid #EEDCA6;}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <div class="kicker">IS 201 · Chapter 1</div>
+    <div class="course-title">Topic 1</div>
+    <p class="course-topic">Foundations of Computer Ethics</p>
+
+    <ol id="toc">
+      <li><a class="toc-link" href="#ethics" data-target="ethics">What is Ethics?</a></li>
+      <li><a class="toc-link" href="#eml" data-target="eml">Ethics, Morals &amp; Law</a></li>
+      <li><a class="toc-link" href="#integrity" data-target="integrity">Integrity &amp; Dilemmas</a></li>
+      <li><a class="toc-link" href="#compethics" data-target="compethics">What is Computer Ethics?</a></li>
+      <li><a class="toc-link" href="#perspectives" data-target="perspectives">Perspectives on Computer Ethics</a>
+        <ul class="sub">
+          <li><a href="#maner">Maner</a></li>
+          <li><a href="#johnson">Johnson</a></li>
+          <li><a href="#moor">Moor</a></li>
+          <li><a href="#values">Human Values</a></li>
+          <li><a href="#gotterbarn">Gotterbarn</a></li>
+        </ul>
+      </li>
+      <li><a class="toc-link" href="#code" data-target="code">Code of Ethics</a></li>
+      <li><a class="toc-link" href="#commandments" data-target="commandments">Ten Commandments</a></li>
+      <li><a class="toc-link" href="#decision" data-target="decision">Ethical Decision Making</a></li>
+      <li><a class="toc-link" href="#keyidea" data-target="keyidea">Key Idea</a></li>
+    </ol>
+
+    <div class="progress-wrap">
+      <div class="progress-label">Check-in progress</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-count" id="progressCount">0 of 7 answered correctly</div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="kicker">IS 201 · Chapter 1 — Foundations and Ethical Reasoning</div>
+        <h1>Topic 1 — Foundations of Computer Ethics</h1>
+        <p class="dek">A guided reading on where ethics comes from, how it differs from morals and law, and the different ways scholars have defined what "computer ethics" even means.</p>
+        <span class="byline">Faculty-in-Charge: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027</span>
+      </div>
+    </div>
+
+    <div class="content-inner">
+
+      <!-- 1. What is Ethics -->
+      <section class="chapter" id="ethics">
+        <div class="eyebrow">01 · Starting Point</div>
+        <h2>What is Ethics?</h2>
+        <p class="lede">Before we can talk about "computer" ethics, we need to agree on what ethics itself is asking.</p>
+
+        <blockquote class="def"><strong>Ethos</strong> — the word <em>ethics</em> comes from the Greek <em>ethos</em>, meaning custom or character.</blockquote>
+
+        <p>Ethics is concerned with the rightness and wrongness of human actions. It asks fundamental questions such as:</p>
+        <ul>
+          <li>How ought we to act?</li>
+          <li>What constitutes right conduct?</li>
+          <li>What makes a good life?</li>
+        </ul>
+        <p>Ethics therefore goes beyond asking whether something is <em>possible</em>. It asks whether something <em>ought</em> to be done — a distinction that becomes very important once computers enter the picture.</p>
+
+        <blockquote class="def"><strong>Morals vs. Ethics</strong> — morals are an individual's personal principles and beliefs about right and wrong, while ethics refers to standards of behavior associated with a group, profession, organization, or society.</blockquote>
+
+        <div class="refbox">
+          <div class="refbox-label">Watch first</div>
+          <ul>
+            <li><a href="https://www.youtube.com/watch?v=Rr7U49RPpTs" target="_blank" rel="noopener">What is Ethics?</a> — a short primer to watch before continuing.</li>
+          </ul>
+        </div>
+
+        <div class="quiz" id="q1">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">1. A student believes lying is always wrong, even to spare someone's feelings. This personal conviction is best described as a matter of:</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q1" value="a"> Ethics — a standard shared by their profession</label>
+            <label class="opt"><input type="radio" name="q1" value="b"> Morals — their own personal belief about right and wrong</label>
+            <label class="opt"><input type="radio" name="q1" value="c"> Law — a rule enforced by government</label>
+            <label class="opt"><input type="radio" name="q1" value="d"> None of the above</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q1')">Check answer</button>
+          <div class="feedback" id="q1-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 2. Ethics, Morals, Law -->
+      <section class="chapter" id="eml">
+        <div class="eyebrow">02 · Distinctions</div>
+        <h2>Ethics, Morals, and Law</h2>
+        <p>These three concepts are often used loosely in everyday speech, but the reading draws a clear line between them:</p>
+
+        <table class="compare">
+          <thead>
+            <tr><th>Concept</th><th>Basic Meaning</th><th>Key Question</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Morals</strong></td><td>Personal beliefs and principles about right and wrong</td><td>What do I believe is right?</td></tr>
+            <tr><td><strong>Ethics</strong></td><td>Standards of acceptable conduct within a group, profession, or society</td><td>What ought we to do?</td></tr>
+            <tr><td><strong>Law</strong></td><td>Rules established and enforced by government</td><td>What are we legally allowed or required to do?</td></tr>
+          </tbody>
+        </table>
+
+        <p>These do not always agree. Something may be perfectly <strong>legal</strong> but still <strong>unethical</strong>. Laws provide important guidance, but they are not a complete guide to ethical behavior — a theme that will keep resurfacing throughout computer ethics, where technology often moves faster than the law does.</p>
+
+        <div class="refbox">
+          <div class="refbox-label">Read alongside this section</div>
+          <ul>
+            <li>Overview of Ethics — <a href="https://reinald-dp.github.io/is201/Ch_01_Overview.pdf" target="_blank" rel="noopener">Ch. 01 Overview (PDF)</a></li>
+          </ul>
+        </div>
+
+        <div class="quiz" id="q2">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">2. A company legally collects and sells user browsing data because its country has no privacy law against it, but many users feel betrayed. This is an example of something that is:</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q2" value="a"> Legal but arguably unethical</label>
+            <label class="opt"><input type="radio" name="q2" value="b"> Illegal but ethical</label>
+            <label class="opt"><input type="radio" name="q2" value="c"> Both illegal and unethical</label>
+            <label class="opt"><input type="radio" name="q2" value="d"> Neither a legal nor ethical issue</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q2')">Check answer</button>
+          <div class="feedback" id="q2-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 3. Integrity and Ethical Dilemmas -->
+      <section class="chapter" id="integrity">
+        <div class="eyebrow">03 · Character in Practice</div>
+        <h2>Integrity and Ethical Dilemmas</h2>
+        <blockquote class="def"><strong>Integrity</strong> means acting according to a personal code of principles and applying those principles consistently.</blockquote>
+
+        <p>Ethical decisions are not always simple choices between right and wrong. Sometimes they involve an <strong>ethical dilemma</strong>, where important values or responsibilities conflict with one another.</p>
+
+        <p><em>Example:</em> a software developer knows that a system still contains serious bugs, but is pressured to approve its release because the project is already behind schedule. The dilemma involves competing responsibilities — meeting organizational expectations versus ensuring that potentially harmful software is not released.</p>
+
+        <div class="quiz" id="q3">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">3. In the developer example above, what makes this an ethical <em>dilemma</em> rather than a simple mistake?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q3" value="a"> The developer does not know the software has bugs</label>
+            <label class="opt"><input type="radio" name="q3" value="b"> There is a clear legal rule that settles the issue</label>
+            <label class="opt"><input type="radio" name="q3" value="c"> Two legitimate responsibilities — meeting deadlines and preventing harm — are in genuine conflict</label>
+            <label class="opt"><input type="radio" name="q3" value="d"> The developer has no integrity</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q3')">Check answer</button>
+          <div class="feedback" id="q3-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 4. What is Computer Ethics -->
+      <section class="chapter" id="compethics">
+        <div class="eyebrow">04 · Bringing in Computing</div>
+        <h2>What is Computer Ethics?</h2>
+        <p>Computer ethics is concerned with ethical issues arising from the development and use of computers and information technology. It asks how people — particularly computing professionals — should make decisions concerning the professional and social consequences of computing.</p>
+        <p>As computing technologies have developed, different scholars have offered different ways of understanding what computer ethics actually is. That's the focus of the next section.</p>
+      </section>
+
+      <!-- 5. Perspectives -->
+      <section class="chapter" id="perspectives">
+        <div class="eyebrow">05 · Five Lenses</div>
+        <h2>Perspectives on Computer Ethics</h2>
+        <p>No single definition of computer ethics is universally agreed upon. Instead, several influential thinkers have each emphasized a different angle.</p>
+
+        <div class="scholar-card" id="maner">
+          <span class="tag">1970s</span>
+          <h4>Walter Maner — New and Transformed Ethical Problems</h4>
+          <p>Maner described computer ethics as the study of ethical problems that are <strong>aggravated, transformed, or created</strong> by computer technology. Computers may make existing ethical problems more serious, significantly change their nature, or even create ethical situations that would not exist without computing technology. Maner viewed computer ethics as a form of <em>applied ethics</em>, where traditional ethical theories are used to analyze problems involving computers.</p>
+        </div>
+
+        <div class="scholar-card" id="johnson">
+          <span class="tag">Contrast with Maner</span>
+          <h4>Deborah Johnson — New Forms of Familiar Problems</h4>
+          <p>Johnson argued that computers often present <strong>new versions of familiar moral problems</strong> and dilemmas. Computing technology can make old problems more complex and place familiar moral principles in situations where their application is no longer obvious. Unlike Maner, Johnson did not generally view computers as creating entirely new moral problems — technology instead gives familiar ethical issues new forms and contexts.</p>
+        </div>
+
+        <div class="scholar-card" id="moor">
+          <span class="tag">Broader view</span>
+          <h4>James Moor — Policy Vacuums and Conceptual Muddles</h4>
+          <p>According to Moor, computers frequently create <strong>policy vacuums</strong>: technology makes new activities and choices possible, but society may not yet have appropriate policies governing how those capabilities should be used. Before appropriate policies can be developed, we may need to resolve <strong>conceptual muddles</strong> — new technologies can challenge existing concepts and force us to clarify what they mean in new contexts. Moor also described computers as <strong>logically malleable</strong>, shaped and programmed to perform an enormous variety of activities, which lets computing become deeply integrated into work, education, money, privacy, and other areas of life.</p>
+        </div>
+
+        <div class="scholar-card" id="values">
+          <span class="tag">Values-centered</span>
+          <h4>Computer Ethics and Human Values</h4>
+          <p>Another approach examines how information technology affects important human values, including health, wealth, opportunity, freedom, democracy, knowledge, privacy, security, and self-fulfillment. From this view, computer ethics is concerned with identifying and analyzing the effects of information technology on these values.</p>
+        </div>
+
+        <div class="scholar-card" id="gotterbarn">
+          <span class="tag">Professional lens</span>
+          <h4>Donald Gotterbarn — Computer Ethics as Professional Ethics</h4>
+          <p>Gotterbarn emphasized computer ethics as a form of <strong>professional ethics</strong> — the values, standards of practice, and codes of conduct that guide computing professionals in their work. Professional responsibility extends beyond simply making technology function correctly; computing professionals must also consider the ethical implications of the systems they help create.</p>
+        </div>
+
+        <div class="refbox">
+          <div class="refbox-label">Go deeper</div>
+          <ul>
+            <li><a href="https://www.youtube.com/watch?v=wtUVQshZqAU" target="_blank" rel="noopener">Computer Ethics: Basic Concepts and Historical Overview</a> (video)</li>
+            <li><a href="https://plato.stanford.edu/archives/fall2005/entries/ethics-computer/" target="_blank" rel="noopener">Computer Ethics — Stanford Encyclopedia of Philosophy</a></li>
+          </ul>
+        </div>
+
+        <div class="quiz" id="q4">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">4. A scholar argues that AI hiring tools don't create a brand-new ethical problem — discrimination in hiring already existed — but the technology makes it harder to detect and complicates how we apply old fairness principles. This view is closest to:</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q4" value="a"> Walter Maner — entirely new problems</label>
+            <label class="opt"><input type="radio" name="q4" value="b"> Deborah Johnson — new forms of familiar problems</label>
+            <label class="opt"><input type="radio" name="q4" value="c"> James Moor — policy vacuums</label>
+            <label class="opt"><input type="radio" name="q4" value="d"> Donald Gotterbarn — professional ethics</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q4')">Check answer</button>
+          <div class="feedback" id="q4-feedback"></div>
+        </div>
+
+        <div class="quiz" id="q5">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">5. When social media first emerged, there were no clear rules yet for how platforms should moderate content, and society was still working out what "harmful speech online" even meant. This scenario best illustrates:</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q5" value="a"> Logical malleability only</label>
+            <label class="opt"><input type="radio" name="q5" value="b"> Johnson's familiar-problems view</label>
+            <label class="opt"><input type="radio" name="q5" value="c"> Moor's policy vacuum and conceptual muddle</label>
+            <label class="opt"><input type="radio" name="q5" value="d"> Gotterbarn's professional codes</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q5')">Check answer</button>
+          <div class="feedback" id="q5-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 6. Code of Ethics -->
+      <section class="chapter" id="code">
+        <div class="eyebrow">06 · Formalizing Standards</div>
+        <h2>Code of Ethics</h2>
+        <p>A <strong>code of ethics</strong> identifies important ethical issues and establishes the overarching values and principles that should guide members of an organization or profession. A good code can help people:</p>
+        <ul>
+          <li>Recognize ethical issues</li>
+          <li>Guide their decisions</li>
+          <li>Establish expectations for appropriate conduct</li>
+          <li>Provide mechanisms for reporting unethical behavior</li>
+          <li>Promote honesty and accountability</li>
+        </ul>
+        <p>Having a code, however, is not sufficient by itself. Ethical standards must also be supported and practiced by the people and leadership of the organization. For computing professionals, professional codes of ethics provide guidance whenever technical decisions also carry ethical weight.</p>
+      </section>
+
+      <!-- 7. Ten Commandments -->
+      <section class="chapter" id="commandments">
+        <div class="eyebrow">07 · A Practical Code</div>
+        <h2>Ten Commandments of Computer Ethics</h2>
+        <p>The Computer Ethics Institute proposed the following as practical principles for responsible computer use:</p>
+
+        <ol class="commandments">
+          <li>Do not use a computer to harm other people.</li>
+          <li>Do not interfere with other people's computer work.</li>
+          <li>Do not snoop around in other people's computer files.</li>
+          <li>Do not use a computer to steal.</li>
+          <li>Do not use a computer to bear false witness.</li>
+          <li>Do not copy or use proprietary software without paying for it.</li>
+          <li>Do not use other people's computer resources without authorization or proper compensation.</li>
+          <li>Do not appropriate other people's intellectual output.</li>
+          <li>Think about the social consequences of the programs and systems you create.</li>
+          <li>Always use computers with consideration and respect for other people.</li>
+        </ol>
+
+        <p>These principles emphasize that responsible computing involves not only the proper <em>use</em> of technology, but also respect for other people and consideration of the consequences of one's actions.</p>
+
+        <div class="refbox">
+          <div class="refbox-label">Primary source</div>
+          <ul>
+            <li><a href="https://computerethics.institute/publications/ten-commandments-of-computer-ethics/" target="_blank" rel="noopener">Ten Commandments of Computer Ethics — Computer Ethics Institute</a></li>
+          </ul>
+        </div>
+
+        <div class="quiz" id="q6">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">6. A student reads a classmate's private messages after guessing their laptop password, without touching or copying any files. Which commandment does this most directly violate?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q6" value="a"> #6 — Do not copy proprietary software</label>
+            <label class="opt"><input type="radio" name="q6" value="b"> #4 — Do not use a computer to steal</label>
+            <label class="opt"><input type="radio" name="q6" value="c"> #3 — Do not snoop around in other people's computer files</label>
+            <label class="opt"><input type="radio" name="q6" value="d"> #9 — Think about the social consequences</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q6')">Check answer</button>
+          <div class="feedback" id="q6-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 8. Ethical Decision Making -->
+      <section class="chapter" id="decision">
+        <div class="eyebrow">08 · Putting It Into Practice</div>
+        <h2>Ethical Decision Making</h2>
+        <p>Ethical issues often require a systematic process rather than an immediate judgment. A basic decision-making process looks like this:</p>
+
+        <div class="flow">
+          <span class="step">Define the problem</span><span class="arrow">→</span>
+          <span class="step">Identify alternatives</span><span class="arrow">→</span>
+          <span class="step">Choose an alternative</span><span class="arrow">→</span>
+          <span class="step">Implement the decision</span><span class="arrow">→</span>
+          <span class="step">Evaluate the results</span>
+        </div>
+
+        <p>Ethical considerations can be incorporated by identifying the people or groups affected by the decision, examining applicable laws, policies, professional standards, and ethical principles, and considering the possible consequences of each alternative. A useful set of guiding questions:</p>
+        <ul>
+          <li>What is the ethical problem?</li>
+          <li>Who will be affected?</li>
+          <li>What values or principles are involved?</li>
+          <li>What laws, policies, or professional standards apply?</li>
+          <li>What are the possible consequences?</li>
+          <li>What is the most responsible course of action?</li>
+        </ul>
+
+        <div class="quiz" id="q7">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">7. In the decision-making flow above, which step comes right after "Identify alternatives"?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q7" value="a"> Evaluate the results</label>
+            <label class="opt"><input type="radio" name="q7" value="b"> Choose an alternative</label>
+            <label class="opt"><input type="radio" name="q7" value="c"> Define the problem</label>
+            <label class="opt"><input type="radio" name="q7" value="d"> Implement the decision</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q7')">Check answer</button>
+          <div class="feedback" id="q7-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 9. Key Idea -->
+      <section class="chapter" id="keyidea">
+        <div class="eyebrow">09 · Takeaway</div>
+        <h2>Key Idea</h2>
+        <div class="keyidea">
+          <h3>Technical capability alone does not determine what should be done.</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">We usually ask</div>
+              <ul>
+                <li>Can we do it?</li>
+                <li>Does it work?</li>
+                <li>Is it legal?</li>
+              </ul>
+            </div>
+            <div class="col">
+              <div class="col-label">Computer ethics also asks</div>
+              <ul>
+                <li>Should we do it?</li>
+                <li>Who will be affected?</li>
+                <li>What values are at stake?</li>
+                <li>What responsibilities do we have?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<footer>IS 201: Computer Ethics · Topic 1 — Foundations of Computer Ethics · Dr. Reinald Adrian Pugoy</footer>
+
+<script>
+  // Quiz checking
+  function checkQuiz(id){
+    const quiz = document.getElementById(id);
+    const optionsDiv = quiz.querySelector('.options');
+    const correctValue = optionsDiv.dataset.correct;
+    const selected = quiz.querySelector('input[name="'+id+'"]:checked');
+    const feedback = document.getElementById(id+'-feedback');
+
+    if(!selected){
+      feedback.className = 'feedback show feedback-neutral';
+      feedback.textContent = 'Please select an answer first.';
+      return;
+    }
+
+    const isCorrect = selected.value === correctValue;
+    feedback.className = 'feedback show ' + (isCorrect ? 'feedback-correct' : 'feedback-incorrect');
+    feedback.textContent = isCorrect ? '✓ Correct.' : '✗ Not quite — review the section above and try again.';
+
+    if(isCorrect && !quiz.dataset.solved){
+      quiz.dataset.solved = 'true';
+      updateProgress();
+    }
+  }
+
+  function updateProgress(){
+    const totalQuizzes = document.querySelectorAll('.quiz').length;
+    const solved = document.querySelectorAll('.quiz[data-solved="true"]').length;
+    document.getElementById('progressFill').style.width = (solved/totalQuizzes*100) + '%';
+    document.getElementById('progressCount').textContent = solved + ' of ' + totalQuizzes + ' answered correctly';
+  }
+
+  // Sidebar active-link highlighting on scroll
+  const sections = document.querySelectorAll('section.chapter');
+  const tocLinks = document.querySelectorAll('.toc-link');
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        tocLinks.forEach(link=>{
+          link.classList.toggle('active', link.dataset.target === id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+
+  sections.forEach(sec => observer.observe(sec));
+
+  updateProgress();
+</script>
+
+</body>
+</html>

@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IS 201 — Course Guide</title>
 <style>
-  :root{
+/* ---- Design tokens -------------------------------------------------------
+   Change colors/fonts for the whole site by editing these variables only. */
+:root{
     --bg:#EEF2F8;
     --paper:#FFFFFF;
     --ink:#1B2333;
@@ -25,7 +27,8 @@
     --neutral:#8A6D1E;
     --neutral-bg:#FBF3E1;
   }
-  *{box-sizing:border-box;}
+  /* ---- Base & typography ---------------------------------------------- */
+*{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
     margin:0;
@@ -43,7 +46,15 @@
   a{color:var(--accent-deep);}
   a:hover{color:var(--accent);}
 
-  /* Layout */
+  /* ---- Page layout: sidebar + main ------------------------------------
+     .layout wraps everything; nav.sidebar is the sticky dark TOC column.
+     Sidebar TOC markup:
+       <div class="nav-heading">Group label</div>
+       <ol><li><a class="toc-link" href="#id">Label</a></li></ol>
+     Optional sub-links under a toc-link:
+       <ul class="sub"><li><a href="#id">…</a></li></ul>
+     .toc-link.active (added by the IntersectionObserver script at the
+     bottom of the page skeleton) highlights the section in view. -------- */
   .layout{
     display:flex;
     min-height:100vh;
@@ -144,6 +155,13 @@
     min-width:0;
     padding:0 0 100px;
   }
+  /* ---- Hero banner (top of main, above the content column) -----------
+     <div class="hero">
+       <div class="kicker">Eyebrow</div>
+       <h1>Title</h1>
+       <p class="dek">Description</p>
+       <span class="byline">Faculty-in-Charge: <strong>Name</strong></span>
+     </div> ------------------------------------------------------------- */
   .hero{
     background:linear-gradient(155deg, var(--accent-deep) 0%, var(--sidebar) 65%);
     color:#fff;
@@ -160,10 +178,10 @@
     color:#fff;
     font-size:38px;
     margin:0 0 10px;
-    max-width:640px;
+    max-width:860px;
   }
   .hero p.dek{
-    max-width:560px;
+    max-width:760px;
     color:#D6E0F1;
     font-size:16px;
     margin:0 0 22px;
@@ -177,6 +195,11 @@
   }
   .hero .byline strong{color:#fff; font-weight:600;}
 
+  /* ---- Content column --------------------------------------------------
+     .content-inner is the comfortable-reading-width wrapper inside <main>.
+     Each page section is a <section class="chapter" id="anchor"> with an
+     .eyebrow label (group name, matches the sidebar nav-heading) and an h2.
+     Use .lede for an intro paragraph with a gold left rule. --------------- */
   .content-inner{
     padding:0 56px;
     max-width:960px;
@@ -231,6 +254,9 @@
     margin:0 0 22px;
   }
 
+  /* ---- Definition / emphasis callout ------------------------------------
+     <blockquote class="def"><strong>Term</strong> — explanation…</blockquote>
+     ------------------------------------------------------------------- */
   blockquote.def{
     background:var(--paper);
     border:1px solid var(--border);
@@ -243,6 +269,13 @@
   }
   blockquote.def strong{color:var(--ink); font-family:"Source Serif 4", serif;}
 
+  /* ---- Data table --------------------------------------------------------
+     <table class="compare">
+       <thead><tr><th>Col</th><th>Col</th></tr></thead>
+       <tbody><tr><td class="num">Value</td><td>...</td></tr></tbody>
+     </table>
+     Row modifiers: tr.deadline (amber highlight), tr.lowgrade (red highlight)
+     td.num bolds/colors a key figure (grade, week number, percentage). ---- */
   table.compare{
     width:100%;
     border-collapse:collapse;
@@ -271,6 +304,13 @@
   table.compare tr.deadline td{ background:var(--neutral-bg); color:var(--neutral); font-style:italic; }
   table.compare tr.lowgrade td{ background:var(--incorrect-bg); color:var(--incorrect); font-weight:600; }
 
+  /* ---- Bio / reference card ------------------------------------------
+     <div class="scholar-card">
+       <span class="tag">Label</span>
+       <h4>Name</h4>
+       <p>Bio text…</p>
+       <ul class="fic-links"><li>Email: <a href="mailto:...">...</a></li></ul>
+     </div> ------------------------------------------------------------- */
   .scholar-card{
     background:var(--paper);
     border:1px solid var(--border);
@@ -299,6 +339,9 @@
   .scholar-card .fic-links{ margin:10px 0 0; padding-left:18px; font-size:14px; }
   .scholar-card .fic-links li{ margin-bottom:3px; }
 
+  /* ---- Numbered list (learning outcomes, rules, steps) ----------------
+     <ol class="commandments"><li>Item text</li></ol>
+     Numbers are auto-generated in gold via a CSS counter. ---------------- */
   .commandments{
     counter-reset:cmd;
     padding:0;
@@ -327,6 +370,11 @@
     color:var(--gold);
   }
 
+  /* ---- Process/flow chips -----------------------------------------------
+     <div class="flow">
+       <span class="step">Step A</span><span class="arrow">→</span>
+       <span class="step">Step B</span>
+     </div> ------------------------------------------------------------- */
   .flow{
     display:flex;
     flex-wrap:wrap;
@@ -345,6 +393,11 @@
   .flow .arrow{color:var(--ink-soft); font-size:15px;}
 
   /* Reference / requirement box */
+  /* ---- Reference / notes box ---------------------------------------------
+     <div class="refbox">
+       <div class="refbox-label">Heading</div>
+       <ul><li><strong>Key</strong> → meaning</li></ul>
+     </div> ------------------------------------------------------------- */
   .refbox{
     background:#F4F7FC;
     border:1px solid var(--border);
@@ -374,7 +427,11 @@
   }
   .refbox a:hover{border-bottom-style:solid;}
 
-  /* Requirement weight cards, reusing scholar-card look */
+  /* ---- Weighted requirement row (percentage + description) --------------
+     <div class="req-card">
+       <div class="pct">25<sub>%</sub></div>
+       <div><h4>Title</h4><p>Description…</p></div>
+     </div> ------------------------------------------------------------- */
   .req-card{
     display:flex;
     gap:18px;
@@ -397,6 +454,13 @@
   .req-card h4{ margin:0 0 4px; font-size:15.5px; }
   .req-card p{ margin:0; font-size:14px; color:var(--ink-soft); }
 
+  /* ---- Highlighted key-idea panel (gradient, for closing/summary blocks)
+     <div class="keyidea">
+       <h3>Headline</h3>
+       <p>Supporting text…</p>
+       Optional two-column list: <div class="qgrid"><div class="col">
+       <div class="col-label">Label</div><ul><li>Item</li></ul></div></div>
+     </div> ------------------------------------------------------------- */
   .keyidea{
     background:linear-gradient(155deg, var(--accent-deep), var(--sidebar));
     color:#fff;
@@ -423,6 +487,8 @@
   .keyidea .qgrid ul{margin:0; padding-left:18px;}
   .keyidea .qgrid li{font-size:14px; margin-bottom:5px; color:#E3EAF6;}
 
+  /* ---- Warning / important-notice callout (red) -----------------------
+     <div class="callout"><strong>Heads up.</strong> Notice text…</div> --- */
   .callout{
     background:var(--incorrect-bg);
     border:1px solid #F0C6C1;
@@ -434,6 +500,9 @@
   }
   .callout strong{ color:var(--incorrect); }
 
+  /* ---- Pull-quote list ---------------------------------------------------
+     <ul class="quotes"><li>"Quote text"<span>— Attribution</span></li></ul>
+     ------------------------------------------------------------------- */
   .quotes{
     list-style:none;
     padding:0;
@@ -456,6 +525,12 @@
     margin-top:3px;
   }
 
+  /* ---- Page-level footnote & footer --------------------------------------
+     <p class="ai-note page-note">Footnote text, placed outside all
+       <section> elements, right before <footer>.</p>
+     <footer>Page footer text</footer>
+     .ai-note (without .page-note) can also be used inside a section as a
+     smaller inline note with just a top rule. --------------------------- */
   .ai-note{
     margin-top:26px;
     padding-top:16px;
@@ -685,7 +760,8 @@
       <section class="chapter" id="submission">
         <div class="eyebrow">Class Policies &amp; Guidelines</div>
         <h2>Submission Policy</h2>
-        <p>All course requirements <strong>must be submitted exclusively through the MyPortal</strong> course site. Submissions via email are strictly prohibited unless prior authorization has been granted by the professor. Students are likewise required to upload the required files directly to MyPortal; external links may not be used as substitutes for file uploads unless expressly permitted.</p>
+        <p>All course requirements must be submitted exclusively through the MyPortal course site. Submissions via email are strictly prohibited unless prior authorization has been granted by the professor. Required files must be uploaded directly to MyPortal; external links may not be used as substitutes unless expressly permitted.</p>
+        <div class="callout"><strong>Late submissions will not be accepted.</strong></div>
         <div class="callout"><strong>Non-compliant submissions will not be considered for grading.</strong></div>
       </section>
 

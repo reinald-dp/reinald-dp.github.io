@@ -118,7 +118,6 @@
      .toc-link.active (added by the IntersectionObserver script at the
      bottom of the page skeleton) highlights the section in view. -------- */
   .layout{
-    display:flex;
     min-height:100vh;
     width:100%;
   }
@@ -128,10 +127,12 @@
     background:var(--sidebar);
     color:var(--sidebar-text);
     padding:28px 22px 40px;
-    position:sticky;
+    position:fixed;
     top:0;
+    left:0;
     height:100vh;
     overflow-y:auto;
+    z-index:10;
   }
   nav.sidebar::-webkit-scrollbar{width:8px;}
   nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
@@ -213,8 +214,8 @@
   .sidebar ul.sub li a:hover{color:#fff;}
 
   main{
-    flex:1;
-    min-width:0;
+    display:block;
+    margin-left:280px;
     padding:0 0 100px;
   }
   /* ---- Hero banner (top of main, above the content column) -----------
@@ -240,10 +241,10 @@
     color:#fff;
     font-size:38px;
     margin:0 0 10px;
-    max-width:640px;
+    max-width:900px;
   }
   .hero p.dek{
-    max-width:560px;
+    max-width:820px;
     color:#D6E0F1;
     font-size:16px;
     margin:0 0 22px;
@@ -614,16 +615,18 @@
     padding:30px 20px 10px;
     font-size:12.5px;
     color:var(--ink-soft);
+    margin-left:280px;
   }
 
   @media (max-width: 880px){
-    .layout{flex-direction:column;}
     nav.sidebar{
       position:relative;
       width:100%;
       height:auto;
       max-height:none;
     }
+    main{ margin-left:0; }
+    footer{ margin-left:0; }
     .hero{padding:40px 24px 32px;}
     .content-inner{padding:0 22px;}
     .req-card{ flex-wrap:wrap; }
@@ -752,15 +755,8 @@
       <li><a class="toc-link" href="#eml" data-target="eml">Ethics, Morals &amp; Law</a></li>
       <li><a class="toc-link" href="#integrity" data-target="integrity">Integrity &amp; Dilemmas</a></li>
       <li><a class="toc-link" href="#compethics" data-target="compethics">What is Computer Ethics?</a></li>
-      <li><a class="toc-link" href="#perspectives" data-target="perspectives">Perspectives on Computer Ethics</a>
-        <ul class="sub">
-          <li><a href="#maner">Maner</a></li>
-          <li><a href="#johnson">Johnson</a></li>
-          <li><a href="#moor">Moor</a></li>
-          <li><a href="#values">Human Values</a></li>
-          <li><a href="#gotterbarn">Gotterbarn</a></li>
-        </ul>
-      </li>
+      <li><a class="toc-link" href="#perspectives" data-target="perspectives">Perspectives on Computer Ethics</a></li>
+      <li><a class="toc-link" href="#major-topics" data-target="major-topics">Major Topics in Computer Ethics</a></li>
       <li><a class="toc-link" href="#code" data-target="code">Code of Ethics</a></li>
       <li><a class="toc-link" href="#commandments" data-target="commandments">Ten Commandments</a></li>
       <li><a class="toc-link" href="#decision" data-target="decision">Ethical Decision Making</a></li>
@@ -968,9 +964,132 @@
         </div>
       </section>
 
-      <!-- 6. Code of Ethics -->
+      <!-- 6. Major Topics in Computer Ethics -->
+      <section class="chapter" id="major-topics">
+        <div class="eyebrow">06 · Broader Landscape</div>
+        <h2>Major Topics in Computer Ethics</h2>
+        <p class="lede">Computer ethics covers a wide range of issues arising from the use of computers and information technology — concerning not only the technology itself, but also its effects on individuals, professionals, organizations, and society.</p>
+
+        <div class="scholar-card" id="workplace">
+          <span class="tag">Labor &amp; Automation</span>
+          <h4>1. Computers in the Workplace</h4>
+          <p>Computers can significantly change the nature of work and employment. Because computers can perform many tasks efficiently, they may replace some forms of human labor — while also creating new occupations and increasing demand for new technical skills. Even when jobs are not eliminated, technology may substantially change them. Automation can lead to <strong>de-skilling</strong>, where workers become less involved in performing tasks and instead monitor or operate automated systems, though it can also create jobs requiring more sophisticated skills. The introduction of computers into the workplace also raises concerns about worker health, safety, stress, and job satisfaction.</p>
+          <blockquote class="def"><strong>Key ethical question</strong> — How should the benefits of automation be balanced against its effects on workers?</blockquote>
+        </div>
+
+        <div class="scholar-card" id="crime">
+          <span class="tag">Security &amp; Misuse</span>
+          <h4>2. Computer Crime</h4>
+          <p>Computer ethics also deals with the security of computer systems and the misuse of computing resources. An important concern is <strong>logical security</strong>, which includes privacy and confidentiality; integrity of data and programs; unimpaired service; consistency of data and system behavior; and control of access to resources. Threats can come from malicious software such as viruses, worms, Trojan horses, logic bombs, and other programs designed to disrupt or damage systems. Security problems are not limited to outsiders — computer crimes may also be committed by trusted users who already have authorized access to a system. Unauthorized access or hacking also raises ethical issues: even when someone enters a system without intending to cause damage, the unauthorized access itself can force the owner to investigate whether information or systems have been compromised.</p>
+          <blockquote class="def"><strong>Key ethical question</strong> — When does the use of computing knowledge or access become an abuse of that capability?</blockquote>
+        </div>
+
+        <div class="quiz" id="q6">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">6. A former employee's account was never deactivated. Out of curiosity, she logs in and browses internal files she no longer has any work reason to see. This scenario shows that:</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q6" value="a"> This isn't a computer crime issue since her credentials were once valid</label>
+            <label class="opt"><input type="radio" name="q6" value="b"> Misuse of access — even by someone who once had legitimate access — is still a computer crime concern</label>
+            <label class="opt"><input type="radio" name="q6" value="c"> It's only a privacy issue, unrelated to computer crime</label>
+            <label class="opt"><input type="radio" name="q6" value="d"> It's acceptable because no files were changed or deleted</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q6')">Check answer</button>
+          <div class="feedback" id="q6-feedback"></div>
+        </div>
+
+        <div class="scholar-card" id="privacy">
+          <span class="tag">Personal Information</span>
+          <h4>3. Privacy and Anonymity</h4>
+          <p>Computers make it possible to collect, store, search, compare, retrieve, analyze, and share large amounts of personal information efficiently. These capabilities have made privacy one of the longstanding concerns of computer ethics — particularly when dealing with sensitive personal information. Computer technology has also encouraged debate about what privacy actually means: one view defines privacy in terms of a person's control over personal information, while another argues that privacy is better understood in terms of restricted access to information. Privacy can also exist in public contexts, leading to the idea of <strong>privacy in public</strong>. Closely related is <strong>anonymity</strong>, which can protect people discussing sensitive matters and provide benefits similar to privacy — though both privacy and anonymity can also be exploited to facilitate undesirable or harmful activities.</p>
+          <blockquote class="def"><strong>Key ethical question</strong> — How should privacy and anonymity be protected while recognizing that they can also be misused?</blockquote>
+        </div>
+
+        <div class="quiz" id="q7">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">7. An employee posts anonymously in an online forum to safely report unsafe practices at their workplace. This use of anonymity mainly illustrates that:</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q7" value="a"> Anonymity has no legitimate ethical value since it hides identity</label>
+            <label class="opt"><input type="radio" name="q7" value="b"> Anonymity can support legitimate, protective purposes, much like privacy does</label>
+            <label class="opt"><input type="radio" name="q7" value="c"> "Privacy in public" is not a real concept</label>
+            <label class="opt"><input type="radio" name="q7" value="d"> Anonymity is only ever exploited for harmful activity</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q7')">Check answer</button>
+          <div class="feedback" id="q7-feedback"></div>
+        </div>
+
+        <div class="scholar-card" id="ip">
+          <span class="tag">Ownership &amp; Access</span>
+          <h4>4. Intellectual Property</h4>
+          <p>Computer ethics examines questions about the ownership and use of software and other intellectual creations. One debate concerns whether software should be freely available for people to copy, study, and modify, or whether developers should be able to control its use and receive compensation for their work. Software ownership can involve different elements, including source code, object code, algorithms, and the "look and feel" of a program. Different forms of legal protection may also apply, including copyrights, trade secrets, and patents. These issues create tension between protecting creators and encouraging access, innovation, competition, and the sharing of knowledge.</p>
+          <blockquote class="def"><strong>Key ethical question</strong> — How should the rights of creators be balanced against the interests of users and society?</blockquote>
+        </div>
+
+        <div class="quiz" id="q8">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">8. A student copies a paid software license from a friend instead of purchasing it, reasoning that "information should be free." Which tension from the Intellectual Property section does this illustrate?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q8" value="a"> Employer-vs-employee conflicts of interest</label>
+            <label class="opt"><input type="radio" name="q8" value="b"> The balance between protecting creators' rights and encouraging access, innovation, and sharing</label>
+            <label class="opt"><input type="radio" name="q8" value="c"> Logical security threats like viruses and worms</label>
+            <label class="opt"><input type="radio" name="q8" value="d"> Differences in privacy law across countries</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q8')">Check answer</button>
+          <div class="feedback" id="q8-feedback"></div>
+        </div>
+
+        <div class="scholar-card" id="profresp">
+          <span class="tag">Codes of Conduct</span>
+          <h4>5. Professional Responsibility</h4>
+          <p>Computing professionals possess specialized knowledge and capabilities that can significantly affect other people and society. With this capability comes a responsibility to exercise professional power appropriately. Computing professionals may hold several kinds of relationships at once — employer and employee, client and professional, professional and professional, and society and professional — and these relationships can involve competing interests and potential conflicts of interest. Professional organizations such as the <strong>ACM</strong> and <strong>IEEE</strong> have developed codes of ethics to help computing professionals understand their responsibilities, including principles such as avoiding harm, being honest and trustworthy, maintaining professional competence, respecting applicable laws, and avoiding conflicts of interest.</p>
+          <blockquote class="def"><strong>Central principle</strong> — professional knowledge and authority come with professional responsibility.</blockquote>
+        </div>
+
+        <div class="scholar-card" id="globalization">
+          <span class="tag">Global Information Ethics</span>
+          <h4>6. Globalization</h4>
+          <p>Computer networks connect people and organizations across geographic, cultural, political, and economic boundaries. As a result, computer ethics increasingly becomes a form of <strong>global information ethics</strong>. Information technology creates situations in which ethical standards and human values must be considered across societies that may have different cultures, laws, traditions, and beliefs — raising the challenge that ethical standards for global technologies cannot always be understood solely within the context of one country or culture.</p>
+          <blockquote class="def"><strong>Key ethical question</strong> — How can appropriate standards of conduct be developed for technologies that operate across different societies and cultures?</blockquote>
+        </div>
+
+        <h3>Putting the Topics Together</h3>
+        <p>These topics show why computer ethics extends well beyond simply asking whether people use computers properly.</p>
+
+        <table class="compare">
+          <thead>
+            <tr><th>Area</th><th>Central Concern</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Computers in the Workplace</strong></td><td>Effects of computing on jobs, skills, health, and working conditions</td></tr>
+            <tr><td><strong>Computer Crime</strong></td><td>Security, unauthorized access, malicious software, and misuse</td></tr>
+            <tr><td><strong>Privacy and Anonymity</strong></td><td>Collection and access to personal information and protection of identity</td></tr>
+            <tr><td><strong>Intellectual Property</strong></td><td>Ownership, copying, modification, and use of software and intellectual work</td></tr>
+            <tr><td><strong>Professional Responsibility</strong></td><td>Duties and responsibilities of computing professionals</td></tr>
+            <tr><td><strong>Globalization</strong></td><td>Ethical issues created by globally connected information technologies</td></tr>
+          </tbody>
+        </table>
+
+        <div class="quiz" id="q9">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">9. Which pairing correctly matches the topic area with its central concern?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q9" value="a"> Globalization → ownership and use of software</label>
+            <label class="opt"><input type="radio" name="q9" value="b"> Professional Responsibility → duties and responsibilities of computing professionals</label>
+            <label class="opt"><input type="radio" name="q9" value="c"> Computer Crime → effects of computing on jobs and skills</label>
+            <label class="opt"><input type="radio" name="q9" value="d"> Privacy and Anonymity → ethical issues from globally connected technologies</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q9')">Check answer</button>
+          <div class="feedback" id="q9-feedback"></div>
+        </div>
+
+        <div class="keyidea">
+          <h3>The recurring question</h3>
+          <p>Across these areas, computer ethics keeps returning to one question: how should computing technology be developed and used responsibly when it affects other people and society?</p>
+        </div>
+      </section>
+
+      <!-- 7. Code of Ethics -->
       <section class="chapter" id="code">
-        <div class="eyebrow">06 · Formalizing Standards</div>
+        <div class="eyebrow">07 · Formalizing Standards</div>
         <h2>Code of Ethics</h2>
         <p>A <strong>code of ethics</strong> identifies important ethical issues and establishes the overarching values and principles that should guide members of an organization or profession. A good code can help people:</p>
         <ul>
@@ -983,9 +1102,9 @@
         <p>Having a code, however, is not sufficient by itself. Ethical standards must also be supported and practiced by the people and leadership of the organization. For computing professionals, professional codes of ethics provide guidance whenever technical decisions also carry ethical weight.</p>
       </section>
 
-      <!-- 7. Ten Commandments -->
+      <!-- 8. Ten Commandments -->
       <section class="chapter" id="commandments">
-        <div class="eyebrow">07 · A Practical Code</div>
+        <div class="eyebrow">08 · A Practical Code</div>
         <h2>Ten Commandments of Computer Ethics</h2>
         <p>The Computer Ethics Institute proposed the following as practical principles for responsible computer use:</p>
 
@@ -1011,23 +1130,23 @@
           </ul>
         </div>
 
-        <div class="quiz" id="q6">
+        <div class="quiz" id="q10">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">6. A student reads a classmate's private messages after guessing their laptop password, without touching or copying any files. Which commandment does this most directly violate?</p>
+          <p class="q-prompt">10. A student reads a classmate's private messages after guessing their laptop password, without touching or copying any files. Which commandment does this most directly violate?</p>
           <div class="options" data-correct="c">
-            <label class="opt"><input type="radio" name="q6" value="a"> #6 — Do not copy proprietary software</label>
-            <label class="opt"><input type="radio" name="q6" value="b"> #4 — Do not use a computer to steal</label>
-            <label class="opt"><input type="radio" name="q6" value="c"> #3 — Do not snoop around in other people's computer files</label>
-            <label class="opt"><input type="radio" name="q6" value="d"> #9 — Think about the social consequences</label>
+            <label class="opt"><input type="radio" name="q10" value="a"> #6 — Do not copy proprietary software</label>
+            <label class="opt"><input type="radio" name="q10" value="b"> #4 — Do not use a computer to steal</label>
+            <label class="opt"><input type="radio" name="q10" value="c"> #3 — Do not snoop around in other people's computer files</label>
+            <label class="opt"><input type="radio" name="q10" value="d"> #9 — Think about the social consequences</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q6')">Check answer</button>
-          <div class="feedback" id="q6-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q10')">Check answer</button>
+          <div class="feedback" id="q10-feedback"></div>
         </div>
       </section>
 
-      <!-- 8. Ethical Decision Making -->
+      <!-- 9. Ethical Decision Making -->
       <section class="chapter" id="decision">
-        <div class="eyebrow">08 · Putting It Into Practice</div>
+        <div class="eyebrow">09 · Putting It Into Practice</div>
         <h2>Ethical Decision Making</h2>
         <p>Ethical issues often require a systematic process rather than an immediate judgment. A basic decision-making process looks like this:</p>
 
@@ -1049,23 +1168,11 @@
           <li>What is the most responsible course of action?</li>
         </ul>
 
-        <div class="quiz" id="q7">
-          <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">7. In the decision-making flow above, which step comes right after "Identify alternatives"?</p>
-          <div class="options" data-correct="b">
-            <label class="opt"><input type="radio" name="q7" value="a"> Evaluate the results</label>
-            <label class="opt"><input type="radio" name="q7" value="b"> Choose an alternative</label>
-            <label class="opt"><input type="radio" name="q7" value="c"> Define the problem</label>
-            <label class="opt"><input type="radio" name="q7" value="d"> Implement the decision</label>
-          </div>
-          <button class="check-btn" onclick="checkQuiz('q7')">Check answer</button>
-          <div class="feedback" id="q7-feedback"></div>
-        </div>
       </section>
 
-      <!-- 9. Key Idea -->
+      <!-- 10. Key Idea -->
       <section class="chapter" id="keyidea">
-        <div class="eyebrow">09 · Takeaway</div>
+        <div class="eyebrow">10 · Takeaway</div>
         <h2>Key Idea</h2>
         <div class="keyidea">
           <h3>Technical capability alone does not determine what should be done.</h3>
@@ -1090,7 +1197,6 @@
           </div>
         </div>
       </section>
-
     </div>
   </main>
 </div>

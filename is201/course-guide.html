@@ -70,6 +70,7 @@
     height:100vh;
     overflow-y:auto;
     z-index:10;
+    counter-reset:section;
   }
   nav.sidebar::-webkit-scrollbar{width:8px;}
   nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
@@ -106,7 +107,6 @@
     list-style:none;
     margin:0;
     padding:0;
-    counter-reset:section;
   }
   .sidebar > ol > li{
     counter-increment:section;

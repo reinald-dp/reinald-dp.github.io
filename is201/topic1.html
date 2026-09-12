@@ -133,6 +133,7 @@
     height:100vh;
     overflow-y:auto;
     z-index:10;
+    counter-reset:section;
   }
   nav.sidebar::-webkit-scrollbar{width:8px;}
   nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
@@ -169,7 +170,6 @@
     list-style:none;
     margin:0;
     padding:0;
-    counter-reset:section;
   }
   .sidebar > ol > li{
     counter-increment:section;
@@ -750,16 +750,29 @@
     <div class="course-title">Topic 1</div>
     <p class="course-topic">Foundations of Computer Ethics</p>
 
-    <ol id="toc">
+    <div class="nav-heading">Foundations</div>
+    <ol>
       <li><a class="toc-link" href="#ethics" data-target="ethics">What is Ethics?</a></li>
       <li><a class="toc-link" href="#eml" data-target="eml">Ethics, Morals &amp; Law</a></li>
       <li><a class="toc-link" href="#integrity" data-target="integrity">Integrity &amp; Dilemmas</a></li>
       <li><a class="toc-link" href="#compethics" data-target="compethics">What is Computer Ethics?</a></li>
+    </ol>
+
+    <div class="nav-heading">Scope of Computer Ethics</div>
+    <ol>
       <li><a class="toc-link" href="#perspectives" data-target="perspectives">Perspectives on Computer Ethics</a></li>
       <li><a class="toc-link" href="#major-topics" data-target="major-topics">Major Topics in Computer Ethics</a></li>
+    </ol>
+
+    <div class="nav-heading">Standards &amp; Practice</div>
+    <ol>
       <li><a class="toc-link" href="#code" data-target="code">Code of Ethics</a></li>
       <li><a class="toc-link" href="#commandments" data-target="commandments">Ten Commandments</a></li>
       <li><a class="toc-link" href="#decision" data-target="decision">Ethical Decision Making</a></li>
+    </ol>
+
+    <div class="nav-heading">Wrap-Up</div>
+    <ol>
       <li><a class="toc-link" href="#reflection" data-target="reflection">A Closing Reflection</a></li>
       <li><a class="toc-link" href="#keyidea" data-target="keyidea">Key Idea</a></li>
     </ol>
@@ -785,7 +798,7 @@
 
       <!-- 1. What is Ethics -->
       <section class="chapter" id="ethics">
-        <div class="eyebrow">01 · Starting Point</div>
+        <div class="eyebrow">01 · Foundations</div>
         <h2>What is Ethics?</h2>
         <p class="lede">Before we can talk about "computer" ethics, we need to agree on what ethics itself is asking.</p>
 
@@ -824,7 +837,7 @@
 
       <!-- 2. Ethics, Morals, Law -->
       <section class="chapter" id="eml">
-        <div class="eyebrow">02 · Distinctions</div>
+        <div class="eyebrow">02 · Foundations</div>
         <h2>Ethics, Morals, and Law</h2>
         <p>These three concepts are often used loosely in everyday speech, but the reading draws a clear line between them:</p>
 
@@ -864,7 +877,7 @@
 
       <!-- 3. Integrity and Ethical Dilemmas -->
       <section class="chapter" id="integrity">
-        <div class="eyebrow">03 · Character in Practice</div>
+        <div class="eyebrow">03 · Foundations</div>
         <h2>Integrity and Ethical Dilemmas</h2>
         <blockquote class="def"><strong>Integrity</strong> means acting according to a personal code of principles and applying those principles consistently.</blockquote>
 
@@ -888,7 +901,7 @@
 
       <!-- 4. What is Computer Ethics -->
       <section class="chapter" id="compethics">
-        <div class="eyebrow">04 · Bringing in Computing</div>
+        <div class="eyebrow">04 · Foundations</div>
         <h2>What is Computer Ethics?</h2>
         <p>Computer ethics is concerned with ethical issues arising from the development and use of computers and information technology. It asks how people — particularly computing professionals — should make decisions concerning the professional and social consequences of computing.</p>
         <p>As computing technologies have developed, different scholars have offered different ways of understanding what computer ethics actually is. That's the focus of the next section.</p>
@@ -896,7 +909,7 @@
 
       <!-- 5. Perspectives -->
       <section class="chapter" id="perspectives">
-        <div class="eyebrow">05 · Five Lenses</div>
+        <div class="eyebrow">05 · Scope of Computer Ethics</div>
         <h2>Perspectives on Computer Ethics</h2>
         <p>No single definition of computer ethics is universally agreed upon. Instead, several influential thinkers have each emphasized a different angle.</p>
 
@@ -967,7 +980,7 @@
 
       <!-- 6. Major Topics in Computer Ethics -->
       <section class="chapter" id="major-topics">
-        <div class="eyebrow">06 · Broader Landscape</div>
+        <div class="eyebrow">06 · Scope of Computer Ethics</div>
         <h2>Major Topics in Computer Ethics</h2>
         <p class="lede">Computer ethics covers a wide range of issues arising from the use of computers and information technology — concerning not only the technology itself, but also its effects on individuals, professionals, organizations, and society.</p>
 
@@ -1090,7 +1103,7 @@
 
       <!-- 7. Code of Ethics -->
       <section class="chapter" id="code">
-        <div class="eyebrow">07 · Formalizing Standards</div>
+        <div class="eyebrow">07 · Standards & Practice</div>
         <h2>Code of Ethics</h2>
         <p>A <strong>code of ethics</strong> identifies important ethical issues and establishes the overarching values and principles that should guide members of an organization or profession. A good code can help people:</p>
         <ul>
@@ -1105,7 +1118,7 @@
 
       <!-- 8. Ten Commandments -->
       <section class="chapter" id="commandments">
-        <div class="eyebrow">08 · A Practical Code</div>
+        <div class="eyebrow">08 · Standards & Practice</div>
         <h2>Ten Commandments of Computer Ethics</h2>
         <p>The Computer Ethics Institute proposed the following as practical principles for responsible computer use:</p>
 
@@ -1147,7 +1160,7 @@
 
       <!-- 9. Ethical Decision Making -->
       <section class="chapter" id="decision">
-        <div class="eyebrow">09 · Putting It Into Practice</div>
+        <div class="eyebrow">09 · Standards & Practice</div>
         <h2>Ethical Decision Making</h2>
         <p>Ethical issues often require a systematic process rather than an immediate judgment. A basic decision-making process looks like this:</p>
 
@@ -1173,7 +1186,7 @@
 
       <!-- 10. A Closing Reflection -->
       <section class="chapter" id="reflection">
-        <div class="eyebrow">10 · Closing Reflection</div>
+        <div class="eyebrow">10 · Wrap-Up</div>
         <h2>A Closing Reflection</h2>
         <p>Computer ethics provides principles, professional standards, and frameworks for thinking about what ought to be done. Ultimately, ethical conduct is reflected in how we exercise our responsibilities and how our decisions affect others.</p>
 
@@ -1193,7 +1206,7 @@
 
       <!-- 11. Key Idea -->
       <section class="chapter" id="keyidea">
-        <div class="eyebrow">11 · Takeaway</div>
+        <div class="eyebrow">11 · Wrap-Up</div>
         <h2>Key Idea</h2>
         <div class="keyidea">
           <h3>Technical capability alone does not determine what should be done.</h3>

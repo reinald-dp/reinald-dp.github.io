@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IS 201 — Topic 2: Ethical Frameworks and Professional Responsibility</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   IS 201 — Shared Course Page Theme
+   ========================================================================== */
+:root{
+    --bg:#EEF2F8;
+    --paper:#FFFFFF;
+    --ink:#1B2333;
+    --ink-soft:#4A5568;
+    --sidebar:#16243E;
+    --sidebar-hover:#22385F;
+    --sidebar-text:#C6D2E8;
+    --sidebar-text-dim:#7E93B8;
+    --accent:#2F5D9C;
+    --accent-deep:#1E3F6E;
+    --gold:#A9822F;
+    --border:#DAE1EC;
+    --correct:#1E7B57;
+    --correct-bg:#E5F4EC;
+    --incorrect:#B03B33;
+    --incorrect-bg:#FBEAE8;
+    --neutral:#8A6D1E;
+    --neutral-bg:#FBF3E1;
+  }
+*{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"IBM Plex Sans", -apple-system, Segoe UI, Roboto, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{
+    font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+    color:var(--ink);
+    line-height:1.25;
+    font-weight:600;
+  }
+  a{color:var(--accent-deep);}
+  a:hover{color:var(--accent);}
+
+  .layout{
+    min-height:100vh;
+    width:100%;
+  }
+  nav.sidebar{
+    width:280px;
+    flex-shrink:0;
+    background:var(--sidebar);
+    color:var(--sidebar-text);
+    padding:28px 22px 40px;
+    position:fixed;
+    top:0;
+    left:0;
+    height:100vh;
+    overflow-y:auto;
+    z-index:10;
+  }
+  nav.sidebar::-webkit-scrollbar{width:8px;}
+  nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
+
+  .sidebar .kicker{
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:6px;
+  }
+  .sidebar .course-title{
+    font-family:"Source Serif 4", Georgia, serif;
+    font-size:21px;
+    color:#fff;
+    margin:0 0 4px;
+  }
+  .sidebar .course-topic{
+    font-size:13.5px;
+    color:var(--sidebar-text);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin:0 0 18px;
+  }
+  .sidebar .nav-heading{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin:18px 0 6px;
+  }
+  .sidebar .nav-heading:first-of-type{ margin-top:0; }
+  .sidebar ol{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:section;
+  }
+  .sidebar > ol > li{
+    counter-increment:section;
+    margin-bottom:2px;
+  }
+  .sidebar a.toc-link{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    text-decoration:none;
+    color:var(--sidebar-text);
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:14px;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .sidebar a.toc-link::before{
+    content:counter(section, decimal-leading-zero);
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:11px;
+    color:var(--sidebar-text-dim);
+    padding-top:2px;
+  }
+  .sidebar a.toc-link:hover, .sidebar a.toc-link.active{
+    background:var(--sidebar-hover);
+    color:#fff;
+  }
+  .sidebar ul.sub{
+    list-style:none;
+    margin:2px 0 8px 26px;
+    padding:0;
+    border-left:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar ul.sub li a{
+    display:block;
+    text-decoration:none;
+    color:var(--sidebar-text-dim);
+    font-size:12.5px;
+    padding:5px 0 5px 14px;
+    transition:color 0.15s ease;
+  }
+  .sidebar ul.sub li a:hover{color:#fff;}
+
+  main{
+    display:block;
+    margin-left:280px;
+    padding:0 0 100px;
+  }
+  .hero{
+    background:linear-gradient(155deg, var(--accent-deep) 0%, var(--sidebar) 65%);
+    color:#fff;
+    padding:64px 56px 46px;
+  }
+  .hero .kicker{
+    text-transform:uppercase;
+    letter-spacing:0.16em;
+    font-size:12px;
+    color:#AFC3E4;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    color:#fff;
+    font-size:38px;
+    margin:0 0 10px;
+    max-width:900px;
+  }
+  .hero p.dek{
+    max-width:820px;
+    color:#D6E0F1;
+    font-size:16px;
+    margin:0 0 22px;
+  }
+  .hero .byline{
+    font-size:14px;
+    color:#AFC3E4;
+    border-top:1px solid rgba(255,255,255,0.18);
+    padding-top:14px;
+    display:inline-block;
+  }
+  .hero .byline strong{color:#fff; font-weight:600;}
+
+  .content-inner{
+    padding:0 56px;
+    max-width:960px;
+  }
+
+  section.chapter{
+    padding-top:52px;
+    scroll-margin-top:24px;
+  }
+  section.chapter:first-of-type{padding-top:40px;}
+
+  .chapter .eyebrow{
+    font-size:13px;
+    color:var(--accent);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .chapter h2{
+    font-size:27px;
+    margin:0 0 16px;
+    padding-bottom:14px;
+    border-bottom:2px solid var(--border);
+  }
+  .chapter h3{
+    font-size:19px;
+    margin:30px 0 10px;
+    color:var(--accent-deep);
+  }
+  .chapter h4{
+    font-size:15.5px;
+    margin:20px 0 8px;
+    color:var(--accent-deep);
+  }
+  .chapter p{
+    font-size:15.5px;
+    color:var(--ink);
+    margin:0 0 14px;
+  }
+  .chapter ul, .chapter ol.plain{
+    padding-left:22px;
+    margin:0 0 16px;
+  }
+  .chapter li{
+    font-size:15.5px;
+    margin-bottom:6px;
+  }
+  .lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    border-left:3px solid var(--gold);
+    padding-left:16px;
+    margin:0 0 22px;
+  }
+
+  blockquote.def{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--accent);
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+  blockquote.def strong{color:var(--ink); font-family:"Source Serif 4", serif;}
+
+  table.compare{
+    width:100%;
+    border-collapse:collapse;
+    margin:8px 0 20px;
+    font-size:14.5px;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  table.compare th{
+    background:var(--sidebar);
+    color:#fff;
+    text-align:left;
+    padding:10px 14px;
+    font-weight:600;
+    font-size:13px;
+  }
+  table.compare td{
+    padding:10px 14px;
+    border-top:1px solid var(--border);
+    vertical-align:top;
+  }
+  table.compare tr:nth-child(even) td{background:#F6F8FC;}
+  table.compare td.num{ font-weight:600; color:var(--accent-deep); white-space:nowrap; }
+  table.compare tr.deadline td{ background:var(--neutral-bg); color:var(--neutral); font-style:italic; }
+  table.compare tr.lowgrade td{ background:var(--incorrect-bg); color:var(--incorrect); font-weight:600; }
+
+  .scholar-card{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+    margin-bottom:18px;
+    scroll-margin-top:24px;
+  }
+  .scholar-card h4{
+    margin:0 0 4px;
+    font-size:16.5px;
+    color:var(--ink);
+  }
+  .scholar-card .tag{
+    display:inline-block;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:#EAF0FA;
+    padding:2px 8px;
+    border-radius:4px;
+    margin-bottom:10px;
+  }
+  .scholar-card p{margin:0 0 6px; font-size:14.5px;}
+  .scholar-card .fic-links{ margin:10px 0 0; padding-left:18px; font-size:14px; }
+  .scholar-card .fic-links li{ margin-bottom:3px; }
+
+  .commandments{
+    counter-reset:cmd;
+    padding:0;
+    list-style:none;
+    margin:0 0 20px;
+    display:grid;
+    gap:8px;
+  }
+  .commandments li{
+    counter-increment:cmd;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 14px 12px 44px;
+    position:relative;
+    font-size:14.5px;
+  }
+  .commandments li::before{
+    content:counter(cmd);
+    position:absolute;
+    left:12px;
+    top:10px;
+    font-family:"Source Serif 4", serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--gold);
+  }
+
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:center;
+    margin:6px 0 22px;
+  }
+  .flow .step{
+    background:var(--accent-deep);
+    color:#fff;
+    padding:8px 13px;
+    border-radius:20px;
+    font-size:13.5px;
+    white-space:nowrap;
+  }
+  .flow .arrow{color:var(--ink-soft); font-size:15px;}
+
+  .refbox{
+    background:#F4F7FC;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 22px;
+  }
+  .refbox .refbox-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent-deep);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .refbox ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .refbox li{
+    font-size:14px;
+    margin-bottom:4px;
+  }
+  .refbox a{
+    text-decoration:none;
+    border-bottom:1px dotted var(--accent);
+  }
+  .refbox a:hover{border-bottom-style:solid;}
+
+  .req-card{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:12px;
+  }
+  .req-card .pct{
+    font-family:"Source Serif 4", serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--accent-deep);
+    flex:0 0 62px;
+    text-align:center;
+  }
+  .req-card .pct sub{ font-size:13px; font-weight:400; color:var(--ink-soft); }
+  .req-card h4{ margin:0 0 4px; font-size:15.5px; }
+  .req-card p{ margin:0; font-size:14px; color:var(--ink-soft); }
+
+  .keyidea{
+    background:linear-gradient(155deg, var(--accent-deep), var(--sidebar));
+    color:#fff;
+    border-radius:12px;
+    padding:28px 30px;
+    margin:8px 0 10px;
+  }
+  .keyidea h3{color:#fff; margin-top:0;}
+  .keyidea p{ color:#E3EAF6; }
+  .keyidea .qgrid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 24px;
+    margin-top:14px;
+  }
+  .keyidea .qgrid .col{ flex:1 1 220px; }
+  .keyidea .qgrid .col-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#AFC3E4;
+    margin-bottom:6px;
+  }
+  .keyidea .qgrid ul{margin:0; padding-left:18px;}
+  .keyidea .qgrid li{font-size:14px; margin-bottom:5px; color:#E3EAF6;}
+
+  .callout{
+    background:var(--incorrect-bg);
+    border:1px solid #F0C6C1;
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 20px;
+    font-size:14.5px;
+    color:var(--incorrect);
+  }
+  .callout strong{ color:var(--incorrect); }
+
+  .quotes{
+    list-style:none;
+    padding:0;
+    margin:10px 0 0;
+    display:grid;
+    gap:12px;
+  }
+  .quotes li{
+    border-left:3px solid var(--gold);
+    padding:2px 0 2px 16px;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .quotes li span{
+    display:block;
+    font-style:normal;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-top:3px;
+  }
+
+  .ai-note{
+    margin-top:26px;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  .ai-note.page-note{
+    max-width:820px;
+    margin:36px auto 0;
+    padding:16px 56px 0;
+    text-align:center;
+    border-top:1px solid var(--border);
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 10px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-left:280px;
+  }
+
+  @media (max-width: 880px){
+    nav.sidebar{
+      position:relative;
+      width:100%;
+      height:auto;
+      max-height:none;
+    }
+    main{ margin-left:0; }
+    footer{ margin-left:0; }
+    .hero{padding:40px 24px 32px;}
+    .content-inner{padding:0 22px;}
+    .req-card{ flex-wrap:wrap; }
+  }
+
+  /* ---- Page-specific additions (quiz, progress bar) ---- */
+  .sidebar .instructor{
+    font-size:12.5px;
+    color:var(--sidebar-text-dim);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin-bottom:18px;
+  }
+  .sidebar .progress-wrap{
+    margin-top:22px;
+    padding-top:16px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar .progress-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:8px;
+  }
+  .progress-track{
+    width:100%;
+    height:6px;
+    background:rgba(255,255,255,0.1);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--gold), #D8B65A);
+    transition:width 0.4s ease;
+  }
+  .progress-count{
+    margin-top:6px;
+    font-size:12px;
+    color:var(--sidebar-text-dim);
+  }
+  .hero-inner{
+    max-width:904px;
+  }
+
+  /* Quiz component (not part of the shared theme) */
+  .quiz{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--gold);
+    border-radius:8px;
+    padding:20px 22px;
+    margin:8px 0 28px;
+  }
+  .quiz .quiz-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .quiz p.q-prompt{
+    font-size:15.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin:0 0 12px;
+  }
+  .quiz .options{
+    display:grid;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .quiz label.opt{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:14.5px;
+    color:var(--ink);
+    padding:8px 10px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .quiz label.opt:hover{border-color:var(--accent); background:#F4F7FC;}
+  .quiz input[type="radio"]{margin-top:3px;}
+  .quiz button.check-btn{
+    background:var(--accent-deep);
+    color:#fff;
+    border:none;
+    padding:9px 18px;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .quiz button.check-btn:hover{background:var(--accent);}
+  .quiz .feedback{
+    margin-top:14px;
+    padding:12px 14px;
+    border-radius:6px;
+    font-size:14px;
+    display:none;
+  }
+  .quiz .feedback.show{display:block;}
+  .feedback-correct{background:var(--correct-bg); color:var(--correct); border:1px solid #BFE3CF;}
+  .feedback-incorrect{background:var(--incorrect-bg); color:var(--incorrect); border:1px solid #F0C6C1;}
+  .feedback-neutral{background:var(--neutral-bg); color:var(--neutral); border:1px solid #EEDCA6;}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <div class="kicker">IS 201 · Chapter 1</div>
+    <div class="course-title">Topic 2</div>
+    <p class="course-topic">Ethical Frameworks and Professional Responsibility</p>
+
+    <div class="nav-heading">Ethical Lenses</div>
+    <ol id="toc">
+      <li><a class="toc-link" href="#intro" data-target="intro">Why Ethics Matters</a></li>
+      <li><a class="toc-link" href="#consequences" data-target="consequences">Consequences</a></li>
+      <li><a class="toc-link" href="#duties" data-target="duties">Duties &amp; Rights</a></li>
+      <li><a class="toc-link" href="#virtue" data-target="virtue">Virtue &amp; Character</a></li>
+      <li><a class="toc-link" href="#justice" data-target="justice">Justice &amp; Fairness</a></li>
+    </ol>
+
+    <div class="nav-heading">Putting Ethics to Work</div>
+    <ol style="counter-reset:none;">
+      <li><a class="toc-link" href="#example-deploy" data-target="example-deploy">Should We Deploy?</a></li>
+      <li><a class="toc-link" href="#no-automatic" data-target="no-automatic">No Automatic Answers</a></li>
+      <li><a class="toc-link" href="#it-ethics" data-target="it-ethics">Ethics Across IT</a></li>
+    </ol>
+
+    <div class="nav-heading">Professional Codes</div>
+    <ol style="counter-reset:none;">
+      <li><a class="toc-link" href="#responsibility" data-target="responsibility">From Ethics to Responsibility</a></li>
+      <li><a class="toc-link" href="#acm-code" data-target="acm-code">ACM Code of Ethics</a></li>
+      <li><a class="toc-link" href="#se-code" data-target="se-code">Software Engineering Code</a></li>
+      <li><a class="toc-link" href="#conflicts" data-target="conflicts">When Responsibilities Conflict</a></li>
+    </ol>
+
+    <div class="nav-heading">Decision &amp; Takeaway</div>
+    <ol style="counter-reset:none;">
+      <li><a class="toc-link" href="#decision" data-target="decision">Ethical Decision-Making</a></li>
+      <li><a class="toc-link" href="#keyidea" data-target="keyidea">Key Idea</a></li>
+    </ol>
+
+    <div class="progress-wrap">
+      <div class="progress-label">Check-in progress</div>
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-count" id="progressCount">0 of 8 answered correctly</div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="kicker">IS 201 · Chapter 1 — Ethical Lenses and Ethical Reasoning</div>
+        <h1>Topic 2 — Ethical Frameworks and Professional Responsibility</h1>
+        <p class="dek">A guided reading on the four major ways of reasoning about ethical problems in computing, why frameworks alone can't hand us automatic answers, and how professional codes turn ethical values into standards of practice.</p>
+        <span class="byline">Faculty-in-Charge: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027</span>
+      </div>
+    </div>
+
+    <div class="content-inner">
+
+      <!-- 1. Why Ethics Matters -->
+      <section class="chapter" id="intro">
+        <div class="eyebrow">01 · Ethical Lenses — Why Ethics Matters</div>
+        <h2>Why Ethics Matters in Computing</h2>
+        <p class="lede">Computing is not only a technical activity. The technologies we design, develop, deploy, and use can affect people's privacy, safety, opportunities, relationships, work, and access to information and services.</p>
+        <p>Consider the decisions computing professionals routinely make. What information should an application collect? When is a system safe enough to deploy? Should an organization use AI to make decisions about people? What should a developer do after discovering a serious security vulnerability? Who is responsible when an automated system causes harm?</p>
+
+        <blockquote class="def">
+          <strong>Technical questions</strong> ask: Can we build it? Does it work?<br><br>
+          <strong>Ethical questions</strong> go further: Should we build it? Should we use it this way? Who could benefit or be harmed? What responsibilities do we have?
+        </blockquote>
+
+        <p>As computing becomes increasingly embedded in society, technical competence must therefore be accompanied by ethical judgment and professional responsibility.</p>
+      </section>
+
+      <!-- 2. Consequences -->
+      <section class="chapter" id="consequences">
+        <div class="eyebrow">02 · Ethical Lenses — Consequences</div>
+        <h2>Consequences: What Will Happen?</h2>
+        <p>There is no single ethical framework that automatically resolves every difficult situation. Instead, different approaches help us examine different aspects of a problem. The first lens, <strong>consequentialism</strong>, evaluates actions in terms of their outcomes. A familiar example is utilitarianism, which asks us to weigh the overall benefits and harms resulting from an action.</p>
+        <p>In computing, this might mean asking:</p>
+        <ul>
+          <li>Who will benefit from this technology?</li>
+          <li>Who might be harmed?</li>
+          <li>How serious and likely are those harms?</li>
+          <li>Do the expected benefits justify the risks?</li>
+          <li>Are there alternatives that could produce better outcomes?</li>
+        </ul>
+        <p>Suppose a university introduces an AI system that identifies students considered at risk of dropping out. If the system allows earlier intervention and helps many students succeed, that is an important benefit. But if inaccurate predictions stigmatize or disadvantage some students, those harms must also be considered. A consequences-based analysis asks us to look beyond whether a technology works and examine what happens because it is used.</p>
+
+        <div class="quiz" id="q1">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">1. The at-risk-student prediction system helps many students through earlier intervention, but occasionally stigmatizes students who were flagged by mistake. According to consequentialist reasoning, why is it not enough to say the system "works" on average?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q1" value="a"> Because consequentialism only cares about whether a policy is legal</label>
+            <label class="opt"><input type="radio" name="q1" value="b"> Because it requires weighing all the benefits and harms the system produces, not just its overall accuracy</label>
+            <label class="opt"><input type="radio" name="q1" value="c"> Because consequentialism only evaluates the intentions of the people who built the system</label>
+            <label class="opt"><input type="radio" name="q1" value="d"> Because consequentialism ignores outcomes and focuses only on rules</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q1')">Check answer</button>
+          <div class="feedback" id="q1-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 3. Duties and Rights -->
+      <section class="chapter" id="duties">
+        <div class="eyebrow">03 · Ethical Lenses — Duties &amp; Rights</div>
+        <h2>Duties and Rights: What Are We Obligated to Do?</h2>
+        <p><strong>Deontological ethics</strong> emphasizes duties, obligations, rules, and rights rather than judging an action solely by its consequences. From this perspective, some actions may be wrong even if they could produce beneficial results.</p>
+        <p>For computing professionals, relevant questions might include:</p>
+        <ul>
+          <li>What duties do I have toward users?</li>
+          <li>Are people's privacy and autonomy being respected?</li>
+          <li>Have people given meaningful consent?</li>
+          <li>Am I being honest about what the system can and cannot do?</li>
+          <li>Are there actions I should refuse even if they would benefit my organization?</li>
+        </ul>
+        <p>An organization, for example, might benefit from secretly collecting extensive information about its users. Even if the data improves its services, we must still ask whether collecting that information without meaningful consent respects users' rights. Good consequences do not necessarily excuse every means used to achieve them.</p>
+
+        <div class="quiz" id="q2">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">2. A company argues that because its data collection technically complies with its posted terms of service, it has no further ethical obligation to users. From a duties-and-rights perspective, what is the strongest objection to that argument?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q2" value="a"> Compliance is irrelevant because only outcomes matter</label>
+            <label class="opt"><input type="radio" name="q2" value="b"> Technical compliance does not by itself establish that users gave meaningful, informed consent</label>
+            <label class="opt"><input type="radio" name="q2" value="c"> The company should instead calculate whether the collection produces more benefit than harm overall</label>
+            <label class="opt"><input type="radio" name="q2" value="d"> The objection only holds if a law was actually broken</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q2')">Check answer</button>
+          <div class="feedback" id="q2-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 4. Virtue and Character -->
+      <section class="chapter" id="virtue">
+        <div class="eyebrow">04 · Ethical Lenses — Virtue &amp; Character</div>
+        <h2>Virtue and Character: What Kind of Professional Should I Be?</h2>
+        <p><strong>Virtue ethics</strong> shifts attention from rules and consequences toward moral character, with roots in the work of Aristotle. Instead of asking only "What should I do?", it also asks what qualities a good person or professional should develop.</p>
+        <p>In computing, we might ask:</p>
+        <ul>
+          <li>What would an honest professional do?</li>
+          <li>What would responsibility require?</li>
+          <li>Am I demonstrating integrity?</li>
+          <li>Do I have the courage to raise a concern when something is wrong?</li>
+          <li>Am I exercising appropriate care in my work?</li>
+        </ul>
+        <p>Imagine discovering a serious defect shortly before a major software release. Reporting it may delay the project and upset your organization or client. Virtue ethics asks whether remaining silent would be consistent with being an honest, responsible, and trustworthy professional. Technical expertise tells us what we can do. Character influences how responsibly we use that expertise.</p>
+
+        <div class="quiz" id="q3">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">3. Virtue ethics asks what a responsible, honest professional would do, rather than only "What does the rule require?" or "What produces the best outcome?" Which scenario best illustrates that distinct focus?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q3" value="a"> An engineer refuses to ship untested code because doing so is illegal in her jurisdiction</label>
+            <label class="opt"><input type="radio" name="q3" value="b"> An engineer refuses to ship untested code because she doesn't want to be the kind of professional who cuts corners, independent of any rule or expected outcome</label>
+            <label class="opt"><input type="radio" name="q3" value="c"> An engineer refuses to ship untested code because the projected financial loss from a bug would be too large</label>
+            <label class="opt"><input type="radio" name="q3" value="d"> An engineer refuses to ship untested code because company policy requires a signed test report</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q3')">Check answer</button>
+          <div class="feedback" id="q3-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 5. Justice and Fairness -->
+      <section class="chapter" id="justice">
+        <div class="eyebrow">05 · Ethical Lenses — Justice &amp; Fairness</div>
+        <h2>Justice and Fairness: Who Benefits and Who Bears the Burden?</h2>
+        <p>Ethical reasoning also requires attention to <strong>justice and fairness</strong>, particularly when technologies distribute benefits, opportunities, risks, or burdens differently among people.</p>
+        <p>In computing, we might ask:</p>
+        <ul>
+          <li>Does the technology treat different groups fairly?</li>
+          <li>Are some communities exposed to greater risks?</li>
+          <li>Who gains access to the benefits?</li>
+          <li>Who may be excluded?</li>
+          <li>Could the system reproduce or amplify existing inequalities?</li>
+        </ul>
+        <p>An AI recruitment system, for example, may appear efficient overall but consistently disadvantage applicants from a particular demographic group. Evaluating only its overall accuracy would therefore be insufficient — we must also examine how its errors and benefits are distributed. This becomes especially important when computing systems influence access to education, employment, healthcare, financial services, government services, or other significant opportunities.</p>
+
+        <div class="quiz" id="q4">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">4. A justice-based review of an AI hiring tool would not be satisfied by a report showing "90% overall accuracy." What additional question would this lens insist on asking?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q4" value="a"> Whether the tool produces good outcomes in total, regardless of who benefits</label>
+            <label class="opt"><input type="radio" name="q4" value="b"> Whether the developers intended to discriminate</label>
+            <label class="opt"><input type="radio" name="q4" value="c"> Whether the tool's benefits and errors are distributed evenly across different groups of applicants</label>
+            <label class="opt"><input type="radio" name="q4" value="d"> Whether the tool complies with the company's internal engineering standards</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q4')">Check answer</button>
+          <div class="feedback" id="q4-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 6. Worked Example -->
+      <section class="chapter" id="example-deploy">
+        <div class="eyebrow">06 · Putting Ethics to Work — Worked Example</div>
+        <h2>Example: Should We Deploy?</h2>
+        <p>A university ICT office is preparing to deploy a new system needed for an important university activity. During final testing, the development team discovers a defect affecting a small percentage of transactions.</p>
+        <p>Delaying deployment would disrupt university operations and require hundreds of transactions to be processed manually. Deploying immediately would avoid this disruption, but some users could receive incorrect records.</p>
+        <p>The requesting office asks the ICT team to deploy the system and fix the defect afterward.</p>
+
+        <blockquote class="def"><strong>What should the ICT team do?</strong></blockquote>
+
+        <p>Examine the situation using the four ethical lenses:</p>
+        <ul>
+          <li><strong>Consequences</strong> — What are the likely benefits and harms of deploying or delaying the system?</li>
+          <li><strong>Duties and Rights</strong> — What obligations does the ICT team have to users, the requesting office, and the university?</li>
+          <li><strong>Virtue and Character</strong> — What would a competent, honest, and responsible ICT professional do?</li>
+          <li><strong>Justice and Fairness</strong> — Who receives the benefits of immediate deployment, and who bears the risks?</li>
+        </ul>
+
+        <p>You may find that the four lenses highlight different aspects of the problem. Keep this scenario in mind as we examine why ethical frameworks do not always give us automatic answers.</p>
+      </section>
+
+      <!-- 7. No Automatic Answers -->
+      <section class="chapter" id="no-automatic">
+        <div class="eyebrow">07 · Putting Ethics to Work — No Automatic Answers</div>
+        <h2>Ethical Frameworks Do Not Give Automatic Answers</h2>
+        <p>Consider again the AI system designed to identify students at risk of dropping out. A consequences-based approach might examine whether the system ultimately helps more students than it harms. A duties-and-rights approach might focus on students' privacy, autonomy, and appropriate use of their personal information. A virtue-based approach might ask what responsible and trustworthy educators, administrators, and developers should do. A justice-based approach might investigate whether the system performs differently across socioeconomic, gender, geographic, or other groups.</p>
+
+        <p>Now consider a different situation: a software developer discovers a serious security vulnerability in an organization's system. Fixing it immediately would require taking the system offline for several hours, disrupting services for thousands of users. Leaving it online avoids the disruption but risks exploitation by attackers.</p>
+
+        <table class="compare">
+          <thead><tr><th>Lens</th><th>How it examines the vulnerability dilemma</th></tr></thead>
+          <tbody>
+            <tr><td class="num">Consequences</td><td>Compares the harm of temporarily disrupting the service with the potentially much greater harm of a security breach.</td></tr>
+            <tr><td class="num">Duties &amp; rights</td><td>Emphasizes the organization's duty to protect users and safeguard their personal information, even when inconvenient or costly.</td></tr>
+            <tr><td class="num">Virtue &amp; character</td><td>Asks what an honest, prudent, and responsible computing professional would do after discovering such a risk.</td></tr>
+            <tr><td class="num">Justice &amp; fairness</td><td>Considers who would be most affected either way — would offline time disproportionately hurt users who depend most on the service, or would a breach expose some groups to greater harm?</td></tr>
+          </tbody>
+        </table>
+
+        <p>The same situation can therefore look different depending on the ethical lens we use. These perspectives may highlight different concerns and sometimes point toward different conclusions — which is precisely why ethical reasoning matters.</p>
+
+        <blockquote class="def">The purpose of an ethical framework is not to replace judgment with a formula. It gives us a structured way to identify what matters, examine competing considerations, and justify our decisions.</blockquote>
+
+        <h3>Mixed Practice: Which Lens Applies?</h3>
+        <p>Now that all four lenses are on the table, try identifying which one is doing the work in each scenario below. Unlike the earlier quick checks, these are deliberately mixed together — the section they sit in won't tell you the answer.</p>
+
+        <div class="quiz" id="q5">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">5. A ride-sharing company raises prices during a storm, arguing that higher fares draw more drivers onto the road, so more stranded passengers overall get picked up — even though some people can no longer afford the fare. Which lens is the company using to defend the policy?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q5" value="a"> Duties and rights — the company respects passengers' autonomy to choose whether to pay</label>
+            <label class="opt"><input type="radio" name="q5" value="b"> Consequences — the company is weighing total rides fulfilled against affordability problems for some</label>
+            <label class="opt"><input type="radio" name="q5" value="c"> Virtue and character — the company is showing courage under pressure</label>
+            <label class="opt"><input type="radio" name="q5" value="d"> Justice and fairness — the company charges every passenger the same price</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q5')">Check answer</button>
+          <div class="feedback" id="q5-feedback"></div>
+        </div>
+
+        <div class="quiz" id="q6">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">6. A researcher wants to reuse anonymized patient records for a new, unrelated study. The study would likely help future patients and no one in the original data could ever be identified or harmed — but those patients never agreed their data could be used this way. A colleague objects anyway. Which lens is she using?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q6" value="a"> Consequences — she believes the study will produce net-negative outcomes</label>
+            <label class="opt"><input type="radio" name="q6" value="b"> Duties and rights — she believes using the data without consent violates patients' autonomy regardless of harm</label>
+            <label class="opt"><input type="radio" name="q6" value="c"> Virtue and character — she thinks the researcher lacks scientific integrity</label>
+            <label class="opt"><input type="radio" name="q6" value="d"> Justice and fairness — she believes some patient groups are underrepresented in the data</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q6')">Check answer</button>
+          <div class="feedback" id="q6-feedback"></div>
+        </div>
+
+      </section>
+
+      <!-- 7. Ethics Across IT -->
+      <section class="chapter" id="it-ethics">
+        <div class="eyebrow">08 · Putting Ethics to Work — Ethics Across IT</div>
+        <h2>Ethics Across Information Technology</h2>
+        <p>Ethical issues are not confined to one particular area of computing. They arise throughout the development, use, and management of information technology, involving areas such as privacy, cybersecurity, intellectual property, artificial intelligence, automation, and professional conduct.</p>
+
+        <h3>Data Privacy</h3>
+        <p>Organizations collect enormous amounts of information about individuals. Some of this information may be necessary to provide digital services, but the ability to collect data does not automatically justify its collection or use. Computing professionals should ask: What information is actually necessary? Do users understand what is being collected? How will it be used? Who will have access to it? How should it be protected? Privacy is therefore not merely a matter of securing databases — it also concerns whether information should have been collected, used, or shared in the first place.</p>
+
+        <h3>Cybersecurity</h3>
+        <p>Professionals responsible for information systems may encounter vulnerabilities, security incidents, unauthorized access, or weaknesses that could place users at risk. Technical knowledge gives professionals the ability to identify and address these problems, but it also creates responsibilities regarding how that knowledge is used. Discovering a vulnerability raises questions about disclosure, confidentiality, organizational responsibility, and the protection of affected users. Security is therefore not simply a technical objective — protecting people from foreseeable digital harm is also an ethical responsibility.</p>
+
+        <h3>Intellectual Property</h3>
+        <p>Digital technologies make software, information, images, music, research, and other creative works extremely easy to reproduce and distribute. The fact that something <em>can</em> be copied does not necessarily mean that it <em>should</em> be copied. Computing professionals must consider questions of ownership, attribution, licensing, permission, and appropriate use — issues that become increasingly complicated when software is assembled from multiple libraries and repositories, or when generative AI systems produce content based on large collections of existing works.</p>
+
+        <h3>Artificial Intelligence and Automation</h3>
+        <p>AI and automation can improve efficiency, expand access to services, support decision-making, and perform tasks at scales that would otherwise be difficult. At the same time, they can introduce concerns involving bias, privacy, transparency, accountability, employment, misinformation, and human autonomy. The important ethical question is therefore not simply whether AI <em>can</em> perform a particular task — we must also ask when its use is appropriate, what safeguards are necessary, and who remains accountable for its consequences.</p>
+
+        <div class="refbox">
+          <div class="refbox-label">Further reading</div>
+          <ul>
+            <li><a href="https://marymount.edu/blog/understanding-the-importance-of-ethics-in-information-technology/" target="_blank" rel="noopener">Understanding the Importance of Ethics in Information Technology — Marymount University</a></li>
+          </ul>
+        </div>
+
+        <div class="quiz" id="q7">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">7. A startup uses a generative AI coding assistant to write a core module for its paid product. The assistant was trained on millions of public GitHub repositories, some under licenses that require attribution or forbid commercial use, and no one at the startup knows which patterns in the output came from where. Which area of IT ethics does this scenario most centrally raise?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q7" value="a"> Data privacy — because personal user data was collected without consent</label>
+            <label class="opt"><input type="radio" name="q7" value="b"> Cybersecurity — because AI-generated code may contain vulnerabilities</label>
+            <label class="opt"><input type="radio" name="q7" value="c"> Intellectual property — because ownership, attribution, and licensing of the underlying training data are unresolved</label>
+            <label class="opt"><input type="radio" name="q7" value="d"> Justice and fairness — because the startup profits while the original repository authors receive nothing</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q7')">Check answer</button>
+          <div class="feedback" id="q7-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 8. From Ethics to Professional Responsibility -->
+      <section class="chapter" id="responsibility">
+        <div class="eyebrow">09 · Professional Codes — From Ethics to Responsibility</div>
+        <h2>From Ethics to Professional Responsibility</h2>
+        <p>Ethical responsibility becomes especially important when someone possesses specialized knowledge or professional authority. Computing professionals often make decisions that affect people who cannot inspect the source code, understand the algorithms, evaluate the security architecture, or independently determine whether a system is safe.</p>
+        <p>This creates <strong>professional responsibility</strong>: recognizing that technical expertise comes with obligations toward clients, employers, colleagues, users, the profession, and society. This is one reason professional organizations develop codes of ethics — codes that translate broader ethical values into principles and responsibilities relevant to professional practice.</p>
+
+        <blockquote class="def">Ethical frameworks help us reason about what ought to be done. Professional codes translate ethical values into expectations for people who practice computing.</blockquote>
+
+        <p>Two important examples are the <strong>ACM Code of Ethics and Professional Conduct</strong> and the <strong>IEEE-CS/ACM Software Engineering Code of Ethics and Professional Practice</strong>. The ACM Code addresses computing professionals broadly, while the Software Engineering Code focuses specifically on ethical responsibilities arising from the development and maintenance of software.</p>
+      </section>
+
+      <!-- 9. ACM Code -->
+      <section class="chapter" id="acm-code">
+        <div class="eyebrow">10 · Professional Codes — ACM Code of Ethics</div>
+        <h2>The ACM Code of Ethics and Professional Conduct</h2>
+        <p>The ACM Code of Ethics and Professional Conduct provides ethical guidance for computing professionals. At its foundation is the idea that computing professionals should use their skills for the benefit of society.</p>
+
+        <p>Its general ethical principles call on computing professionals to:</p>
+        <ol class="commandments">
+          <li>Contribute to society and human well-being.</li>
+          <li>Avoid harm.</li>
+          <li>Be honest and trustworthy.</li>
+          <li>Be fair and take action not to discriminate.</li>
+          <li>Respect the work required to produce new ideas, inventions, creative works, and computing artifacts.</li>
+          <li>Respect privacy.</li>
+          <li>Honor confidentiality.</li>
+        </ol>
+
+        <p>The Code goes beyond simply asking whether something is technically possible or legally permissible. Imagine that an application collects considerably more personal information than its users realize. The collection might technically comply with an organization's policies or terms of service — but professional ethics requires additional questions: Is collecting all this information necessary? Are users sufficiently informed? Could the information be misused? Are we respecting their privacy?</p>
+
+        <div class="callout"><strong>Key distinction.</strong> Something can be legal without necessarily being ethical.</div>
+
+        <p>The ACM Code also addresses more specific professional responsibilities, including maintaining professional competence, producing high-quality work, evaluating systems and their risks, respecting applicable rules, and designing systems that are secure and usable. Professional ethics therefore involves not only avoiding obvious wrongdoing, but also exercising care, competence, judgment, and responsibility in one's work.</p>
+
+        <div class="refbox">
+          <div class="refbox-label">Primary source</div>
+          <ul>
+            <li><a href="https://www.acm.org/about-acm/acm-code-of-ethics-and-professional-conduct" target="_blank" rel="noopener">ACM Code of Ethics and Professional Conduct</a></li>
+          </ul>
+        </div>
+
+        <div class="quiz" id="q8">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">8. A company's data collection practice fully complies with its posted terms of service, yet it gathers far more personal data than users realize or would knowingly agree to. According to the primer, this scenario illustrates that:</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q8" value="a"> Compliance with terms of service always satisfies the ACM Code</label>
+            <label class="opt"><input type="radio" name="q8" value="b"> Something can be legal without necessarily being ethical</label>
+            <label class="opt"><input type="radio" name="q8" value="c"> The ACM Code only applies to software engineers, not data collection</label>
+            <label class="opt"><input type="radio" name="q8" value="d"> Ethics and law always require exactly the same actions</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q8')">Check answer</button>
+          <div class="feedback" id="q8-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 10. SE Code -->
+      <section class="chapter" id="se-code">
+        <div class="eyebrow">11 · Professional Codes — Software Engineering Code</div>
+        <h2>The IEEE-CS/ACM Software Engineering Code</h2>
+        <p>Software engineers have particular responsibilities because software increasingly forms part of the infrastructure on which individuals, organizations, and societies depend. The IEEE-CS/ACM Software Engineering Code of Ethics and Professional Practice organizes these responsibilities around eight principles:</p>
+
+        <div class="flow">
+          <span class="step">Public</span><span class="arrow">·</span>
+          <span class="step">Client &amp; Employer</span><span class="arrow">·</span>
+          <span class="step">Product</span><span class="arrow">·</span>
+          <span class="step">Judgment</span><span class="arrow">·</span>
+          <span class="step">Management</span><span class="arrow">·</span>
+          <span class="step">Profession</span><span class="arrow">·</span>
+          <span class="step">Colleagues</span><span class="arrow">·</span>
+          <span class="step">Self</span>
+        </div>
+
+        <ul>
+          <li><strong>Public</strong> — Software engineers should act consistently with the public interest.</li>
+          <li><strong>Client and Employer</strong> — They should act in the best interests of their clients and employers, consistent with the public interest.</li>
+          <li><strong>Product</strong> — Software and related modifications should meet the highest professional standards possible.</li>
+          <li><strong>Judgment</strong> — Software engineers should maintain integrity and independence in their professional judgment.</li>
+          <li><strong>Management</strong> — Managers and leaders should promote ethical approaches to software development and maintenance.</li>
+          <li><strong>Profession</strong> — Software engineers should advance the integrity and reputation of the profession.</li>
+          <li><strong>Colleagues</strong> — Professionals should be fair to and supportive of their colleagues.</li>
+          <li><strong>Self</strong> — Software engineers should continue developing their professional competence and promote ethical practice.</li>
+        </ul>
+
+        <p>One idea is particularly important throughout the Code: the <strong>public interest</strong>. Suppose your organization wants a system deployed immediately, testing is incomplete, and you know that an unresolved defect could expose users' personal information. It is not sufficient to say, "My supervisor told me to deploy it." Professional responsibility requires considering the people who may be affected by that decision — following instructions does not eliminate professional accountability.</p>
+
+        <div class="refbox">
+          <div class="refbox-label">Primary source</div>
+          <ul>
+            <li><a href="https://www.acm.org/code-of-ethics/software-engineering-code" target="_blank" rel="noopener">IEEE-CS/ACM Software Engineering Code of Ethics and Professional Practice</a></li>
+          </ul>
+        </div>
+
+        <div class="quiz" id="q9">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">9. A team lead is under pressure to ship a product with incomplete testing. Which principle of the Software Engineering Code most directly reminds her that "my manager told me to" does not remove her own accountability?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q9" value="a"> Judgment — maintaining integrity and independence in professional judgment</label>
+            <label class="opt"><input type="radio" name="q9" value="b"> Colleagues — being fair and supportive to colleagues</label>
+            <label class="opt"><input type="radio" name="q9" value="c"> Self — pursuing lifelong learning</label>
+            <label class="opt"><input type="radio" name="q9" value="d"> Profession — advancing the reputation of the field</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q9')">Check answer</button>
+          <div class="feedback" id="q9-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 11. Conflicts -->
+      <section class="chapter" id="conflicts">
+        <div class="eyebrow">12 · Professional Codes — When Responsibilities Conflict</div>
+        <h2>When Professional Responsibilities Conflict</h2>
+        <p>Ethical problems become particularly difficult when legitimate responsibilities point in different directions. Imagine you discover a serious security vulnerability in software developed by your organization. Your supervisor tells you not to disclose the problem because doing so could damage the organization's reputation.</p>
+
+        <p>You now have several responsibilities:</p>
+        <ul>
+          <li><strong>To your employer</strong> — protect legitimate organizational interests and confidential information.</li>
+          <li><strong>To users</strong> — protect them from foreseeable harm.</li>
+          <li><strong>To the public</strong> — consider the wider consequences of an insecure system.</li>
+          <li><strong>To your profession</strong> — maintain honesty, competence, and integrity.</li>
+        </ul>
+
+        <p>What should take priority? The IEEE-CS/ACM Code provides an important principle: responsibilities toward clients and employers must remain consistent with the public interest.</p>
+
+        <blockquote class="def">Professionalism does not mean unquestioning obedience. Depending on the circumstances, responsible professional conduct may require raising concerns, documenting risks, escalating problems, recommending alternatives, or refusing to participate in an action that would violate serious professional obligations.</blockquote>
+
+        <p>Professional responsibility sometimes means making difficult decisions precisely because different responsibilities are legitimate but cannot all be satisfied equally.</p>
+
+        <div class="quiz" id="q10">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">10. Your supervisor asks you to stay quiet about a security flaw to protect the organization's image. According to the IEEE-CS/ACM Code, what principle should guide your decision?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q10" value="a"> Always follow your supervisor's instructions without question</label>
+            <label class="opt"><input type="radio" name="q10" value="b"> Employer interests always outweigh every other consideration</label>
+            <label class="opt"><input type="radio" name="q10" value="c"> Disclose everything publicly immediately, regardless of process</label>
+            <label class="opt"><input type="radio" name="q10" value="d"> Responsibilities to your employer must remain consistent with the public interest</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q10')">Check answer</button>
+          <div class="feedback" id="q10-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 12. Ethical Decision-Making -->
+      <section class="chapter" id="decision">
+        <div class="eyebrow">13 · Decision &amp; Takeaway — Ethical Decision-Making</div>
+        <h2>Putting It All Together: Ethical Decision-Making</h2>
+        <p>Professional codes are valuable, but they cannot anticipate every possible situation. Ethical frameworks and professional codes should guide professional judgment rather than replace it.</p>
+        <p>A checklist might tell you whether software testing was performed — ethical reasoning asks whether the testing was <em>sufficient</em> given the potential consequences of failure. A policy might tell you that collecting certain information is permitted — ethical reasoning asks whether collecting it is necessary, proportionate, transparent, and respectful of the people involved. A manager might authorize deployment — ethical reasoning still asks whether deployment is <em>responsible</em>.</p>
+
+        <p>When confronted with an ethical problem in computing, consider the following questions:</p>
+        <ol class="commandments">
+          <li>What are the facts? Understand what is actually happening before making a judgment.</li>
+          <li>Who are the stakeholders? Identify the people and groups who may be directly or indirectly affected.</li>
+          <li>What are the possible consequences? Consider potential benefits, harms, risks, and unintended effects.</li>
+          <li>What duties and rights are involved? Consider privacy, autonomy, honesty, confidentiality, safety, and other obligations.</li>
+          <li>What would responsible professional character require? Consider integrity, honesty, competence, fairness, and courage.</li>
+          <li>Is the situation fair? Examine how benefits, opportunities, risks, and burdens are distributed.</li>
+          <li>What do relevant professional codes require? Apply principles from codes such as those of ACM and IEEE-CS/ACM.</li>
+          <li>What alternatives are available? Ethical choices are rarely limited to only two options.</li>
+          <li>Can you justify your decision? A professional should be able to explain why a decision is ethically defensible.</li>
+        </ol>
+
+        <p>This process brings together the ideas in this primer: ethical frameworks help us examine the problem from different perspectives, professional codes identify responsibilities associated with computing practice, and professional judgment requires us to consider both and make a decision we can reasonably justify.</p>
+
+        <div class="quiz" id="q11">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">11. A manager has already authorized a deployment. According to this primer, why should ethical reasoning still have a role at that point?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q11" value="a"> It shouldn't — a manager's authorization always settles the matter</label>
+            <label class="opt"><input type="radio" name="q11" value="b"> Authorization tells you what is permitted, not whether deployment is responsible</label>
+            <label class="opt"><input type="radio" name="q11" value="c"> Ethical reasoning only matters before any decision is made public</label>
+            <label class="opt"><input type="radio" name="q11" value="d"> Ethical frameworks are only for engineers, not managers</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q11')">Check answer</button>
+          <div class="feedback" id="q11-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 13. Key Idea -->
+      <section class="chapter" id="keyidea">
+        <div class="eyebrow">14 · Decision &amp; Takeaway — Key Idea</div>
+        <h2>Key Idea</h2>
+        <div class="keyidea">
+          <h3>Ethical frameworks help us examine decisions from different angles — they don't replace professional judgment.</h3>
+          <p>Computing professionals make decisions that can affect privacy, safety, fairness, opportunity, access, and human well-being. Ethical frameworks help us examine those decisions from different perspectives. Professional codes translate ethical principles into responsibilities for computing practice.</p>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Computing professionals must ask</div>
+              <ul>
+                <li>Can we build it?</li>
+                <li>Does it work?</li>
+                <li>Is it legal?</li>
+              </ul>
+            </div>
+            <div class="col">
+              <div class="col-label">They must also ask</div>
+              <ul>
+                <li>Should we build it?</li>
+                <li>How should we build it?</li>
+                <li>Who might be affected?</li>
+                <li>What responsibilities do we have?</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:22px;">The goal is not to memorize rules or find a formula that automatically produces the "ethical" answer. It is to develop the ability to recognize ethical problems, examine them from multiple perspectives, exercise professional judgment, and justify responsible decisions.</p>
+
+        <div class="refbox">
+          <div class="refbox-label">Readings and references</div>
+          <ul>
+            <li><a href="https://www.acm.org/about-acm/acm-code-of-ethics-and-professional-conduct" target="_blank" rel="noopener">ACM Code of Ethics and Professional Conduct</a></li>
+            <li><a href="https://www.acm.org/code-of-ethics/software-engineering-code" target="_blank" rel="noopener">IEEE-CS/ACM Software Engineering Code of Ethics and Professional Practice</a></li>
+            <li><a href="https://marymount.edu/blog/understanding-the-importance-of-ethics-in-information-technology/" target="_blank" rel="noopener">Understanding the Importance of Ethics in Information Technology — Marymount University</a></li>
+            <li><a href="https://plato.stanford.edu/entries/ethics-virtue/" target="_blank" rel="noopener">Stanford Encyclopedia of Philosophy: Virtue Ethics</a></li>
+            <li><a href="https://plato.stanford.edu/entries/ethics-deontological/" target="_blank" rel="noopener">Stanford Encyclopedia of Philosophy: Deontological Ethics</a></li>
+            <li><a href="https://plato.stanford.edu/entries/justice/" target="_blank" rel="noopener">Stanford Encyclopedia of Philosophy: Justice</a></li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<footer>IS 201: Computer Ethics · Topic 2 — Ethical Frameworks and Professional Responsibility · Dr. Reinald Adrian Pugoy</footer>
+
+<script>
+  // Quiz checking
+  function checkQuiz(id){
+    const quiz = document.getElementById(id);
+    const optionsDiv = quiz.querySelector('.options');
+    const correctValue = optionsDiv.dataset.correct;
+    const selected = quiz.querySelector('input[name="'+id+'"]:checked');
+    const feedback = document.getElementById(id+'-feedback');
+
+    if(!selected){
+      feedback.className = 'feedback show feedback-neutral';
+      feedback.textContent = 'Please select an answer first.';
+      return;
+    }
+
+    const isCorrect = selected.value === correctValue;
+    feedback.className = 'feedback show ' + (isCorrect ? 'feedback-correct' : 'feedback-incorrect');
+    feedback.textContent = isCorrect ? '✓ Correct.' : '✗ Not quite — review the section above and try again.';
+
+    if(isCorrect && !quiz.dataset.solved){
+      quiz.dataset.solved = 'true';
+      updateProgress();
+    }
+  }
+
+  function updateProgress(){
+    const totalQuizzes = document.querySelectorAll('.quiz').length;
+    const solved = document.querySelectorAll('.quiz[data-solved="true"]').length;
+    document.getElementById('progressFill').style.width = (solved/totalQuizzes*100) + '%';
+    document.getElementById('progressCount').textContent = solved + ' of ' + totalQuizzes + ' answered correctly';
+  }
+
+  // Sidebar active-link highlighting on scroll
+  const sections = document.querySelectorAll('section.chapter');
+  const tocLinks = document.querySelectorAll('.toc-link');
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        tocLinks.forEach(link=>{
+          link.classList.toggle('active', link.dataset.target === id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+
+  sections.forEach(sec => observer.observe(sec));
+
+  updateProgress();
+</script>
+
+</body>
+</html>

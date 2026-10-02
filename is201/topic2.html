@@ -541,6 +541,56 @@
     max-width:904px;
   }
 
+  /* Sticky check-in progress bar (fixed to bottom of the viewport) */
+  body{ padding-bottom:44px; }
+  .progress-dock{
+    position:fixed;
+    left:280px;
+    right:0;
+    bottom:0;
+    z-index:20;
+    background:#D8B65A;
+    border-top:1px solid #C9A548;
+    box-shadow:0 -2px 10px rgba(22,36,62,0.16);
+    color:var(--sidebar);
+  }
+  .progress-dock-inner{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:8px 56px;
+    max-width:1016px;
+  }
+  .progress-dock-label{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    font-weight:600;
+    color:var(--sidebar);
+    opacity:0.8;
+    white-space:nowrap;
+  }
+  .progress-dock .progress-track{
+    flex:1;
+    height:6px;
+    background:rgba(22,36,62,0.18);
+  }
+  .progress-dock .progress-fill{
+    background:var(--sidebar);
+  }
+  .progress-dock .progress-count{
+    margin-top:0;
+    font-size:12px;
+    font-weight:600;
+    color:var(--sidebar);
+    white-space:nowrap;
+  }
+  @media (max-width: 880px){
+    .progress-dock{ left:0; }
+    .progress-dock-inner{ padding:7px 22px; gap:10px; }
+    .progress-dock-label{ display:none; }
+  }
+
   /* Quiz component (not part of the shared theme) */
   .quiz{
     background:var(--paper);
@@ -647,17 +697,12 @@
       <li><a class="toc-link" href="#keyidea" data-target="keyidea">Key Idea</a></li>
     </ol>
 
-    <div class="progress-wrap">
-      <div class="progress-label">Check-in progress</div>
-      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-      <div class="progress-count" id="progressCount">0 of 8 answered correctly</div>
-    </div>
   </nav>
 
   <main>
     <div class="hero">
       <div class="hero-inner">
-        <div class="kicker">IS 201 · Chapter 1 — Ethical Lenses and Ethical Reasoning</div>
+        <div class="kicker">IS 201 · Chapter 1 — Foundations and Ethical Reasoning</div>
         <h1>Topic 2 — Ethical Frameworks and Professional Responsibility</h1>
         <p class="dek">A guided reading on the four major ways of reasoning about ethical problems in computing, why frameworks alone can't hand us automatic answers, and how professional codes turn ethical values into standards of practice.</p>
         <span class="byline">Faculty-in-Charge: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027</span>
@@ -1149,6 +1194,14 @@
 </div>
 
 <footer>IS 201: Computer Ethics · Topic 2 — Ethical Frameworks and Professional Responsibility · Dr. Reinald Adrian Pugoy</footer>
+
+<div class="progress-dock" role="status" aria-live="polite">
+  <div class="progress-dock-inner">
+    <div class="progress-dock-label">Check-in progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-count" id="progressCount">0 of 11 answered correctly</div>
+  </div>
+</div>
 
 <script>
   // Quiz checking

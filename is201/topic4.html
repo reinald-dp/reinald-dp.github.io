@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IS 201 — Topic 4: Cybersecurity and Cyberethics</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   IS 201 — Shared Course Page Theme
+   ==========================================================================
+   One stylesheet for every IS 201 page (course guide, topic readings, etc.)
+   so they all look and feel the same.
+
+   HOW TO USE ON A NEW PAGE
+   --------------------------------------------------------------------------
+   1. Link this file in <head>:
+        <link rel="stylesheet" href="theme.css">
+   2. (Optional) For pixel-perfect type, load the two fonts referenced in
+      the font stacks below — IBM Plex Sans and Source Serif 4. Without
+      them the page falls back to system fonts and still looks correct:
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+   3. Copy the page skeleton below and fill in your own sidebar links and
+      <section class="chapter"> blocks.
+   4. Reuse the component classes documented in each section of this file
+      (blockquote.def, table.compare, .req-card, .scholar-card, .keyidea,
+      .callout, .quotes, .commandments, .refbox, .flow) instead of writing
+      new CSS — that's what keeps every page consistent.
+
+   PAGE SKELETON
+   --------------------------------------------------------------------------
+   <div class="layout">
+     <nav class="sidebar" aria-label="Table of contents">
+       <div class="kicker">IS 201 · Computer Ethics</div>
+       <div class="course-title">Page Title</div>
+       <p class="course-topic">Subtitle / term</p>
+
+       <div class="nav-heading">Section Group</div>
+       <ol>
+         <li><a class="toc-link" href="#anchor">Link label</a></li>
+       </ol>
+     </nav>
+
+     <main>
+       <div class="hero">
+         <div class="kicker">Eyebrow text</div>
+         <h1>Page Title</h1>
+         <p class="dek">One or two sentence description.</p>
+         <span class="byline">Faculty-in-Charge: <strong>Name</strong></span>
+       </div>
+
+       <div class="content-inner">
+         <section class="chapter" id="anchor">
+           <div class="eyebrow">Section Group</div>
+           <h2>Section Title</h2>
+           <p>Body copy…</p>
+         </section>
+       </div>
+     </main>
+   </div>
+
+   <p class="ai-note page-note">Optional closing footnote.</p>
+   <footer>Page footer text</footer>
+   ========================================================================== */
+
+/* ---- Design tokens -------------------------------------------------------
+   Change colors/fonts for the whole site by editing these variables only. */
+:root{
+    --bg:#EEF2F8;
+    --paper:#FFFFFF;
+    --ink:#1B2333;
+    --ink-soft:#4A5568;
+    --sidebar:#16243E;
+    --sidebar-hover:#22385F;
+    --sidebar-text:#C6D2E8;
+    --sidebar-text-dim:#7E93B8;
+    --accent:#2F5D9C;
+    --accent-deep:#1E3F6E;
+    --gold:#A9822F;
+    --border:#DAE1EC;
+    --correct:#1E7B57;
+    --correct-bg:#E5F4EC;
+    --incorrect:#B03B33;
+    --incorrect-bg:#FBEAE8;
+    --neutral:#8A6D1E;
+    --neutral-bg:#FBF3E1;
+  }
+  /* ---- Base & typography ---------------------------------------------- */
+*{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"IBM Plex Sans", -apple-system, Segoe UI, Roboto, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{
+    font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+    color:var(--ink);
+    line-height:1.25;
+    font-weight:600;
+  }
+  a{color:var(--accent-deep);}
+  a:hover{color:var(--accent);}
+
+  /* ---- Page layout: sidebar + main ------------------------------------
+     .layout wraps everything; nav.sidebar is the sticky dark TOC column.
+     Sidebar TOC markup:
+       <div class="nav-heading">Group label</div>
+       <ol><li><a class="toc-link" href="#id">Label</a></li></ol>
+     Optional sub-links under a toc-link:
+       <ul class="sub"><li><a href="#id">…</a></li></ul>
+     .toc-link.active (added by the IntersectionObserver script at the
+     bottom of the page skeleton) highlights the section in view. -------- */
+  .layout{
+    min-height:100vh;
+    width:100%;
+  }
+  nav.sidebar{
+    width:280px;
+    flex-shrink:0;
+    background:var(--sidebar);
+    color:var(--sidebar-text);
+    padding:28px 22px 40px;
+    position:fixed;
+    top:0;
+    left:0;
+    height:100vh;
+    overflow-y:auto;
+    z-index:10;
+  }
+  nav.sidebar::-webkit-scrollbar{width:8px;}
+  nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
+
+  .sidebar .kicker{
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:6px;
+  }
+  .sidebar .course-title{
+    font-family:"Source Serif 4", Georgia, serif;
+    font-size:21px;
+    color:#fff;
+    margin:0 0 4px;
+  }
+  .sidebar .course-topic{
+    font-size:13.5px;
+    color:var(--sidebar-text);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin:0 0 18px;
+  }
+  .sidebar .nav-heading{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin:18px 0 6px;
+  }
+  .sidebar .nav-heading:first-of-type{ margin-top:0; }
+  .sidebar ol{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:section;
+  }
+  .sidebar > ol > li{
+    counter-increment:section;
+    margin-bottom:2px;
+  }
+  .sidebar a.toc-link{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    text-decoration:none;
+    color:var(--sidebar-text);
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:14px;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .sidebar a.toc-link::before{
+    content:counter(section, decimal-leading-zero);
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:11px;
+    color:var(--sidebar-text-dim);
+    padding-top:2px;
+  }
+  .sidebar a.toc-link:hover, .sidebar a.toc-link.active{
+    background:var(--sidebar-hover);
+    color:#fff;
+  }
+  .sidebar ul.sub{
+    list-style:none;
+    margin:2px 0 8px 26px;
+    padding:0;
+    border-left:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar ul.sub li a{
+    display:block;
+    text-decoration:none;
+    color:var(--sidebar-text-dim);
+    font-size:12.5px;
+    padding:5px 0 5px 14px;
+    transition:color 0.15s ease;
+  }
+  .sidebar ul.sub li a:hover{color:#fff;}
+
+  main{
+    display:block;
+    margin-left:280px;
+    padding:0 0 100px;
+  }
+  /* ---- Hero banner (top of main, above the content column) -----------
+     <div class="hero">
+       <div class="kicker">Eyebrow</div>
+       <h1>Title</h1>
+       <p class="dek">Description</p>
+       <span class="byline">Faculty-in-Charge: <strong>Name</strong></span>
+     </div> ------------------------------------------------------------- */
+  .hero{
+    background:linear-gradient(155deg, var(--accent-deep) 0%, var(--sidebar) 65%);
+    color:#fff;
+    padding:64px 56px 46px;
+  }
+  .hero .kicker{
+    text-transform:uppercase;
+    letter-spacing:0.16em;
+    font-size:12px;
+    color:#AFC3E4;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    color:#fff;
+    font-size:38px;
+    margin:0 0 10px;
+    max-width:900px;
+  }
+  .hero p.dek{
+    max-width:820px;
+    color:#D6E0F1;
+    font-size:16px;
+    margin:0 0 22px;
+  }
+  .hero .byline{
+    font-size:14px;
+    color:#AFC3E4;
+    border-top:1px solid rgba(255,255,255,0.18);
+    padding-top:14px;
+    display:inline-block;
+  }
+  .hero .byline strong{color:#fff; font-weight:600;}
+
+  /* ---- Content column --------------------------------------------------
+     .content-inner is the comfortable-reading-width wrapper inside <main>.
+     Each page section is a <section class="chapter" id="anchor"> with an
+     .eyebrow label (group name, matches the sidebar nav-heading) and an h2.
+     Use .lede for an intro paragraph with a gold left rule. --------------- */
+  .content-inner{
+    padding:0 56px;
+    max-width:960px;
+  }
+
+  section.chapter{
+    padding-top:52px;
+    scroll-margin-top:24px;
+  }
+  section.chapter:first-of-type{padding-top:40px;}
+
+  .chapter .eyebrow{
+    font-size:13px;
+    color:var(--accent);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .chapter h2{
+    font-size:27px;
+    margin:0 0 16px;
+    padding-bottom:14px;
+    border-bottom:2px solid var(--border);
+  }
+  .chapter h3{
+    font-size:19px;
+    margin:30px 0 10px;
+    color:var(--accent-deep);
+  }
+  .chapter h4{
+    font-size:15.5px;
+    margin:20px 0 8px;
+    color:var(--accent-deep);
+  }
+  .chapter p{
+    font-size:15.5px;
+    color:var(--ink);
+    margin:0 0 14px;
+  }
+  .chapter ul, .chapter ol.plain{
+    padding-left:22px;
+    margin:0 0 16px;
+  }
+  .chapter li{
+    font-size:15.5px;
+    margin-bottom:6px;
+  }
+  .lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    border-left:3px solid var(--gold);
+    padding-left:16px;
+    margin:0 0 22px;
+  }
+
+  /* ---- Definition / emphasis callout ------------------------------------
+     <blockquote class="def"><strong>Term</strong> — explanation…</blockquote>
+     ------------------------------------------------------------------- */
+  blockquote.def{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--accent);
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+  blockquote.def strong{color:var(--ink); font-family:"Source Serif 4", serif;}
+
+  /* ---- Data table --------------------------------------------------------
+     <table class="compare">
+       <thead><tr><th>Col</th><th>Col</th></tr></thead>
+       <tbody><tr><td class="num">Value</td><td>...</td></tr></tbody>
+     </table>
+     Row modifiers: tr.deadline (amber highlight), tr.lowgrade (red highlight)
+     td.num bolds/colors a key figure (grade, week number, percentage). ---- */
+  table.compare{
+    width:100%;
+    border-collapse:collapse;
+    margin:8px 0 20px;
+    font-size:14.5px;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  table.compare th{
+    background:var(--sidebar);
+    color:#fff;
+    text-align:left;
+    padding:10px 14px;
+    font-weight:600;
+    font-size:13px;
+  }
+  table.compare td{
+    padding:10px 14px;
+    border-top:1px solid var(--border);
+    vertical-align:top;
+  }
+  table.compare tr:nth-child(even) td{background:#F6F8FC;}
+  table.compare td.num{ font-weight:600; color:var(--accent-deep); white-space:nowrap; }
+  table.compare tr.deadline td{ background:var(--neutral-bg); color:var(--neutral); font-style:italic; }
+  table.compare tr.lowgrade td{ background:var(--incorrect-bg); color:var(--incorrect); font-weight:600; }
+
+  /* ---- Bio / reference card ------------------------------------------
+     <div class="scholar-card">
+       <span class="tag">Label</span>
+       <h4>Name</h4>
+       <p>Bio text…</p>
+       <ul class="fic-links"><li>Email: <a href="mailto:...">...</a></li></ul>
+     </div> ------------------------------------------------------------- */
+  .scholar-card{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+    margin-bottom:18px;
+    scroll-margin-top:24px;
+  }
+  .scholar-card h4{
+    margin:0 0 4px;
+    font-size:16.5px;
+    color:var(--ink);
+  }
+  .scholar-card .tag{
+    display:inline-block;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:#EAF0FA;
+    padding:2px 8px;
+    border-radius:4px;
+    margin-bottom:10px;
+  }
+  .scholar-card p{margin:0 0 6px; font-size:14.5px;}
+  .scholar-card .fic-links{ margin:10px 0 0; padding-left:18px; font-size:14px; }
+  .scholar-card .fic-links li{ margin-bottom:3px; }
+
+  /* ---- Numbered list (learning outcomes, rules, steps) ----------------
+     <ol class="commandments"><li>Item text</li></ol>
+     Numbers are auto-generated in gold via a CSS counter. ---------------- */
+  .commandments{
+    counter-reset:cmd;
+    padding:0;
+    list-style:none;
+    margin:0 0 20px;
+    display:grid;
+    gap:8px;
+  }
+  .commandments li{
+    counter-increment:cmd;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 14px 12px 44px;
+    position:relative;
+    font-size:14.5px;
+  }
+  .commandments li::before{
+    content:counter(cmd);
+    position:absolute;
+    left:12px;
+    top:10px;
+    font-family:"Source Serif 4", serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--gold);
+  }
+
+  /* ---- Process/flow chips -----------------------------------------------
+     <div class="flow">
+       <span class="step">Step A</span><span class="arrow">→</span>
+       <span class="step">Step B</span>
+     </div> ------------------------------------------------------------- */
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:center;
+    margin:6px 0 22px;
+  }
+  .flow .step{
+    background:var(--accent-deep);
+    color:#fff;
+    padding:8px 13px;
+    border-radius:20px;
+    font-size:13.5px;
+    white-space:nowrap;
+  }
+  .flow .arrow{color:var(--ink-soft); font-size:15px;}
+
+  /* Reference / requirement box */
+  /* ---- Reference / notes box ---------------------------------------------
+     <div class="refbox">
+       <div class="refbox-label">Heading</div>
+       <ul><li><strong>Key</strong> → meaning</li></ul>
+     </div> ------------------------------------------------------------- */
+  .refbox{
+    background:#F4F7FC;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 22px;
+  }
+  .refbox .refbox-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent-deep);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .refbox ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .refbox li{
+    font-size:14px;
+    margin-bottom:4px;
+  }
+  .refbox a{
+    text-decoration:none;
+    border-bottom:1px dotted var(--accent);
+  }
+  .refbox a:hover{border-bottom-style:solid;}
+
+  /* ---- Weighted requirement row (percentage + description) --------------
+     <div class="req-card">
+       <div class="pct">25<sub>%</sub></div>
+       <div><h4>Title</h4><p>Description…</p></div>
+     </div> ------------------------------------------------------------- */
+  .req-card{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:12px;
+  }
+  .req-card .pct{
+    font-family:"Source Serif 4", serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--accent-deep);
+    flex:0 0 62px;
+    text-align:center;
+  }
+  .req-card .pct sub{ font-size:13px; font-weight:400; color:var(--ink-soft); }
+  .req-card h4{ margin:0 0 4px; font-size:15.5px; }
+  .req-card p{ margin:0; font-size:14px; color:var(--ink-soft); }
+
+  /* ---- Highlighted key-idea panel (gradient, for closing/summary blocks)
+     <div class="keyidea">
+       <h3>Headline</h3>
+       <p>Supporting text…</p>
+       Optional two-column list: <div class="qgrid"><div class="col">
+       <div class="col-label">Label</div><ul><li>Item</li></ul></div></div>
+     </div> ------------------------------------------------------------- */
+  .keyidea{
+    background:linear-gradient(155deg, var(--accent-deep), var(--sidebar));
+    color:#fff;
+    border-radius:12px;
+    padding:28px 30px;
+    margin:8px 0 10px;
+  }
+  .keyidea h3{color:#fff; margin-top:0;}
+  .keyidea p{ color:#E3EAF6; }
+  .keyidea .qgrid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 24px;
+    margin-top:14px;
+  }
+  .keyidea .qgrid .col{ flex:1 1 220px; }
+  .keyidea .qgrid .col-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#AFC3E4;
+    margin-bottom:6px;
+  }
+  .keyidea .qgrid ul{margin:0; padding-left:18px;}
+  .keyidea .qgrid li{font-size:14px; margin-bottom:5px; color:#E3EAF6;}
+
+  /* ---- Warning / important-notice callout (red) -----------------------
+     <div class="callout"><strong>Heads up.</strong> Notice text…</div> --- */
+  .callout{
+    background:var(--incorrect-bg);
+    border:1px solid #F0C6C1;
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 20px;
+    font-size:14.5px;
+    color:var(--incorrect);
+  }
+  .callout strong{ color:var(--incorrect); }
+
+  /* ---- Pull-quote list ---------------------------------------------------
+     <ul class="quotes"><li>"Quote text"<span>— Attribution</span></li></ul>
+     ------------------------------------------------------------------- */
+  .quotes{
+    list-style:none;
+    padding:0;
+    margin:10px 0 0;
+    display:grid;
+    gap:12px;
+  }
+  .quotes li{
+    border-left:3px solid var(--gold);
+    padding:2px 0 2px 16px;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .quotes li span{
+    display:block;
+    font-style:normal;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-top:3px;
+  }
+
+  /* ---- Page-level footnote & footer --------------------------------------
+     <p class="ai-note page-note">Footnote text, placed outside all
+       <section> elements, right before <footer>.</p>
+     <footer>Page footer text</footer>
+     .ai-note (without .page-note) can also be used inside a section as a
+     smaller inline note with just a top rule. --------------------------- */
+  .ai-note{
+    margin-top:26px;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  .ai-note.page-note{
+    max-width:820px;
+    margin:36px auto 0;
+    padding:16px 56px 0;
+    text-align:center;
+    border-top:1px solid var(--border);
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 10px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-left:280px;
+  }
+
+  @media (max-width: 880px){
+    nav.sidebar{
+      position:relative;
+      width:100%;
+      height:auto;
+      max-height:none;
+    }
+    main{ margin-left:0; }
+    footer{ margin-left:0; }
+    .hero{padding:40px 24px 32px;}
+    .content-inner{padding:0 22px;}
+    .req-card{ flex-wrap:wrap; }
+  }
+
+  /* ---- Page-specific additions (quiz, progress bar) ---- */
+  .sidebar .instructor{
+    font-size:12.5px;
+    color:var(--sidebar-text-dim);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin-bottom:18px;
+  }
+  .sidebar .progress-wrap{
+    margin-top:22px;
+    padding-top:16px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar .progress-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:8px;
+  }
+  .progress-track{
+    width:100%;
+    height:6px;
+    background:rgba(255,255,255,0.1);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--gold), #D8B65A);
+    transition:width 0.4s ease;
+  }
+  .progress-count{
+    margin-top:6px;
+    font-size:12px;
+    color:var(--sidebar-text-dim);
+  }
+  .hero-inner{
+    max-width:904px;
+  }
+
+  /* Sticky check-in progress bar (fixed to bottom of the viewport) */
+  body{ padding-bottom:44px; }
+  .progress-dock{
+    position:fixed;
+    left:280px;
+    right:0;
+    bottom:0;
+    z-index:20;
+    background:#D8B65A;
+    border-top:1px solid #C9A548;
+    box-shadow:0 -2px 10px rgba(22,36,62,0.16);
+    color:var(--sidebar);
+  }
+  .progress-dock-inner{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:8px 56px;
+    max-width:1016px;
+  }
+  .progress-dock-label{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    font-weight:600;
+    color:var(--sidebar);
+    opacity:0.8;
+    white-space:nowrap;
+  }
+  .progress-dock .progress-track{
+    flex:1;
+    height:6px;
+    background:rgba(22,36,62,0.18);
+  }
+  .progress-dock .progress-fill{
+    background:var(--sidebar);
+  }
+  .progress-dock .progress-count{
+    margin-top:0;
+    font-size:12px;
+    font-weight:600;
+    color:var(--sidebar);
+    white-space:nowrap;
+  }
+  @media (max-width: 880px){
+    .progress-dock{ left:0; }
+    .progress-dock-inner{ padding:7px 22px; gap:10px; }
+    .progress-dock-label{ display:none; }
+  }
+
+  /* Quiz component (not part of the shared theme) */
+  .quiz{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--gold);
+    border-radius:8px;
+    padding:20px 22px;
+    margin:8px 0 28px;
+  }
+  .quiz .quiz-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .quiz p.q-prompt{
+    font-size:15.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin:0 0 12px;
+  }
+  .quiz .options{
+    display:grid;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .quiz label.opt{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:14.5px;
+    color:var(--ink);
+    padding:8px 10px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .quiz label.opt:hover{border-color:var(--accent); background:#F4F7FC;}
+  .quiz input[type="radio"]{margin-top:3px;}
+  .quiz button.check-btn{
+    background:var(--accent-deep);
+    color:#fff;
+    border:none;
+    padding:9px 18px;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .quiz button.check-btn:hover{background:var(--accent);}
+  .quiz .feedback{
+    margin-top:14px;
+    padding:12px 14px;
+    border-radius:6px;
+    font-size:14px;
+    display:none;
+  }
+  .quiz .feedback.show{display:block;}
+  .feedback-correct{background:var(--correct-bg); color:var(--correct); border:1px solid #BFE3CF;}
+  .feedback-incorrect{background:var(--incorrect-bg); color:var(--incorrect); border:1px solid #F0C6C1;}
+  .feedback-neutral{background:var(--neutral-bg); color:var(--neutral); border:1px solid #EEDCA6;}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <div class="kicker">IS 201 · Chapter 2</div>
+    <div class="course-title">Topic 4</div>
+    <p class="course-topic">Cybersecurity and Cyberethics</p>
+
+    <div class="nav-heading">Introduction</div>
+    <ol id="toc">
+      <li><a class="toc-link" href="#intro" data-target="intro">Beyond Technical Protection</a></li>
+      <li><a class="toc-link" href="#why-is" data-target="why-is">Why This Matters to IS</a></li>
+    </ol>
+
+    <div class="nav-heading">Cybersecurity and Ethical Responsibility</div>
+    <ol style="counter-reset:section 2">
+      <li><a class="toc-link" href="#ethical-concern" data-target="ethical-concern">Cybersecurity as an Ethical Concern</a></li>
+      <li><a class="toc-link" href="#cia" data-target="cia">The CIA Triad</a></li>
+      <li><a class="toc-link" href="#risk" data-target="risk">Risk, Harm &amp; Responsibility</a></li>
+      <li><a class="toc-link" href="#values" data-target="values">Security: Not the Only Value</a></li>
+    </ol>
+
+    <div class="nav-heading">Cybercrime and Digital Harm</div>
+    <ol style="counter-reset:section 6">
+      <li><a class="toc-link" href="#threats" data-target="threats">Cyber Threats</a></li>
+      <li><a class="toc-link" href="#ra10175" data-target="ra10175">Cybercrime Prevention Act</a></li>
+      <li><a class="toc-link" href="#human" data-target="human">The Human Element</a></li>
+    </ol>
+
+    <div class="nav-heading">Professional and Organizational Responsibility</div>
+    <ol style="counter-reset:section 9">
+      <li><a class="toc-link" href="#trust" data-target="trust">Positions of Trust</a></li>
+      <li><a class="toc-link" href="#by-design" data-target="by-design">Security by Design</a></li>
+      <li><a class="toc-link" href="#monitoring" data-target="monitoring">Monitoring &amp; Privileged Access</a></li>
+      <li><a class="toc-link" href="#incidents" data-target="incidents">Responding to Incidents</a></li>
+      <li><a class="toc-link" href="#vulns" data-target="vulns">Discovering Vulnerabilities</a></li>
+    </ol>
+
+    <div class="nav-heading">Wrap-up</div>
+    <ol style="counter-reset:section 14">
+      <li><a class="toc-link" href="#takeaways" data-target="takeaways">Key Takeaways</a></li>
+      <li><a class="toc-link" href="#references" data-target="references">References</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="kicker">IS 201 · Chapter 2 — Ethical Issues in Computing</div>
+        <h1>Topic 4 — Cybersecurity and Cyberethics</h1>
+        <p class="dek">A guided reading on cybersecurity as an ethical responsibility — the CIA triad, risk and duty of care, cybercrime under RA 10175, the human element, and the professional responsibilities that come with privileged access.</p>
+        <span class="byline">Faculty-in-Charge: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027</span>
+      </div>
+    </div>
+
+    <div class="content-inner">
+
+      <!-- 1. Introduction -->
+      <section class="chapter" id="intro">
+        <div class="eyebrow">01 · Introduction</div>
+        <h2>Beyond Technical Protection</h2>
+        <p class="lede">Digital systems have become essential to communication, education, government, commerce, banking, healthcare, and everyday life.</p>
+        <p>As society becomes increasingly dependent on these systems, protecting them from unauthorized access, disruption, manipulation, and misuse becomes more than a technical concern. It becomes an <strong>ethical responsibility</strong>.</p>
+        <p>Cybersecurity is concerned with protecting systems, networks, devices, and information from threats and attacks. <strong>Cyberethics</strong> asks broader questions about what people and organizations <em>ought</em> to do in digital environments:</p>
+        <ul>
+          <li>Who is responsible when inadequate security causes harm?</li>
+          <li>How much monitoring is justified in the name of security?</li>
+          <li>When does accessing a system cross an ethical boundary?</li>
+          <li>What responsibilities do information systems professionals have when they discover vulnerabilities or security incidents?</li>
+        </ul>
+        <p>These questions matter because cybersecurity decisions affect not only computers and data, but also <strong>people, organizations, rights, and society</strong>.</p>
+
+        <div class="keyidea">
+          <h3>The central question</h3>
+          <p>Cybersecurity asks how systems can be protected. Cyberethics also asks what we ought to do — and what we ought not to do — with the power to access, monitor, and control them.</p>
+        </div>
+      </section>
+
+      <!-- 2. Why This Matters -->
+      <section class="chapter" id="why-is">
+        <div class="eyebrow">02 · Introduction</div>
+        <h2>Why This Matters to Information Systems Students and Professionals</h2>
+        <p class="lede">Information systems professionals operate at the intersection of people, organizations, data, processes, and technology. Cybersecurity decisions are therefore part of ordinary IS practice, not merely the responsibility of specialized cybersecurity professionals.</p>
+
+        <p>An IS professional may help determine:</p>
+        <ul>
+          <li>who receives access to a system;</li>
+          <li>what activities are logged;</li>
+          <li>how information is protected;</li>
+          <li>how security incidents are handled;</li>
+          <li>whether vulnerable systems remain in operation; and</li>
+          <li>how users are informed about risks.</li>
+        </ul>
+        <p>These decisions can affect privacy, organizational trust, access to services, financial resources, and people's rights and well-being.</p>
+
+        <blockquote class="def"><strong>Cybersecurity competence</strong> involves more than knowing how to protect a system technically. It also requires recognizing who may be harmed, what responsibilities are involved, what level of security is reasonable and proportionate, and what ethical boundaries should not be crossed in the pursuit of security.</blockquote>
+
+        <div class="quiz" id="q1">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">1. An IS student says: "Cybersecurity is the job of the security team. As a business analyst, the access rules and logging I design aren't really a security concern." Based on this section, what is the problem with this view?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q1" value="a"> Nothing — only specialized cybersecurity professionals make security decisions</label>
+            <label class="opt"><input type="radio" name="q1" value="b"> Decisions about access, logging, and handling information are part of ordinary IS practice and can affect privacy, trust, and people's rights</label>
+            <label class="opt"><input type="radio" name="q1" value="c"> Business analysts should never be involved in deciding who gets access to a system</label>
+            <label class="opt"><input type="radio" name="q1" value="d"> Access rules only matter after a cyberattack has happened</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q1')">Check answer</button>
+          <div class="feedback" id="q1-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 3. Cybersecurity as an Ethical Concern -->
+      <section class="chapter" id="ethical-concern">
+        <div class="eyebrow">03 · Cybersecurity and Ethical Responsibility</div>
+        <h2>Cybersecurity as an Ethical Concern</h2>
+        <p>Cybersecurity is often understood primarily as a technical problem: protecting systems, networks, devices, and data from unauthorized access, disruption, manipulation, or destruction. Technical measures such as authentication, access controls, encryption, software updates, backups, and network monitoring are essential. However, cybersecurity is also fundamentally an <strong>ethical concern</strong> because security decisions can directly affect people, organizations, and society.</p>
+
+        <h3>Security Failures Cause Real Harm</h3>
+        <p>A security failure can cause more than technical inconvenience:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>If this is compromised…</th><th>The harm may include…</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>A university system</strong></td><td>Exposure of student records or interruption of essential academic services</td></tr>
+            <tr><td><strong>A financial system</strong></td><td>Financial loss or identity theft</td></tr>
+            <tr><td><strong>A hospital (via ransomware)</strong></td><td>Interference with access to critical information and services</td></tr>
+          </tbody>
+        </table>
+        <p>In each case, weaknesses in cybersecurity can translate into <strong>real harm to individuals and communities</strong>.</p>
+
+        <h3>Responsibility and Power</h3>
+        <p>Cybersecurity also involves decisions about <strong>responsibility and power</strong>. Organizations decide how much security to provide, what risks are acceptable, who should have access to information, and how users should be monitored. IS and IT professionals may possess privileged access to databases, servers, accounts, logs, and other resources. The ability to access or control these resources does not automatically justify every possible use of that capability.</p>
+        <p>For example, a system administrator may technically be able to view confidential employee or student records while maintaining a system.</p>
+        <div class="keyidea">
+          <h3>Two different questions</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">A technical question</div>
+              <ul><li><em>Can</em> the administrator access the information?</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">An ethical question</div>
+              <ul><li><em>Should</em> the administrator access it — under what circumstances, and for what purpose?</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:18px;">Cybersecurity therefore concerns not only <strong>how systems should be protected</strong>, but also <strong>who has responsibilities toward those systems and the people who depend on them</strong>. It requires professionals and organizations to consider potential harm, respect privacy and confidentiality, exercise appropriate care, and use their technical capabilities responsibly.</p>
+        <p>The <a href="https://www.acm.org/code-of-ethics" target="_blank" rel="noopener">ACM Code of Ethics and Professional Conduct</a> reflects this broader responsibility by requiring computing professionals to avoid harm, respect privacy, honor confidentiality, maintain professional competence, and design and implement systems that are robustly and usably secure.</p>
+
+        <blockquote class="def"><strong>A useful principle</strong> — Cybersecurity protects systems, but the ultimate reason for protecting systems is to protect the people and activities that depend on them.</blockquote>
+
+        <div class="quiz" id="q2">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">2. While maintaining the HR server, a system administrator realizes she can open the salary records of every employee. Which statement best reflects this section?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q2" value="a"> Since the system allows it, she is free to view the records</label>
+            <label class="opt"><input type="radio" name="q2" value="b"> This is purely a technical matter with no ethical dimension</label>
+            <label class="opt"><input type="radio" name="q2" value="c"> She should immediately delete the records so nobody can view them</label>
+            <label class="opt"><input type="radio" name="q2" value="d"> <span>Whether she <em>can</em> access them is technical; whether she <em>should</em>, when, and for what purpose is an ethical question</span></label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q2')">Check answer</button>
+          <div class="feedback" id="q2-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 4. CIA Triad -->
+      <section class="chapter" id="cia">
+        <div class="eyebrow">04 · Cybersecurity and Ethical Responsibility</div>
+        <h2>What Are We Protecting? The CIA Triad</h2>
+        <p class="lede">A foundational model in cybersecurity is the CIA triad, which identifies three fundamental security objectives: Confidentiality, Integrity, and Availability. These principles help explain what cybersecurity seeks to protect and what can be harmed when security fails.</p>
+
+        <div class="flow">
+          <span class="step">Confidentiality</span><span class="arrow">+</span>
+          <span class="step">Integrity</span><span class="arrow">+</span>
+          <span class="step">Availability</span>
+        </div>
+
+        <h3>Confidentiality</h3>
+        <blockquote class="def"><strong>Confidentiality</strong> — ensuring that information is accessible only to people, systems, or processes that are authorized to access it. It protects information from unauthorized disclosure.</blockquote>
+        <p>Confidentiality is particularly important when systems contain sensitive information such as personal data, financial records, student records, health information, passwords, or confidential organizational documents. Common measures include authentication, access controls, encryption, and appropriate handling of sensitive information.</p>
+        <p>For example, a university employee may legitimately have access to student records because that access is necessary for their work. Another employee without such responsibilities should not be able to view the same records simply out of curiosity. If student information is accessed or disclosed without authorization, confidentiality has been compromised.</p>
+        <p>From an ethical perspective, confidentiality involves <strong>trust and respect for the interests and rights of others</strong>. Individuals and organizations entrust information to information systems with the expectation that it will not be accessed or disclosed without legitimate justification.</p>
+
+        <h3>Integrity</h3>
+        <blockquote class="def"><strong>Integrity</strong> — protecting information and systems from unauthorized or improper modification, deletion, or manipulation. Information should remain accurate, complete, and trustworthy.</blockquote>
+        <p>Integrity is essential because organizations increasingly rely on digital information to make decisions. Even if information remains confidential, it may become harmful or useless if it has been altered improperly.</p>
+        <p>If an unauthorized person changes a student's grade, modifies enrollment information, or alters financial records, the primary problem is not necessarily that confidential information was exposed. The problem is that the <strong>trustworthiness of the information has been compromised</strong>.</p>
+        <p>Integrity also extends beyond deliberate attacks. Accidental changes, software errors, incorrect system configurations, and poorly designed processes can also undermine the accuracy and reliability of information. Measures such as access controls, audit logs, validation mechanisms, version control, and backups can help preserve integrity.</p>
+        <p>Ethically, protecting integrity means recognizing that people and organizations make important decisions based on information systems. Professionals therefore have a responsibility to help ensure that information remains <strong>accurate, reliable, and protected against improper alteration</strong>.</p>
+
+        <h3>Availability</h3>
+        <blockquote class="def"><strong>Availability</strong> — ensuring that authorized users can access information, systems, and services when they legitimately need them.</blockquote>
+        <p>A system may successfully protect confidentiality and integrity but still fail its users if it is unavailable when needed. Availability can be affected by hardware failures, software problems, network outages, denial-of-service attacks, ransomware, natural disasters, or inadequate infrastructure.</p>
+        <p>If a university's enrollment system becomes inaccessible during the enrollment period, students may be unable to register for courses. If a hospital information system becomes unavailable during an emergency, the consequences may be considerably more serious. Organizations protect availability through backups, redundancy, system monitoring, disaster recovery, regular maintenance, and appropriate incident-response procedures.</p>
+        <p>From an ethical perspective, availability matters because people increasingly <strong>depend on digital systems to exercise rights, fulfill responsibilities, and access important services</strong>. The greater the importance of a system, the greater the potential harm caused by prolonged or preventable disruption.</p>
+
+        <div class="quiz" id="q3">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">3. A student's final grade in the registrar's system is quietly changed from 3.0 to 1.5 by someone without authorization. Nobody's records were exposed. Which security objective was primarily compromised?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q3" value="a"> Integrity — the information was improperly altered and can no longer be trusted</label>
+            <label class="opt"><input type="radio" name="q3" value="b"> Confidentiality — the grade was disclosed to the public</label>
+            <label class="opt"><input type="radio" name="q3" value="c"> Availability — students could not access the system</label>
+            <label class="opt"><input type="radio" name="q3" value="d"> None — since no data were exposed, there was no security failure</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q3')">Check answer</button>
+          <div class="feedback" id="q3-feedback"></div>
+        </div>
+
+        <h3>The CIA Triad in Practice</h3>
+        <p>The three objectives are closely related, but a cybersecurity incident may affect one, two, or all three.</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Incident</th><th>Primary Security Concern</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Someone views confidential student records without authorization</td><td class="num">Confidentiality</td></tr>
+            <tr><td>Someone changes a student's grade without authorization</td><td class="num">Integrity</td></tr>
+            <tr><td>Students cannot access the system because of a cyberattack</td><td class="num">Availability</td></tr>
+            <tr><td>Ransomware prevents access to records and threatens to publish stolen data</td><td class="num">Confidentiality, Integrity, and Availability</td></tr>
+          </tbody>
+        </table>
+
+        <p>The CIA triad shifts the question from simply <strong>"Is the system secure?"</strong> to more specific questions:</p>
+        <ul>
+          <li>Is information protected from unauthorized disclosure?</li>
+          <li>Can we trust that it has not been improperly altered?</li>
+          <li>Can legitimate users access the system when they need it?</li>
+        </ul>
+
+        <div class="quiz" id="q4">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">4. During the first day of enrollment, attackers flood the university portal with traffic so that students cannot log in to register. Which objective is most directly affected?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q4" value="a"> Confidentiality — private student records were disclosed to the attackers</label>
+            <label class="opt"><input type="radio" name="q4" value="b"> Integrity — enrollment data were improperly altered</label>
+            <label class="opt"><input type="radio" name="q4" value="c"> Availability — legitimate users can't access the system when they need it</label>
+            <label class="opt"><input type="radio" name="q4" value="d"> None — as long as no data were stolen, there was no security failure</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q4')">Check answer</button>
+          <div class="feedback" id="q4-feedback"></div>
+        </div>
+
+        <p>For cyberethics, these questions matter because failures of confidentiality, integrity, and availability ultimately affect <strong>people</strong>:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Failure of…</th><th>May lead to…</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Confidentiality</strong></td><td>Violations of privacy</td></tr>
+            <tr><td><strong>Integrity</strong></td><td>Unfair or incorrect decisions</td></tr>
+            <tr><td><strong>Availability</strong></td><td>People being unable to access essential services</td></tr>
+          </tbody>
+        </table>
+        <p>Thus, the CIA triad is not only a technical model for information security. It also helps identify <strong>what interests may be harmed when cybersecurity fails and why protecting information systems carries ethical responsibilities</strong>.</p>
+
+        <div class="quiz" id="q5">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">5. A hospital is hit by ransomware: patient records are encrypted and locked, some files are corrupted, and the attackers threaten to leak copies online unless paid. Which CIA objectives are affected?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q5" value="a"> Only availability, since the records are locked</label>
+            <label class="opt"><input type="radio" name="q5" value="b"> Only confidentiality, since data may be leaked</label>
+            <label class="opt"><input type="radio" name="q5" value="c"> None, if the hospital pays the ransom</label>
+            <label class="opt"><input type="radio" name="q5" value="d"> Confidentiality, integrity, and availability — the attack can compromise all three</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q5')">Check answer</button>
+          <div class="feedback" id="q5-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 5. Risk, Harm, and Responsibility -->
+      <section class="chapter" id="risk">
+        <div class="eyebrow">05 · Cybersecurity and Ethical Responsibility</div>
+        <h2>Risk, Harm, and Responsibility</h2>
+        <p class="lede">Perfect security does not exist. Organizations therefore make decisions about risk: what could go wrong, how likely it is to happen, how serious the consequences could be, and what protections are reasonable.</p>
+
+        <blockquote class="def"><strong>Scenario</strong> — An organization knows that an outdated system contains serious vulnerabilities but postpones an upgrade because replacement is expensive. Months later, attackers exploit the vulnerability and obtain thousands of users' records.</blockquote>
+        <p>The attackers are responsible for the attack. But does responsibility end there?</p>
+        <p>The organization may also bear responsibility if it knew about a significant risk and failed to take reasonable precautions. Cybersecurity therefore involves the idea of <strong>duty of care</strong>.</p>
+
+        <blockquote class="def"><strong>Duty of care</strong> — the responsibility to take reasonable measures to prevent foreseeable harm.</blockquote>
+
+        <p>This does not mean that every successful cyberattack proves negligence. Even well-protected systems can be compromised. Ethical evaluation should consider:</p>
+        <ol class="commandments">
+          <li>What risks were known?</li>
+          <li>What protections were reasonably available?</li>
+          <li>What responsibilities did the organization have?</li>
+          <li>Were appropriate precautions actually taken?</li>
+        </ol>
+
+        <div class="quiz" id="q6">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">6. In the scenario above, the company's spokesperson says: "We were the victims here. The hackers are entirely to blame." How should this claim be evaluated?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q6" value="a"> It is correct — only attackers can ever bear responsibility for a cyberattack</label>
+            <label class="opt"><input type="radio" name="q6" value="b"> The attackers are responsible for the attack, but the company may share responsibility because it knew of a serious risk and failed to take reasonable precautions</label>
+            <label class="opt"><input type="radio" name="q6" value="c"> Every successful cyberattack automatically proves the organization was negligent</label>
+            <label class="opt"><input type="radio" name="q6" value="d"> Responsibility depends only on how expensive the upgrade would have been</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q6')">Check answer</button>
+          <div class="feedback" id="q6-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 6. Security Is Not the Only Value -->
+      <section class="chapter" id="values">
+        <div class="eyebrow">06 · Cybersecurity and Ethical Responsibility</div>
+        <h2>Security: Not the Only Value</h2>
+        <p>Greater security is not automatically better in every circumstance.</p>
+        <p>Organizations might improve security by collecting more information, monitoring more activities, restricting more access, requiring additional authentication, or recording detailed user behavior. These measures may reduce certain risks, but they can also affect <strong>privacy, autonomy, accessibility, usability, and trust</strong>.</p>
+        <p>Consider employee monitoring. Logging suspicious network activity may be a reasonable cybersecurity measure. Recording every website visited, message sent, and keystroke typed represents a substantially greater degree of intrusion.</p>
+
+        <div class="keyidea">
+          <h3>Asking the right question</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Not only</div>
+              <ul><li>Does this make the system more secure?</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">But also</div>
+              <ul><li>Is the security measure necessary, proportionate, transparent, and respectful of the people affected by it?</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:18px;">This connects cyberethics directly with the privacy and digital rights issues discussed in <strong>Topic 3</strong>.</p>
+
+        <div class="quiz" id="q7">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">7. To "improve security," an office decides to install keyloggers on every employee laptop that record every keystroke, including personal messages typed during breaks. Which response best reflects this section?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q7" value="a"> Any measure that increases security is automatically justified</label>
+            <label class="opt"><input type="radio" name="q7" value="b"> The only question is whether the keyloggers are technically reliable</label>
+            <label class="opt"><input type="radio" name="q7" value="c"> Even if it reduces some risks, the measure must also be necessary, proportionate, and transparent — and this level of intrusion likely goes too far</label>
+            <label class="opt"><input type="radio" name="q7" value="d"> Monitoring of any kind is always unethical</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q7')">Check answer</button>
+          <div class="feedback" id="q7-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 7. Cyber Threats -->
+      <section class="chapter" id="threats">
+        <div class="eyebrow">07 · Cybercrime and Digital Harm</div>
+        <h2>Cyber Threats</h2>
+        <p class="lede">Cyber threats are actions or events that can compromise the confidentiality, integrity, or availability of digital systems and information. While cyberattacks take place through computers and networks, their consequences extend well beyond technology.</p>
+        <p>They can result in <strong>financial loss, privacy violations, identity theft, reputational damage, disruption of essential services, and harm to individuals and organizations</strong>.</p>
+
+        <h3>Common Cyber Threats</h3>
+        <table class="compare">
+          <thead>
+            <tr><th>Threat</th><th>What it does</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Phishing</strong></td><td>Uses deceptive messages to obtain sensitive information or persuade users to perform harmful actions</td></tr>
+            <tr><td><strong>Malware</strong></td><td>Malicious software designed to damage, disrupt, spy on, or gain unauthorized access to systems</td></tr>
+            <tr><td><strong>Ransomware</strong></td><td>Typically prevents access to systems or data and demands payment for their restoration</td></tr>
+            <tr><td><strong>Social engineering</strong></td><td>Targets people rather than purely technical vulnerabilities, manipulating trust, authority, fear, urgency, or curiosity to gain information or access</td></tr>
+          </tbody>
+        </table>
+        <p>Cyber threats can also involve <strong>unauthorized access</strong>, data theft or manipulation, disruption of systems, and misuse of legitimate accounts or privileges. Importantly, attacks do not always require sophisticated technical methods. A stolen password, a convincing phishing message, or misuse of authorized access can be enough to compromise an information system.</p>
+
+        <h3>Severity Depends on the Target</h3>
+        <p>Disrupting an entertainment website is different from disrupting a hospital, banking system, government service, or university information system. The same type of attack can therefore have very different ethical consequences depending on <strong>who is affected, what information or services are involved, and how serious the resulting harm may be</strong>.</p>
+
+        <blockquote class="def"><strong>The cyberethics concern</strong> — not merely <em>how</em> an attack works, but what harm it causes, whose rights or interests are affected, and who bears responsibility for preventing and responding to that harm.</blockquote>
+
+        <div class="quiz" id="q8">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">8. A faculty member receives an email that appears to come from the university president: "URGENT — I'm in a meeting. Buy five ₱2,000 gift cards and send me the codes within the hour." What kind of threat is this, and what makes it work?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q8" value="a"> Social engineering via phishing — it targets human trust in authority and a sense of urgency rather than a technical flaw</label>
+            <label class="opt"><input type="radio" name="q8" value="b"> Ransomware — it encrypts the faculty member's files</label>
+            <label class="opt"><input type="radio" name="q8" value="c"> A hardware failure affecting availability</label>
+            <label class="opt"><input type="radio" name="q8" value="d"> Not a threat, since no sophisticated technical method is involved</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q8')">Check answer</button>
+          <div class="feedback" id="q8-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 8. RA 10175 -->
+      <section class="chapter" id="ra10175">
+        <div class="eyebrow">08 · Cybercrime and Digital Harm</div>
+        <h2>The Cybercrime Prevention Act of 2012</h2>
+        <p>In the Philippines, an important legal foundation for understanding cybercrime is <strong>Republic Act No. 10175</strong>, or the <strong>Cybercrime Prevention Act of 2012</strong>.</p>
+        <p>The law identifies several categories of cybercrime offenses. These include offenses against the confidentiality, integrity, and availability of computer data and systems:</p>
+
+        <table class="compare">
+          <thead>
+            <tr><th>Offense</th><th>What it involves</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Illegal access</strong></td><td>Accessing the whole or any part of a computer system without right</td></tr>
+            <tr><td><strong>Illegal interception</strong></td><td>Unauthorized interception of non-public computer data transmissions</td></tr>
+            <tr><td><strong>Data interference</strong></td><td>Unauthorized alteration, damage, deletion, or deterioration of computer data</td></tr>
+            <tr><td><strong>System interference</strong></td><td>Unauthorized hindering or interference with the functioning of computer systems or networks</td></tr>
+            <tr><td><strong>Misuse of devices</strong></td><td>Certain devices, programs, passwords, or access credentials intended or adapted for committing cybercrime</td></tr>
+            <tr><td><strong>Cybersquatting</strong></td><td>Certain bad-faith acquisition of domain names</td></tr>
+          </tbody>
+        </table>
+        <p>RA 10175 also addresses specified <strong>computer-related offenses</strong>, including computer-related forgery, fraud, and identity theft, as well as certain content-related offenses.</p>
+
+        <h3>Connecting the Law to the CIA Triad</h3>
+        <table class="compare">
+          <thead>
+            <tr><th>Offense</th><th>Threatens</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Illegal access and illegal interception</td><td class="num">Confidentiality</td></tr>
+            <tr><td>Data interference</td><td class="num">Integrity</td></tr>
+            <tr><td>System interference</td><td class="num">Availability</td></tr>
+          </tbody>
+        </table>
+
+        <div class="quiz" id="q9">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">9. A disgruntled former contractor logs in with an old account and deletes several tables of financial data from the company database. Under RA 10175, which offense most directly describes the deletion?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q9" value="a"> Cybersquatting</label>
+            <label class="opt"><input type="radio" name="q9" value="b"> Illegal interception</label>
+            <label class="opt"><input type="radio" name="q9" value="c"> Data interference</label>
+            <label class="opt"><input type="radio" name="q9" value="d"> None</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q9')">Check answer</button>
+          <div class="feedback" id="q9-feedback"></div>
+        </div>
+
+        <h3>Law Is Only Part of the Picture</h3>
+        <p>For IS students, knowing what the law prohibits is only one part of the analysis. As discussed in earlier topics, <strong>legal compliance is only one part of ethical responsibility</strong>. Cyberethics also considers questions that may not be fully resolved by law, including appropriate use of privileged access, reasonable security practices, proportionality of monitoring, and professional responsibility when vulnerabilities are discovered.</p>
+        <p>For example, an IT administrator may have legitimate access to a server for maintenance and discover that they can also access confidential files unrelated to their work. The fact that the system permits the access does not by itself provide a legitimate reason to use it.</p>
+        <p>This distinction is particularly important for IS professionals because their roles may give them capabilities and privileges that ordinary users do not have.</p>
+
+        <div class="keyidea">
+          <h3>Technical capability is not the same as ethical permission.</h3>
+        </div>
+
+        <div class="quiz" id="q10" style="margin-top:28px;">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">10. An IT staffer argues: "I have admin rights to the file server, so reading the Dean's confidential memos isn't illegal access — the system lets me in." What is the strongest ethical response?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q10" value="a"> He is right — if the system grants access, any use of it is acceptable</label>
+            <label class="opt"><input type="radio" name="q10" value="b"> Even setting the legal question aside, access granted for maintenance does not provide a legitimate reason to read files unrelated to his work</label>
+            <label class="opt"><input type="radio" name="q10" value="c"> It is only a problem if he shares the memos with others</label>
+            <label class="opt"><input type="radio" name="q10" value="d"> Ethics doesn't apply to people with administrator rights</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q10')">Check answer</button>
+          <div class="feedback" id="q10-feedback"></div>
+        </div>
+
+        <div class="refbox">
+          <div class="refbox-label">Primary source</div>
+          <ul>
+            <li><a href="https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/2/50264" target="_blank" rel="noopener">Republic Act No. 10175: Cybercrime Prevention Act of 2012</a> — Supreme Court E-Library</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 9. Human Element -->
+      <section class="chapter" id="human">
+        <div class="eyebrow">09 · Cybercrime and Digital Harm</div>
+        <h2>The Human Element</h2>
+        <p class="lede">Cybersecurity is sometimes treated primarily as a technological problem, but people are involved at almost every stage.</p>
+        <p>Users choose passwords, respond to messages, handle information, configure systems, grant access, and make decisions about security. Attackers recognize this and often target <strong>human behavior rather than technical vulnerabilities</strong>.</p>
+        <p>Social engineering illustrates this clearly. A phishing message may impersonate a supervisor, colleague, bank, or trusted organization and create a sense of urgency. Even a technically secure system can be compromised if an attacker successfully persuades an authorized user to reveal credentials or approve access.</p>
+
+        <h3>Beyond "the Weakest Link"</h3>
+        <p>Describing people simply as the <strong>"weakest link"</strong> can oversimplify responsibility. Organizations also determine how systems are designed, how employees are trained, what safeguards are implemented, and how easy or difficult it is for users to behave securely.</p>
+        <p>If an employee falls for a sophisticated phishing attack, the employee's actions may need to be examined. But so should the surrounding system:</p>
+        <ul>
+          <li>Did the organization provide adequate security awareness training?</li>
+          <li>Was multi-factor authentication available?</li>
+          <li>Could a single compromised account provide excessive access?</li>
+          <li>Was there an easy way to report suspicious messages?</li>
+        </ul>
+
+        <blockquote class="def"><strong>Shared responsibility</strong> — Users have responsibilities to exercise reasonable care, while developers, administrators, managers, and organizations have responsibilities to create systems and environments that reduce both the likelihood and consequences of human error.</blockquote>
+
+        <p>The ethical goal should not simply be to <strong>blame the person who made the mistake</strong>, but to understand why the failure occurred and how people and systems can work together to prevent similar harm.</p>
+
+        <div class="quiz" id="q11">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">11. A clerk enters her password on a convincing fake login page. Because her account had admin rights to the entire student database and there was no multi-factor authentication, attackers downloaded every record. Management proposes simply firing the clerk. What does this section suggest?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q11" value="a"> Firing the clerk fully resolves the problem, since she was the weakest link</label>
+            <label class="opt"><input type="radio" name="q11" value="b"> The clerk bears no responsibility at all</label>
+            <label class="opt"><input type="radio" name="q11" value="c"> Only the attackers' actions need to be examined</label>
+            <label class="opt"><input type="radio" name="q11" value="d"> Her actions matter, but so do the organization's choices — excessive access, missing MFA, training — because responsibility is shared</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q11')">Check answer</button>
+          <div class="feedback" id="q11-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 10. Positions of Trust -->
+      <section class="chapter" id="trust">
+        <div class="eyebrow">10 · Professional and Organizational Responsibility</div>
+        <h2>Information Systems Professionals Hold Positions of Trust</h2>
+        <p class="lede">IS and IT professionals may have extraordinary access to organizational systems.</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Role</th><th>Typical access or knowledge</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>System administrators</strong></td><td>Access to servers</td></tr>
+            <tr><td><strong>Database administrators</strong></td><td>Privileges over large collections of information</td></tr>
+            <tr><td><strong>Developers</strong></td><td>Understanding of weaknesses that ordinary users cannot see</td></tr>
+            <tr><td><strong>Security personnel</strong></td><td>Monitoring of network activity</td></tr>
+            <tr><td><strong>Technical staff</strong></td><td>Encounters with confidential information while performing their jobs</td></tr>
+          </tbody>
+        </table>
+        <p>With this access comes <strong>professional responsibility</strong>. The ACM Code of Ethics requires computing professionals to respect privacy and honor confidentiality. It also emphasizes professional competence, careful evaluation of systems and their risks, and the design and implementation of systems that are robustly and usably secure.</p>
+        <p>Having privileged access therefore does not mean having unrestricted ethical permission to use it. Professionals are entrusted with capabilities because those capabilities are <strong>necessary for performing particular responsibilities</strong>.</p>
+
+        <blockquote class="def"><strong>Access and responsibility</strong> — The greater the access and control a professional possesses, the greater the importance of exercising that power responsibly.</blockquote>
+      </section>
+
+      <!-- 11. Security by Design -->
+      <section class="chapter" id="by-design">
+        <div class="eyebrow">11 · Professional and Organizational Responsibility</div>
+        <h2>Security by Design</h2>
+        <p>Security should not merely be added after a system has already been developed.</p>
+        <blockquote class="def"><strong>Security by design</strong> — considering security throughout the design, development, deployment, and operation of an information system. This includes decisions about authentication, authorization, data protection, logging, software updates, backups, recovery, and other safeguards appropriate to the system and its risks.</blockquote>
+
+        <div class="flow">
+          <span class="step">Design</span><span class="arrow">→</span>
+          <span class="step">Development</span><span class="arrow">→</span>
+          <span class="step">Deployment</span><span class="arrow">→</span>
+          <span class="step">Operation</span>
+        </div>
+
+        <p>This reflects an important ethical principle:</p>
+        <div class="keyidea">
+          <h3>Anticipate, don't wait.</h3>
+          <p>Professionals should anticipate reasonably foreseeable risks rather than wait for harm to occur before acting.</p>
+        </div>
+
+        <p style="margin-top:18px;">For example, a developer building a system containing sensitive personal information should not wait until a breach occurs before considering access controls. Likewise, an organization operating a critical service should consider backups and recovery procedures before a major outage happens.</p>
+        <p>Security is therefore not solely the responsibility of a cybersecurity team. Developers, system administrators, database administrators, managers, vendors, users, and organizational leaders can all influence whether systems remain trustworthy and secure.</p>
+
+        <div class="quiz" id="q12">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">12. A team building a clinic's patient-records app decides: "Let's ship first and add access controls and backups later if something goes wrong." Which principle does this violate?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q12" value="a"> Security by design — foreseeable risks should be addressed throughout design and development, not after harm occurs</label>
+            <label class="opt"><input type="radio" name="q12" value="b"> Data minimization — the app collects too little data</label>
+            <label class="opt"><input type="radio" name="q12" value="c"> None — security is only the cybersecurity team's job</label>
+            <label class="opt"><input type="radio" name="q12" value="d"> Fair use — the team may reuse existing code without checking licenses</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q12')">Check answer</button>
+          <div class="feedback" id="q12-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 12. Monitoring and Privileged Access -->
+      <section class="chapter" id="monitoring">
+        <div class="eyebrow">12 · Professional and Organizational Responsibility</div>
+        <h2>Monitoring and Privileged Access</h2>
+        <p>Organizations have legitimate reasons to monitor their systems. They may need to detect attacks, investigate suspicious activity, enforce security policies, and protect organizational resources.</p>
+        <p>But monitoring also creates <strong>power</strong>. A system administrator might be able to inspect logs containing user activity. A security team might monitor network traffic. An organization might track employee access to systems.</p>
+        <p>The ethical issue is not whether monitoring is always right or wrong. Instead, we should consider:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Lens</th><th>Question to ask</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Purpose</strong></td><td>Why is the monitoring being conducted?</td></tr>
+            <tr><td><strong>Scope</strong></td><td>What, and whom, does the monitoring cover?</td></tr>
+            <tr><td><strong>Necessity</strong></td><td>Is the monitoring actually needed to achieve that purpose?</td></tr>
+            <tr><td><strong>Proportionality</strong></td><td>Is the extent of monitoring appropriate to the problem?</td></tr>
+            <tr><td><strong>Transparency</strong></td><td>Do people know that they are being monitored?</td></tr>
+          </tbody>
+        </table>
+        <p>Monitoring that is appropriate for detecting a security breach may become ethically problematic if the same capability is used unnecessarily to observe employees' private activities. Similarly, privileged access provided for system administration should not be used for personal curiosity or purposes unrelated to one's professional responsibilities.</p>
+
+        <div class="callout"><strong>A recurring tension.</strong> Security measures themselves can create ethical risks if the power they provide is misused.</div>
+
+        <div class="quiz" id="q13">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">13. A network security analyst has access to traffic logs to detect intrusions. After a breakup, he uses those logs to see which websites his ex-partner, a co-worker, has been visiting. What is the core ethical problem?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q13" value="a"> None — he only looked at logs he already had access to</label>
+            <label class="opt"><input type="radio" name="q13" value="b"> The logs were not encrypted</label>
+            <label class="opt"><input type="radio" name="q13" value="c"> He used monitoring power granted for a security purpose for a personal purpose unrelated to his professional responsibilities</label>
+            <label class="opt"><input type="radio" name="q13" value="d"> Network monitoring should never be done by any organization</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q13')">Check answer</button>
+          <div class="feedback" id="q13-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 13. Responding to Security Incidents -->
+      <section class="chapter" id="incidents">
+        <div class="eyebrow">13 · Professional and Organizational Responsibility</div>
+        <h2>Responding to Security Incidents</h2>
+        <p class="lede">Ethical responsibility continues after a security failure occurs.</p>
+        <p>Suppose an organization discovers that attackers may have obtained users' personal information. The organization now faces several decisions:</p>
+        <ul>
+          <li>How quickly should the incident be investigated?</li>
+          <li>Who needs to know?</li>
+          <li>What should affected individuals be told?</li>
+          <li>How can further harm be prevented?</li>
+          <li>Who should be held accountable?</li>
+        </ul>
+        <p>Organizations may sometimes have incentives to minimize or conceal incidents to protect their reputation. But withholding important information may <strong>prevent affected people from protecting themselves</strong>.</p>
+        <p>Ethical incident response therefore involves balancing <strong>security, transparency, confidentiality, accountability, and prevention of further harm</strong>.</p>
+
+        <p>The responsibility of an organization is not simply to restore the affected system. It should also:</p>
+        <div class="flow">
+          <span class="step">Understand what happened</span><span class="arrow">→</span>
+          <span class="step">Limit the consequences</span><span class="arrow">→</span>
+          <span class="step">Communicate with affected parties</span><span class="arrow">→</span>
+          <span class="step">Prevent recurrence</span>
+        </div>
+
+        <div class="quiz" id="q14">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">14. An online store learns that customers' names, emails, and passwords were stolen. The marketing head says: "Let's restore the servers quietly. Announcing this will hurt our brand." What is the main ethical problem with this plan?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q14" value="a"> There is none — restoring the system is the organization's only responsibility</label>
+            <label class="opt"><input type="radio" name="q14" value="b"> Concealing the incident may prevent customers from protecting themselves (e.g., changing passwords), putting reputation above preventing further harm</label>
+            <label class="opt"><input type="radio" name="q14" value="c"> The servers should not be restored at all</label>
+            <label class="opt"><input type="radio" name="q14" value="d"> Incidents only need to be disclosed if financial data were stolen</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q14')">Check answer</button>
+          <div class="feedback" id="q14-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 14. Discovering Vulnerabilities -->
+      <section class="chapter" id="vulns">
+        <div class="eyebrow">14 · Professional and Organizational Responsibility</div>
+        <h2>Discovering Vulnerabilities</h2>
+        <p>IS professionals may discover vulnerabilities in systems, sometimes unintentionally.</p>
+        <p>Discovering a vulnerability does not automatically authorize someone to exploit it. Testing a system beyond one's authorization can itself create risks, expose confidential information, or disrupt services.</p>
+
+        <p>A responsible response requires considering:</p>
+        <div class="flow">
+          <span class="step">Am I authorized to test this?</span><span class="arrow">→</span>
+          <span class="step">Could further testing cause harm?</span><span class="arrow">→</span>
+          <span class="step">Who should receive the report?</span><span class="arrow">→</span>
+          <span class="step">How can it be fixed without increasing risk?</span>
+        </div>
+
+        <div class="keyidea">
+          <h3>Discovering vs. exploiting</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Discovering a weakness</div>
+              <ul><li>Noticing that something is wrong — and reporting it responsibly</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">Exploiting a weakness</div>
+              <ul><li>Using it, or testing it beyond one's authorization</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:18px;">Professional competence gives computing practitioners greater ability to affect digital systems. Ethical responsibility requires knowing when <strong>not</strong> to exercise that ability.</p>
+
+        <div class="quiz" id="q15">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">15. While checking her grades on the university portal, a student notices that changing the student number in the URL shows another student's grades. What is the most responsible next step?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q15" value="a"> Try a few hundred more student numbers to confirm how serious the flaw is</label>
+            <label class="opt"><input type="radio" name="q15" value="b"> Post the trick on social media so everyone knows the system is insecure</label>
+            <label class="opt"><input type="radio" name="q15" value="c"> Keep using it quietly, since she didn't hack anything</label>
+            <label class="opt"><input type="radio" name="q15" value="d"> Stop, avoid further testing or viewing others' data, and report the flaw to the appropriate university office</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q15')">Check answer</button>
+          <div class="feedback" id="q15-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 15. Key Takeaways -->
+      <section class="chapter" id="takeaways">
+        <div class="eyebrow">15 · Wrap-up</div>
+        <h2>Key Takeaways</h2>
+        <ol class="commandments">
+          <li><strong>Cybersecurity protects people, not just computers.</strong> It is about protecting the people, information, activities, and institutions that depend on digital systems.</li>
+          <li><strong>The CIA triad is a foundation.</strong> Confidentiality, integrity, and availability define what cybersecurity seeks to protect — and failures in each produce real harms, from privacy violations and financial losses to disruption of essential services.</li>
+          <li><strong>Organizations have a duty of care.</strong> Perfect security does not exist, but reasonable precautions against foreseeable harm are expected.</li>
+          <li><strong>Security is not the only value.</strong> Security measures should be necessary, proportionate, transparent, and respectful of the people affected.</li>
+          <li><strong>RA 10175 provides the Philippine legal framework for cybercrime.</strong> But professional responsibility extends beyond simply avoiding illegal behavior.</li>
+          <li><strong>Responsibility is often shared.</strong> Users must exercise reasonable care, while organizations must design systems and environments that reduce human error and its consequences.</li>
+          <li><strong>Privileged access is a position of trust.</strong> Access is granted for specific responsibilities, not for personal curiosity or unrelated purposes.</li>
+          <li><strong>Security should be built in by design.</strong> Professionals should anticipate foreseeable risks rather than wait for harm to occur.</li>
+          <li><strong>Ethical responsibility continues after an incident.</strong> Organizations should investigate, limit harm, communicate appropriately, and prevent recurrence.</li>
+          <li><strong>Technical capability is not the same as ethical permission.</strong> Discovering a weakness does not authorize exploiting it.</li>
+        </ol>
+      </section>
+
+      <!-- 16. References -->
+      <section class="chapter" id="references">
+        <div class="eyebrow">16 · Wrap-up</div>
+        <h2>References and Further Reading</h2>
+
+        <div class="refbox">
+          <div class="refbox-label">Key References</div>
+          <ul>
+            <li>Republic of the Philippines. (2012). <a href="https://elibrary.judiciary.gov.ph/thebookshelf/showdocs/2/50264" target="_blank" rel="noopener"><em>Republic Act No. 10175: Cybercrime Prevention Act of 2012.</em></a> Supreme Court E-Library.</li>
+            <li>Association for Computing Machinery. (2018). <a href="https://www.acm.org/code-of-ethics" target="_blank" rel="noopener"><em>ACM Code of Ethics and Professional Conduct.</em></a></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<footer>IS 201: Computer Ethics · Topic 4 — Cybersecurity and Cyberethics · Dr. Reinald Adrian Pugoy</footer>
+
+<div class="progress-dock" role="status" aria-live="polite">
+  <div class="progress-dock-inner">
+    <div class="progress-dock-label">Check-in progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-count" id="progressCount">0 of 15 answered correctly</div>
+  </div>
+</div>
+
+<script>
+  // Quiz checking
+  function checkQuiz(id){
+    const quiz = document.getElementById(id);
+    const optionsDiv = quiz.querySelector('.options');
+    const correctValue = optionsDiv.dataset.correct;
+    const selected = quiz.querySelector('input[name="'+id+'"]:checked');
+    const feedback = document.getElementById(id+'-feedback');
+
+    if(!selected){
+      feedback.className = 'feedback show feedback-neutral';
+      feedback.textContent = 'Please select an answer first.';
+      return;
+    }
+
+    const isCorrect = selected.value === correctValue;
+    feedback.className = 'feedback show ' + (isCorrect ? 'feedback-correct' : 'feedback-incorrect');
+    feedback.textContent = isCorrect ? '✓ Correct.' : '✗ Not quite — review the section above and try again.';
+
+    if(isCorrect && !quiz.dataset.solved){
+      quiz.dataset.solved = 'true';
+      updateProgress();
+    }
+  }
+
+  function updateProgress(){
+    const totalQuizzes = document.querySelectorAll('.quiz').length;
+    const solved = document.querySelectorAll('.quiz[data-solved="true"]').length;
+    document.getElementById('progressFill').style.width = (solved/totalQuizzes*100) + '%';
+    document.getElementById('progressCount').textContent = solved + ' of ' + totalQuizzes + ' answered correctly';
+  }
+
+  // Sidebar active-link highlighting on scroll
+  const sections = document.querySelectorAll('section.chapter');
+  const tocLinks = document.querySelectorAll('.toc-link');
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        tocLinks.forEach(link=>{
+          link.classList.toggle('active', link.dataset.target === id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+
+  sections.forEach(sec => observer.observe(sec));
+
+  updateProgress();
+</script>
+
+</body>
+</html>

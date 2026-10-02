@@ -803,10 +803,11 @@
     <div class="nav-heading">Introduction</div>
     <ol id="toc">
       <li><a class="toc-link" href="#intro" data-target="intro">Just Because We Can…</a></li>
+      <li><a class="toc-link" href="#why-is" data-target="why-is">Why This Matters to IS</a></li>
     </ol>
 
     <div class="nav-heading">Privacy and Data Ethics</div>
-    <ol style="counter-reset:section 1">
+    <ol style="counter-reset:section 2">
       <li><a class="toc-link" href="#privacy" data-target="privacy">Privacy &amp; Digital Privacy</a></li>
       <li><a class="toc-link" href="#personal-data" data-target="personal-data">Personal Data &amp; Consent</a></li>
       <li><a class="toc-link" href="#dpa" data-target="dpa">Data Privacy Act of 2012</a></li>
@@ -814,7 +815,7 @@
     </ol>
 
     <div class="nav-heading">Intellectual Property and Digital Ownership</div>
-    <ol style="counter-reset:section 5">
+    <ol style="counter-reset:section 6">
       <li><a class="toc-link" href="#copyright" data-target="copyright">Copyright &amp; IP</a></li>
       <li><a class="toc-link" href="#ipcode" data-target="ipcode">Philippine IP Code</a></li>
       <li><a class="toc-link" href="#fairuse" data-target="fairuse">Piracy &amp; Fair Use</a></li>
@@ -824,13 +825,13 @@
     </ol>
 
     <div class="nav-heading">Applying the Ethical Frameworks</div>
-    <ol style="counter-reset:section 11">
+    <ol style="counter-reset:section 12">
       <li><a class="toc-link" href="#case1" data-target="case1">Case 1: Academic Analytics</a></li>
       <li><a class="toc-link" href="#case2" data-target="case2">Case 2: Open-Source Reuse</a></li>
     </ol>
 
     <div class="nav-heading">Wrap-up</div>
-    <ol style="counter-reset:section 13">
+    <ol style="counter-reset:section 14">
       <li><a class="toc-link" href="#takeaways" data-target="takeaways">Key Takeaways</a></li>
       <li><a class="toc-link" href="#references" data-target="references">References</a></li>
     </ol>
@@ -862,9 +863,35 @@
         </div>
       </section>
 
-      <!-- 2. Privacy and Digital Privacy -->
+      <!-- 2. Why This Matters -->
+      <section class="chapter" id="why-is">
+        <div class="eyebrow">02 · Introduction</div>
+        <h2>Why This Matters to Information Systems Students and Professionals</h2>
+        <p class="lede">Information systems professionals work at the intersection of people, organizations, data, and technology. They help design, develop, implement, and manage systems that collect information, support organizational processes, and influence how people interact with technology.</p>
+
+        <p>Decisions about what data to collect, who can access them, how long they are retained, and how users are monitored are therefore <strong>not merely technical decisions</strong>. They can affect privacy, autonomy, rights, security, and trust.</p>
+
+        <p>IS professionals also routinely work with software, datasets, digital content, and third-party resources. Understanding intellectual property, attribution, and software licensing is therefore an important part of responsible professional practice.</p>
+
+        <blockquote class="def"><strong>A well-designed information system</strong> should not only work correctly. It should also handle people, data, and digital resources responsibly.</blockquote>
+
+        <div class="quiz" id="q1">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">1. A systems analyst designing a university enrollment system says: "My job is just to make sure it works, runs fast, and is secure. Deciding what student data it collects or who can see it isn't my concern." Based on this section, what is the problem with this view?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q1" value="a"> Nothing — IS professionals are only responsible for technical performance</label>
+            <label class="opt"><input type="radio" name="q1" value="b"> Security alone guarantees that the system handles student data responsibly</label>
+            <label class="opt"><input type="radio" name="q1" value="c"> Decisions about what data to collect and who can access them are not merely technical — they affect privacy, rights, and trust, so they are part of responsible professional practice</label>
+            <label class="opt"><input type="radio" name="q1" value="d"> Only lawyers and administrators need to think about privacy and data rights</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q1')">Check answer</button>
+          <div class="feedback" id="q1-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 3. Privacy and Digital Privacy -->
       <section class="chapter" id="privacy">
-        <div class="eyebrow">02 · Privacy and Data Ethics</div>
+        <div class="eyebrow">03 · Privacy and Data Ethics</div>
         <h2>Privacy and Digital Privacy</h2>
 
         <h3>What Is Privacy?</h3>
@@ -874,17 +901,17 @@
 
         <blockquote class="def"><strong>Digital privacy</strong> — the appropriate handling of personal information, communications, and activities in digital environments. It includes keeping information appropriately confidential and secure and maintaining reasonable control over how personal data are collected, processed, stored, and shared.</blockquote>
 
-        <div class="quiz" id="q1">
+        <div class="quiz" id="q2">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">1. A student gives her home address to the university registrar for enrollment. Later, she is upset to learn the address was shared with a private marketing firm. Why is this still a privacy issue even though she provided the information voluntarily?</p>
+          <p class="q-prompt">2. A student gives her home address to the university registrar for enrollment. Later, she is upset to learn the address was shared with a private marketing firm. Why is this still a privacy issue even though she provided the information voluntarily?</p>
           <div class="options" data-correct="c">
-            <label class="opt"><input type="radio" name="q1" value="a"> It isn't — once information is shared, privacy no longer applies</label>
-            <label class="opt"><input type="radio" name="q1" value="b"> Because home addresses should never be collected by anyone</label>
-            <label class="opt"><input type="radio" name="q1" value="c"> Because privacy is about appropriate boundaries, not just secrecy — sharing for one purpose doesn't surrender all expectations about use</label>
-            <label class="opt"><input type="radio" name="q1" value="d"> Because the registrar failed to encrypt the data</label>
+            <label class="opt"><input type="radio" name="q2" value="a"> It isn't — once information is shared, privacy no longer applies</label>
+            <label class="opt"><input type="radio" name="q2" value="b"> Because home addresses should never be collected by anyone</label>
+            <label class="opt"><input type="radio" name="q2" value="c"> Because privacy is about appropriate boundaries, not just secrecy — sharing for one purpose doesn't surrender all expectations about use</label>
+            <label class="opt"><input type="radio" name="q2" value="d"> Because the registrar failed to encrypt the data</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q1')">Check answer</button>
-          <div class="feedback" id="q1-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q2')">Check answer</button>
+          <div class="feedback" id="q2-feedback"></div>
         </div>
 
         <h3>Why Is Digital Privacy Different?</h3>
@@ -923,17 +950,17 @@
         <blockquote class="def"><strong>The better question</strong> — When is collecting, accessing, or using personal information justified, and what limits should apply?</blockquote>
         <p>The existence of a legitimate purpose does not automatically justify unlimited collection or access. The degree of intrusion should be necessary, appropriate, and sufficiently justified.</p>
 
-        <div class="quiz" id="q2">
+        <div class="quiz" id="q3">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">2. A fitness app separately records your running route, the time you leave home each morning, and the café you stop at. Each item seems harmless on its own. What is the main privacy concern?</p>
+          <p class="q-prompt">3. A fitness app separately records your running route, the time you leave home each morning, and the café you stop at. Each item seems harmless on its own. What is the main privacy concern?</p>
           <div class="options" data-correct="b">
-            <label class="opt"><input type="radio" name="q2" value="a"> There is no concern, since each item is harmless on its own</label>
-            <label class="opt"><input type="radio" name="q2" value="b"> Combined, the pieces can reveal a detailed picture of your routine and location that you never explicitly disclosed</label>
-            <label class="opt"><input type="radio" name="q2" value="c"> Fitness apps should never collect any data at all, because privacy is absolute</label>
-            <label class="opt"><input type="radio" name="q2" value="d"> The only concern is whether the app is free or paid</label>
+            <label class="opt"><input type="radio" name="q3" value="a"> There is no concern, since each item is harmless on its own</label>
+            <label class="opt"><input type="radio" name="q3" value="b"> Combined, the pieces can reveal a detailed picture of your routine and location that you never explicitly disclosed</label>
+            <label class="opt"><input type="radio" name="q3" value="c"> Fitness apps should never collect any data at all, because privacy is absolute</label>
+            <label class="opt"><input type="radio" name="q3" value="d"> The only concern is whether the app is free or paid</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q2')">Check answer</button>
-          <div class="feedback" id="q2-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q3')">Check answer</button>
+          <div class="feedback" id="q3-feedback"></div>
         </div>
 
         <div class="refbox">
@@ -945,9 +972,9 @@
         </div>
       </section>
 
-      <!-- 3. Personal Data, Data Protection, and Consent -->
+      <!-- 4. Personal Data, Data Protection, and Consent -->
       <section class="chapter" id="personal-data">
-        <div class="eyebrow">03 · Privacy and Data Ethics</div>
+        <div class="eyebrow">04 · Privacy and Data Ethics</div>
         <h2>Personal Data, Data Protection, and Consent</h2>
 
         <h3>What Is Personal Data?</h3>
@@ -970,17 +997,17 @@
         <blockquote class="def"><strong>Security vs. privacy</strong> — Security asks whether data are adequately protected. Privacy also asks whether the data should be collected, accessed, or used in the first place.</blockquote>
         <p>Good cybersecurity contributes to privacy, but security alone does not guarantee responsible data practices.</p>
 
-        <div class="quiz" id="q3">
+        <div class="quiz" id="q4">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">3. A company's customer database has never been breached and uses state-of-the-art encryption. Without telling customers, the company starts using their purchase histories to set individually higher prices. Which statement is most accurate?</p>
+          <p class="q-prompt">4. A company's customer database has never been breached and uses state-of-the-art encryption. Without telling customers, the company starts using their purchase histories to set individually higher prices. Which statement is most accurate?</p>
           <div class="options" data-correct="d">
-            <label class="opt"><input type="radio" name="q3" value="a"> There is no privacy issue because the data are secure</label>
-            <label class="opt"><input type="radio" name="q3" value="b"> This is purely a data protection failure</label>
-            <label class="opt"><input type="radio" name="q3" value="c"> Encryption automatically makes any use of the data ethical</label>
-            <label class="opt"><input type="radio" name="q3" value="d"> The data are well protected, but the new use still raises a data privacy concern</label>
+            <label class="opt"><input type="radio" name="q4" value="a"> There is no privacy issue because the data are secure</label>
+            <label class="opt"><input type="radio" name="q4" value="b"> This is purely a data protection failure</label>
+            <label class="opt"><input type="radio" name="q4" value="c"> Encryption automatically makes any use of the data ethical</label>
+            <label class="opt"><input type="radio" name="q4" value="d"> The data are well protected, but the new use still raises a data privacy concern</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q3')">Check answer</button>
-          <div class="feedback" id="q3-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q4')">Check answer</button>
+          <div class="feedback" id="q4-feedback"></div>
         </div>
 
         <h3>Data Minimization</h3>
@@ -988,17 +1015,17 @@
         <blockquote class="def"><strong>Data minimization</strong> — collect only the information actually needed for a legitimate purpose.</blockquote>
         <p>For developers and system designers, this can begin with a simple question: <strong>Do we actually need this information?</strong> If the answer is no, perhaps it should not be collected.</p>
 
-        <div class="quiz" id="q4">
+        <div class="quiz" id="q5">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">4. You're building a sign-up form for a campus library's e-newsletter. A teammate suggests also asking for birthdate, home address, and mobile number "in case we need them later." Applying data minimization, what should you do?</p>
+          <p class="q-prompt">5. You're building a sign-up form for a campus library's e-newsletter. A teammate suggests also asking for birthdate, home address, and mobile number "in case we need them later." Applying data minimization, what should you do?</p>
           <div class="options" data-correct="a">
-            <label class="opt"><input type="radio" name="q4" value="a"> Collect only what the newsletter actually needs (e.g., name and email) and leave out the rest</label>
-            <label class="opt"><input type="radio" name="q4" value="b"> Collect everything, as long as it's encrypted</label>
-            <label class="opt"><input type="radio" name="q4" value="c"> Collect everything, but make the extra fields optional and hidden</label>
-            <label class="opt"><input type="radio" name="q4" value="d"> Collect everything, since more data always means better service</label>
+            <label class="opt"><input type="radio" name="q5" value="a"> Collect only what the newsletter actually needs (e.g., name and email) and leave out the rest</label>
+            <label class="opt"><input type="radio" name="q5" value="b"> Collect everything, as long as it's encrypted</label>
+            <label class="opt"><input type="radio" name="q5" value="c"> Collect everything, but make the extra fields optional and hidden</label>
+            <label class="opt"><input type="radio" name="q5" value="d"> Collect everything, since more data always means better service</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q4')">Check answer</button>
-          <div class="feedback" id="q4-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q5')">Check answer</button>
+          <div class="feedback" id="q5-feedback"></div>
         </div>
 
         <h3>Consent</h3>
@@ -1008,17 +1035,17 @@
         <p>Imagine an application presenting a lengthy privacy policy written in highly technical language. The user must accept it to access a service that they genuinely need. The organization may have obtained a click. Whether the individual genuinely understood what they were agreeing to is a different question.</p>
         <p>Consent therefore raises ethical questions about transparency, comprehension, choice, and the power relationship between the organization requesting data and the individual providing them.</p>
 
-        <div class="quiz" id="q5">
+        <div class="quiz" id="q6">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">5. To access the only online portal for paying her tuition, a student must accept a 40-page privacy policy full of legal jargon. She clicks "I agree" without reading it. From an ethical standpoint, what is the main problem?</p>
+          <p class="q-prompt">6. To access the only online portal for paying her tuition, a student must accept a 40-page privacy policy full of legal jargon. She clicks "I agree" without reading it. From an ethical standpoint, what is the main problem?</p>
           <div class="options" data-correct="b">
-            <label class="opt"><input type="radio" name="q5" value="a"> Nothing — a click is a valid agreement, so consent is fully meaningful</label>
-            <label class="opt"><input type="radio" name="q5" value="b"> A click was obtained, but it's doubtful she made an informed, genuine choice given the length, jargon, and lack of real alternatives</label>
-            <label class="opt"><input type="radio" name="q5" value="c"> The student is entirely at fault for not reading it, so no ethical issue remains for the organization</label>
-            <label class="opt"><input type="radio" name="q5" value="d"> The only problem is that the policy is too short</label>
+            <label class="opt"><input type="radio" name="q6" value="a"> Nothing — a click is a valid agreement, so consent is fully meaningful</label>
+            <label class="opt"><input type="radio" name="q6" value="b"> A click was obtained, but it's doubtful she made an informed, genuine choice given the length, jargon, and lack of real alternatives</label>
+            <label class="opt"><input type="radio" name="q6" value="c"> The student is entirely at fault for not reading it, so no ethical issue remains for the organization</label>
+            <label class="opt"><input type="radio" name="q6" value="d"> The only problem is that the policy is too short</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q5')">Check answer</button>
-          <div class="feedback" id="q5-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q6')">Check answer</button>
+          <div class="feedback" id="q6-feedback"></div>
         </div>
 
         <div class="refbox">
@@ -1029,9 +1056,9 @@
         </div>
       </section>
 
-      <!-- 4. Data Privacy Act -->
+      <!-- 5. Data Privacy Act -->
       <section class="chapter" id="dpa">
-        <div class="eyebrow">04 · Privacy and Data Ethics</div>
+        <div class="eyebrow">05 · Privacy and Data Ethics</div>
         <h2>The Philippine Data Privacy Act of 2012</h2>
         <p>In the Philippines, <strong>Republic Act No. 10173</strong>, or the <strong>Data Privacy Act of 2012 (DPA)</strong>, provides the principal legal framework for protecting personal information. It establishes responsibilities for organizations that process personal data and rights for individuals whose information is processed.</p>
 
@@ -1046,30 +1073,30 @@
 
         <p>Consent is an important basis for processing personal information, but it is <strong>not the only lawful basis</strong>. The law permits processing under other specified circumstances, such as when necessary to fulfill a contract, comply with a legal obligation, protect vital interests, or satisfy other conditions provided by law.</p>
 
-        <div class="quiz" id="q6">
-          <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">6. A barangay health center asks residents for their full employment history, social media handles, and monthly income just to schedule a free flu vaccination. Which DPA principle is most clearly at issue?</p>
-          <div class="options" data-correct="c">
-            <label class="opt"><input type="radio" name="q6" value="a"> Transparency</label>
-            <label class="opt"><input type="radio" name="q6" value="b"> The right to correct personal information</label>
-            <label class="opt"><input type="radio" name="q6" value="c"> Proportionality — the data collected is excessive relative to the purpose</label>
-            <label class="opt"><input type="radio" name="q6" value="d"> None — health centers may collect anything they want</label>
-          </div>
-          <button class="check-btn" onclick="checkQuiz('q6')">Check answer</button>
-          <div class="feedback" id="q6-feedback"></div>
-        </div>
-
         <div class="quiz" id="q7">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">7. A classmate says, "Under the DPA, an employer can never process your personal data unless you explicitly give consent." Is this correct?</p>
-          <div class="options" data-correct="b">
-            <label class="opt"><input type="radio" name="q7" value="a"> Yes — consent is the only lawful basis for processing under the DPA</label>
-            <label class="opt"><input type="radio" name="q7" value="b"> No — consent is important but not the only basis; processing may also be lawful when needed to fulfill a contract or comply with a legal obligation, among others</label>
-            <label class="opt"><input type="radio" name="q7" value="c"> No — the DPA doesn't apply to employers at all</label>
-            <label class="opt"><input type="radio" name="q7" value="d"> Yes — but only for government employers</label>
+          <p class="q-prompt">7. A barangay health center asks residents for their full employment history, social media handles, and monthly income just to schedule a free flu vaccination. Which DPA principle is most clearly at issue?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q7" value="a"> Transparency</label>
+            <label class="opt"><input type="radio" name="q7" value="b"> The right to correct personal information</label>
+            <label class="opt"><input type="radio" name="q7" value="c"> Proportionality — the data collected is excessive relative to the purpose</label>
+            <label class="opt"><input type="radio" name="q7" value="d"> None — health centers may collect anything they want</label>
           </div>
           <button class="check-btn" onclick="checkQuiz('q7')">Check answer</button>
           <div class="feedback" id="q7-feedback"></div>
+        </div>
+
+        <div class="quiz" id="q8">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">8. A classmate says, "Under the DPA, an employer can never process your personal data unless you explicitly give consent." Is this correct?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q8" value="a"> Yes — consent is the only lawful basis for processing under the DPA</label>
+            <label class="opt"><input type="radio" name="q8" value="b"> No — consent is important but not the only basis; processing may also be lawful when needed to fulfill a contract or comply with a legal obligation, among others</label>
+            <label class="opt"><input type="radio" name="q8" value="c"> No — the DPA doesn't apply to employers at all</label>
+            <label class="opt"><input type="radio" name="q8" value="d"> Yes — but only for government employers</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q8')">Check answer</button>
+          <div class="feedback" id="q8-feedback"></div>
         </div>
 
         <p>For computing professionals, the DPA establishes important requirements for systems that collect and process personal information. However, legal compliance does not automatically settle the ethical question.</p>
@@ -1083,9 +1110,9 @@
         </div>
       </section>
 
-      <!-- 5. Surveillance, Tracking, and Profiling -->
+      <!-- 6. Surveillance, Tracking, and Profiling -->
       <section class="chapter" id="surveillance">
-        <div class="eyebrow">05 · Privacy and Data Ethics</div>
+        <div class="eyebrow">06 · Privacy and Data Ethics</div>
         <h2>Surveillance, Tracking, and Profiling</h2>
         <p>Digital technologies do more than store information about people. They can also be used to <strong>observe activities, track behavior, and draw conclusions about individuals</strong>.</p>
         <p>Websites can record pages visited and links clicked. Applications can track location and usage patterns. Online stores can record purchases. Employers can monitor organizational systems. Universities can maintain system logs. Governments and private organizations can use cameras and other technologies to monitor physical and digital environments.</p>
@@ -1109,17 +1136,17 @@
 
         <p>Consider an employer who wants to ensure that employees are performing their work while working remotely. Recording login times may serve a legitimate administrative purpose. Continuously recording employees through their webcams would create a very different level of intrusion. Both involve monitoring, but their ethical implications are not the same.</p>
 
-        <div class="quiz" id="q8">
+        <div class="quiz" id="q9">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">8. To check that work-from-home staff are productive, a manager wants to install software that takes webcam photos of employees every five minutes. Which lens most directly exposes the problem with this plan?</p>
+          <p class="q-prompt">9. To check that work-from-home staff are productive, a manager wants to install software that takes webcam photos of employees every five minutes. Which lens most directly exposes the problem with this plan?</p>
           <div class="options" data-correct="a">
-            <label class="opt"><input type="radio" name="q8" value="a"> Proportionality — the level of intrusion far exceeds what's needed when less intrusive options (e.g., login times, output) exist</label>
-            <label class="opt"><input type="radio" name="q8" value="b"> Retention — the photos are kept too briefly</label>
-            <label class="opt"><input type="radio" name="q8" value="c"> There's no problem; any monitoring by an employer is acceptable</label>
-            <label class="opt"><input type="radio" name="q8" value="d"> Access — too few people can see the photos</label>
+            <label class="opt"><input type="radio" name="q9" value="a"> Proportionality — the level of intrusion far exceeds what's needed when less intrusive options (e.g., login times, output) exist</label>
+            <label class="opt"><input type="radio" name="q9" value="b"> Retention — the photos are kept too briefly</label>
+            <label class="opt"><input type="radio" name="q9" value="c"> There's no problem; any monitoring by an employer is acceptable</label>
+            <label class="opt"><input type="radio" name="q9" value="d"> Access — too few people can see the photos</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q8')">Check answer</button>
-          <div class="feedback" id="q8-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q9')">Check answer</button>
+          <div class="feedback" id="q9-feedback"></div>
         </div>
 
         <h3>Profiling</h3>
@@ -1134,23 +1161,23 @@
         </ul>
         <p>The ethical concern is no longer simply that information has been collected. The information is now being used to <strong>make judgments about a person</strong>.</p>
 
-        <div class="quiz" id="q9">
+        <div class="quiz" id="q10">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">9. A lending app never asks about your health, but based on your pharmacy purchases and late-night browsing it infers you may have a chronic illness — and quietly lowers your credit limit. What makes this profiling ethically significant?</p>
+          <p class="q-prompt">10. A lending app never asks about your health, but based on your pharmacy purchases and late-night browsing it infers you may have a chronic illness — and quietly lowers your credit limit. What makes this profiling ethically significant?</p>
           <div class="options" data-correct="d">
-            <label class="opt"><input type="radio" name="q9" value="a"> Nothing, since you never directly provided health information</label>
-            <label class="opt"><input type="radio" name="q9" value="b"> Only that the app stored your purchase data</label>
-            <label class="opt"><input type="radio" name="q9" value="c"> It's only an intellectual property issue</label>
-            <label class="opt"><input type="radio" name="q9" value="d"> An inference you never disclosed — which may be inaccurate — is being used to make a decision that affects you</label>
+            <label class="opt"><input type="radio" name="q10" value="a"> Nothing, since you never directly provided health information</label>
+            <label class="opt"><input type="radio" name="q10" value="b"> Only that the app stored your purchase data</label>
+            <label class="opt"><input type="radio" name="q10" value="c"> It's only an intellectual property issue</label>
+            <label class="opt"><input type="radio" name="q10" value="d"> An inference you never disclosed — which may be inaccurate — is being used to make a decision that affects you</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q9')">Check answer</button>
-          <div class="feedback" id="q9-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q10')">Check answer</button>
+          <div class="feedback" id="q10-feedback"></div>
         </div>
       </section>
 
-      <!-- 6. Copyright and Intellectual Property -->
+      <!-- 7. Copyright and Intellectual Property -->
       <section class="chapter" id="copyright">
-        <div class="eyebrow">06 · Intellectual Property and Digital Ownership</div>
+        <div class="eyebrow">07 · Intellectual Property and Digital Ownership</div>
         <h2>Copyright and Intellectual Property</h2>
         <p class="lede">Privacy and data ethics concern information <strong>about people</strong>. Intellectual property and digital ownership concern the rights and responsibilities associated with <strong>things people create, own, use, and share</strong>.</p>
         <p>Digital technology makes copying extraordinarily easy. A physical object generally cannot be given to another person while the original owner keeps the same object. A digital file, however, can be copied perfectly, rapidly, and at almost no cost. This creates enormous opportunities for education, creativity, collaboration, and innovation. It also creates ethical questions concerning ownership, attribution, access, and the rights of creators.</p>
@@ -1166,40 +1193,58 @@
         </div>
       </section>
 
-      <!-- 7. Philippine IP Code -->
+      <!-- 8. Philippine IP Code -->
       <section class="chapter" id="ipcode">
-        <div class="eyebrow">07 · Intellectual Property and Digital Ownership</div>
+        <div class="eyebrow">08 · Intellectual Property and Digital Ownership</div>
         <h2>The Philippine Intellectual Property Code</h2>
         <p>In the Philippines, <strong>Republic Act No. 8293</strong>, or the <strong>Intellectual Property Code of the Philippines</strong>, provides the principal legal framework for protecting intellectual property. It covers areas such as copyright, patents, trademarks, and other intellectual property rights.</p>
         <p>For digital technologies, copyright is particularly relevant because it protects various forms of creative works, including literary and artistic works, computer programs, and other original intellectual creations.</p>
         <p>Copyright gives creators and other rights holders certain rights over how protected works are reproduced, distributed, adapted, communicated, and otherwise used. However, these rights are <strong>not absolute</strong>. Philippine law also recognizes limitations and exceptions, including <strong>fair use</strong>, which allows certain uses of copyrighted works depending on the circumstances.</p>
+        <h3>How the IP Code Protects Software</h3>
+        <p>The Philippines takes a mixed approach to protecting software. Under RA 8293, a <strong>computer program is protected by copyright as a literary work</strong>, while some <strong>software-related inventions</strong> may also qualify for patent protection.</p>
+
+        <table class="compare">
+          <thead>
+            <tr><th></th><th>Copyright</th><th>Patent</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>What it covers</strong></td><td>The expression of the software — its written code and how that code is structured and organized</td><td>A new technical solution to a problem, where software is part of how the problem is solved (e.g., a fraud-detection or disaster-warning system)</td></tr>
+            <tr><td><strong>What it does not cover</strong></td><td>The underlying ideas, methods, or abstract mathematical functions</td><td>Abstract algorithms or business methods on their own</td></tr>
+            <tr><td><strong>When protection begins</strong></td><td>Automatically, from the moment the program is created — no registration required</td><td>Only after a formal application is examined and granted by IPOPHL, which can take years</td></tr>
+            <tr><td><strong>Role of registration</strong></td><td>Optional; recording the work with IPOPHL strengthens the owner's ability to enforce their rights</td><td>Required</td></tr>
+          </tbody>
+        </table>
+
+        <p>For developers, this means code is protected as soon as it is written — but so is everyone else's. The fact that a program carries no registration notice does not mean it is free to copy. And because copyright protects expression rather than ideas, developers may independently implement a similar idea or algorithm, but may not simply copy another person's code.</p>
+
         <p>For computing professionals, the Intellectual Property Code establishes important legal boundaries when creating, copying, modifying, distributing, or incorporating digital materials into technological products and services. As with data privacy, however, legal compliance does not settle every ethical question.</p>
         <blockquote class="def"><strong>Beyond the law</strong> — Respecting intellectual property involves not only asking what the law permits, but also what constitutes fair, responsible, and respectful use of another person's work.</blockquote>
 
-        <div class="quiz" id="q10">
+        <div class="quiz" id="q11">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">10. Which statement best describes copyright under the Philippine Intellectual Property Code?</p>
+          <p class="q-prompt">11. Which statement best describes copyright under the Philippine Intellectual Property Code?</p>
           <div class="options" data-correct="c">
-            <label class="opt"><input type="radio" name="q10" value="a"> It gives creators absolute control over every possible use of their work</label>
-            <label class="opt"><input type="radio" name="q10" value="b"> It does not apply to computer programs</label>
-            <label class="opt"><input type="radio" name="q10" value="c"> It protects works such as computer programs, but its rights are subject to limitations and exceptions such as fair use</label>
-            <label class="opt"><input type="radio" name="q10" value="d"> It only covers trademarks and patents</label>
+            <label class="opt"><input type="radio" name="q11" value="a"> It gives creators absolute control over every possible use of their work</label>
+            <label class="opt"><input type="radio" name="q11" value="b"> It does not apply to computer programs</label>
+            <label class="opt"><input type="radio" name="q11" value="c"> It protects works such as computer programs, but its rights are subject to limitations and exceptions such as fair use</label>
+            <label class="opt"><input type="radio" name="q11" value="d"> It only covers trademarks and patents</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q10')">Check answer</button>
-          <div class="feedback" id="q10-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q11')">Check answer</button>
+          <div class="feedback" id="q11-feedback"></div>
         </div>
 
         <div class="refbox">
-          <div class="refbox-label">Primary source</div>
+          <div class="refbox-label">Read alongside this section</div>
           <ul>
             <li><a href="https://www.officialgazette.gov.ph/1997/06/06/republic-act-no-8293/" target="_blank" rel="noopener">Republic Act No. 8293: Intellectual Property Code of the Philippines</a> — Official Gazette</li>
+            <li><a href="https://www.trademark.net.ph/blog/copyright-protection-computer-software-and-application" target="_blank" rel="noopener">Copyright Protection: Computer Software and Application</a> — Brealant</li>
           </ul>
         </div>
       </section>
 
-      <!-- 8. Digital Piracy and Fair Use -->
+      <!-- 9. Digital Piracy and Fair Use -->
       <section class="chapter" id="fairuse">
-        <div class="eyebrow">08 · Intellectual Property and Digital Ownership</div>
+        <div class="eyebrow">09 · Intellectual Property and Digital Ownership</div>
         <h2>Digital Piracy and Fair Use</h2>
         <p>Digital technologies have made copying and distributing protected works extremely easy.</p>
         <blockquote class="def"><strong>Digital piracy</strong> — unauthorized copying, downloading, distribution, or use of copyrighted material.</blockquote>
@@ -1215,23 +1260,23 @@
         </ol>
         <p>Ethical reasoning therefore requires consideration of both the rights of creators and the legitimate interests of users and society.</p>
 
-        <div class="quiz" id="q11">
+        <div class="quiz" id="q12">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">11. A review center scans an entire commercially sold textbook and gives free PDF copies to all its enrollees, saying "it's for education, so it's fair use." What's wrong with this reasoning?</p>
+          <p class="q-prompt">12. A review center scans an entire commercially sold textbook and gives free PDF copies to all its enrollees, saying "it's for education, so it's fair use." What's wrong with this reasoning?</p>
           <div class="options" data-correct="b">
-            <label class="opt"><input type="radio" name="q11" value="a"> Nothing — any educational use is automatically fair use</label>
-            <label class="opt"><input type="radio" name="q11" value="b"> Labeling a use "educational" doesn't make it fair use; copying the entire work and replacing sales weighs heavily against it</label>
-            <label class="opt"><input type="radio" name="q11" value="c"> Fair use only applies to news reporting</label>
-            <label class="opt"><input type="radio" name="q11" value="d"> It would be fine if the PDFs were sold instead of given away</label>
+            <label class="opt"><input type="radio" name="q12" value="a"> Nothing — any educational use is automatically fair use</label>
+            <label class="opt"><input type="radio" name="q12" value="b"> Labeling a use "educational" doesn't make it fair use; copying the entire work and replacing sales weighs heavily against it</label>
+            <label class="opt"><input type="radio" name="q12" value="c"> Fair use only applies to news reporting</label>
+            <label class="opt"><input type="radio" name="q12" value="d"> It would be fine if the PDFs were sold instead of given away</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q11')">Check answer</button>
-          <div class="feedback" id="q11-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q12')">Check answer</button>
+          <div class="feedback" id="q12-feedback"></div>
         </div>
       </section>
 
-      <!-- 9. Attribution and Plagiarism -->
+      <!-- 10. Attribution and Plagiarism -->
       <section class="chapter" id="attribution">
-        <div class="eyebrow">09 · Intellectual Property and Digital Ownership</div>
+        <div class="eyebrow">10 · Intellectual Property and Digital Ownership</div>
         <h2>Authorship, Attribution, and Plagiarism</h2>
         <p>Copyright and plagiarism are related, but they are not identical.</p>
         <table class="compare">
@@ -1261,23 +1306,23 @@
 
         <p style="margin-top:18px;">Computing professionals encounter similar responsibilities when reusing code, documentation, images, datasets, designs, and other digital materials.</p>
 
-        <div class="quiz" id="q12">
+        <div class="quiz" id="q13">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">12. A student copies three full chapters of a copyrighted e-book into his project website, but carefully credits the author and publisher at the bottom. Which statement is correct?</p>
+          <p class="q-prompt">13. A student copies three full chapters of a copyrighted e-book into his project website, but carefully credits the author and publisher at the bottom. Which statement is correct?</p>
           <div class="options" data-correct="a">
-            <label class="opt"><input type="radio" name="q12" value="a"> He avoided plagiarism by crediting the source, but attribution alone doesn't give him permission to reproduce that much copyrighted material</label>
-            <label class="opt"><input type="radio" name="q12" value="b"> Crediting the author makes the copying fully legal and ethical</label>
-            <label class="opt"><input type="radio" name="q12" value="c"> This is plagiarism, since he named the author</label>
-            <label class="opt"><input type="radio" name="q12" value="d"> Copyright and plagiarism are the same thing, so there's only one issue here</label>
+            <label class="opt"><input type="radio" name="q13" value="a"> He avoided plagiarism by crediting the source, but attribution alone doesn't give him permission to reproduce that much copyrighted material</label>
+            <label class="opt"><input type="radio" name="q13" value="b"> Crediting the author makes the copying fully legal and ethical</label>
+            <label class="opt"><input type="radio" name="q13" value="c"> This is plagiarism, since he named the author</label>
+            <label class="opt"><input type="radio" name="q13" value="d"> Copyright and plagiarism are the same thing, so there's only one issue here</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q12')">Check answer</button>
-          <div class="feedback" id="q12-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q13')">Check answer</button>
+          <div class="feedback" id="q13-feedback"></div>
         </div>
       </section>
 
-      <!-- 10. Digital Ownership -->
+      <!-- 11. Digital Ownership -->
       <section class="chapter" id="ownership">
-        <div class="eyebrow">10 · Intellectual Property and Digital Ownership</div>
+        <div class="eyebrow">11 · Intellectual Property and Digital Ownership</div>
         <h2>Ownership of Digital Content and Assets</h2>
         <p>Digital ownership can be less intuitive than ownership of physical objects.</p>
         <table class="compare">
@@ -1299,23 +1344,23 @@
         </ul>
         <p>Digital technologies therefore challenge familiar assumptions about ownership.</p>
 
-        <div class="quiz" id="q13">
+        <div class="quiz" id="q14">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">13. You "bought" 30 movies on a streaming store. The store shuts down, and you can no longer watch any of them. What does this situation best illustrate?</p>
+          <p class="q-prompt">14. You "bought" 30 movies on a streaming store. The store shuts down, and you can no longer watch any of them. What does this situation best illustrate?</p>
           <div class="options" data-correct="c">
-            <label class="opt"><input type="radio" name="q13" value="a"> Digital piracy</label>
-            <label class="opt"><input type="radio" name="q13" value="b"> A data minimization failure</label>
-            <label class="opt"><input type="radio" name="q13" value="c"> Purchasing digital content often provides a license to access it rather than ownership like a physical copy</label>
-            <label class="opt"><input type="radio" name="q13" value="d"> Plagiarism by the streaming store</label>
+            <label class="opt"><input type="radio" name="q14" value="a"> Digital piracy</label>
+            <label class="opt"><input type="radio" name="q14" value="b"> A data minimization failure</label>
+            <label class="opt"><input type="radio" name="q14" value="c"> Purchasing digital content often provides a license to access it rather than ownership like a physical copy</label>
+            <label class="opt"><input type="radio" name="q14" value="d"> Plagiarism by the streaming store</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q13')">Check answer</button>
-          <div class="feedback" id="q13-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q14')">Check answer</button>
+          <div class="feedback" id="q14-feedback"></div>
         </div>
       </section>
 
-      <!-- 11. Software Licensing and Open Source -->
+      <!-- 12. Software Licensing and Open Source -->
       <section class="chapter" id="licensing">
-        <div class="eyebrow">11 · Intellectual Property and Digital Ownership</div>
+        <div class="eyebrow">12 · Intellectual Property and Digital Ownership</div>
         <h2>Software Licensing and Open Source</h2>
         <p>Software is intellectual property, but obtaining software does not necessarily mean owning it. In most cases, users receive permission to use software according to a <strong>software license</strong>, which establishes what they may and may not do with it.</p>
         <p>A license may specify whether software can be installed on multiple devices, copied or redistributed, modified, used commercially, or incorporated into another software product.</p>
@@ -1337,17 +1382,17 @@
         <p>Open-source software remains subject to licensing conditions. Some licenses, such as the <strong>MIT</strong> and <strong>Apache</strong> licenses, generally permit broad reuse and modification provided that specified requirements are followed. Other licenses, such as the <strong>GNU General Public License (GPL)</strong>, impose additional conditions when software is modified or redistributed.</p>
         <p>This is especially important because modern software development relies heavily on existing frameworks, libraries, packages, plugins, and other third-party components. Finding code in a public repository does not automatically mean that it can be used for any purpose.</p>
 
-        <div class="quiz" id="q14">
+        <div class="quiz" id="q15">
           <div class="quiz-label">Quick check</div>
-          <p class="q-prompt">14. A developer finds useful code in a public GitHub repository and says, "It's public, so I can drop it into our paid app however I like." What's the flaw in this reasoning?</p>
+          <p class="q-prompt">15. A developer finds useful code in a public GitHub repository and says, "It's public, so I can drop it into our paid app however I like." What's the flaw in this reasoning?</p>
           <div class="options" data-correct="b">
-            <label class="opt"><input type="radio" name="q14" value="a"> There is no flaw — public code has no copyright</label>
-            <label class="opt"><input type="radio" name="q14" value="b"> Public availability doesn't grant unrestricted permission; the code's license determines how it may be used, modified, or redistributed</label>
-            <label class="opt"><input type="radio" name="q14" value="c"> Code on GitHub can only be used by students</label>
-            <label class="opt"><input type="radio" name="q14" value="d"> Only proprietary software has licenses</label>
+            <label class="opt"><input type="radio" name="q15" value="a"> There is no flaw — public code has no copyright</label>
+            <label class="opt"><input type="radio" name="q15" value="b"> Public availability doesn't grant unrestricted permission; the code's license determines how it may be used, modified, or redistributed</label>
+            <label class="opt"><input type="radio" name="q15" value="c"> Code on GitHub can only be used by students</label>
+            <label class="opt"><input type="radio" name="q15" value="d"> Only proprietary software has licenses</label>
           </div>
-          <button class="check-btn" onclick="checkQuiz('q14')">Check answer</button>
-          <div class="feedback" id="q14-feedback"></div>
+          <button class="check-btn" onclick="checkQuiz('q15')">Check answer</button>
+          <div class="feedback" id="q15-feedback"></div>
         </div>
 
         <p>Before incorporating third-party software, developers should consider:</p>
@@ -1373,9 +1418,9 @@
         </div>
       </section>
 
-      <!-- 12. Case 1 -->
+      <!-- 13. Case 1 -->
       <section class="chapter" id="case1">
-        <div class="eyebrow">12 · Applying the Ethical Frameworks</div>
+        <div class="eyebrow">13 · Applying the Ethical Frameworks</div>
         <h2>Case 1: Student Data and Academic Analytics</h2>
         <p class="lede">Ethical frameworks become particularly useful when technological practices involve competing interests rather than an obvious right-or-wrong answer. The two cases that follow represent the major areas covered in this topic.</p>
 
@@ -1406,9 +1451,9 @@
         </div>
       </section>
 
-      <!-- 13. Case 2 -->
+      <!-- 14. Case 2 -->
       <section class="chapter" id="case2">
-        <div class="eyebrow">13 · Applying the Ethical Frameworks</div>
+        <div class="eyebrow">14 · Applying the Ethical Frameworks</div>
         <h2>Case 2: Reusing Open-Source Code</h2>
 
         <blockquote class="def"><strong>The case</strong> — A developer finds an open-source library that could save several weeks of development. The developer incorporates it into the company's commercial software without checking the license. The code works successfully, and the product is released. The company later discovers that the license imposed conditions that were not followed.</blockquote>
@@ -1438,9 +1483,9 @@
         </div>
       </section>
 
-      <!-- 14. Key Takeaways -->
+      <!-- 15. Key Takeaways -->
       <section class="chapter" id="takeaways">
-        <div class="eyebrow">14 · Wrap-up</div>
+        <div class="eyebrow">15 · Wrap-up</div>
         <h2>Key Takeaways</h2>
         <ol class="commandments">
           <li><strong>Privacy is more than secrecy.</strong> It concerns appropriate boundaries, autonomy, freedom, and the responsible handling of information about individuals.</li>
@@ -1481,9 +1526,9 @@
         </div>
       </section>
 
-      <!-- 15. References -->
+      <!-- 16. References -->
       <section class="chapter" id="references">
-        <div class="eyebrow">15 · Wrap-up</div>
+        <div class="eyebrow">16 · Wrap-up</div>
         <h2>References and Further Reading</h2>
 
         <div class="refbox">
@@ -1500,6 +1545,7 @@
           <div class="refbox-label">Intellectual Property and Digital Ownership</div>
           <ul>
             <li>Republic of the Philippines. (1997). <a href="https://www.officialgazette.gov.ph/1997/06/06/republic-act-no-8293/" target="_blank" rel="noopener"><em>Republic Act No. 8293: Intellectual Property Code of the Philippines.</em></a> Official Gazette of the Republic of the Philippines.</li>
+            <li>Brealant. (2025, April 29). <a href="https://www.trademark.net.ph/blog/copyright-protection-computer-software-and-application" target="_blank" rel="noopener"><em>Copyright protection: Computer software and application.</em></a></li>
           </ul>
         </div>
 
@@ -1521,7 +1567,7 @@
   <div class="progress-dock-inner">
     <div class="progress-dock-label">Check-in progress</div>
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
-    <div class="progress-count" id="progressCount">0 of 14 answered correctly</div>
+    <div class="progress-count" id="progressCount">0 of 15 answered correctly</div>
   </div>
 </div>
 

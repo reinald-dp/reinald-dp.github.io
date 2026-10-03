@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IS 201 — Topic 5: AI Ethics</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   IS 201 — Shared Course Page Theme
+   ==========================================================================
+   One stylesheet for every IS 201 page (course guide, topic readings, etc.)
+   so they all look and feel the same.
+
+   HOW TO USE ON A NEW PAGE
+   --------------------------------------------------------------------------
+   1. Link this file in <head>:
+        <link rel="stylesheet" href="theme.css">
+   2. (Optional) For pixel-perfect type, load the two fonts referenced in
+      the font stacks below — IBM Plex Sans and Source Serif 4. Without
+      them the page falls back to system fonts and still looks correct:
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+   3. Copy the page skeleton below and fill in your own sidebar links and
+      <section class="chapter"> blocks.
+   4. Reuse the component classes documented in each section of this file
+      (blockquote.def, table.compare, .req-card, .scholar-card, .keyidea,
+      .callout, .quotes, .commandments, .refbox, .flow) instead of writing
+      new CSS — that's what keeps every page consistent.
+
+   PAGE SKELETON
+   --------------------------------------------------------------------------
+   <div class="layout">
+     <nav class="sidebar" aria-label="Table of contents">
+       <div class="kicker">IS 201 · Computer Ethics</div>
+       <div class="course-title">Page Title</div>
+       <p class="course-topic">Subtitle / term</p>
+
+       <div class="nav-heading">Section Group</div>
+       <ol>
+         <li><a class="toc-link" href="#anchor">Link label</a></li>
+       </ol>
+     </nav>
+
+     <main>
+       <div class="hero">
+         <div class="kicker">Eyebrow text</div>
+         <h1>Page Title</h1>
+         <p class="dek">One or two sentence description.</p>
+         <span class="byline">Faculty-in-Charge: <strong>Name</strong></span>
+       </div>
+
+       <div class="content-inner">
+         <section class="chapter" id="anchor">
+           <div class="eyebrow">Section Group</div>
+           <h2>Section Title</h2>
+           <p>Body copy…</p>
+         </section>
+       </div>
+     </main>
+   </div>
+
+   <p class="ai-note page-note">Optional closing footnote.</p>
+   <footer>Page footer text</footer>
+   ========================================================================== */
+
+/* ---- Design tokens -------------------------------------------------------
+   Change colors/fonts for the whole site by editing these variables only. */
+:root{
+    --bg:#EEF2F8;
+    --paper:#FFFFFF;
+    --ink:#1B2333;
+    --ink-soft:#4A5568;
+    --sidebar:#16243E;
+    --sidebar-hover:#22385F;
+    --sidebar-text:#C6D2E8;
+    --sidebar-text-dim:#7E93B8;
+    --accent:#2F5D9C;
+    --accent-deep:#1E3F6E;
+    --gold:#A9822F;
+    --border:#DAE1EC;
+    --correct:#1E7B57;
+    --correct-bg:#E5F4EC;
+    --incorrect:#B03B33;
+    --incorrect-bg:#FBEAE8;
+    --neutral:#8A6D1E;
+    --neutral-bg:#FBF3E1;
+  }
+  /* ---- Base & typography ---------------------------------------------- */
+*{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"IBM Plex Sans", -apple-system, Segoe UI, Roboto, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{
+    font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+    color:var(--ink);
+    line-height:1.25;
+    font-weight:600;
+  }
+  a{color:var(--accent-deep);}
+  a:hover{color:var(--accent);}
+
+  /* ---- Page layout: sidebar + main ------------------------------------
+     .layout wraps everything; nav.sidebar is the sticky dark TOC column.
+     Sidebar TOC markup:
+       <div class="nav-heading">Group label</div>
+       <ol><li><a class="toc-link" href="#id">Label</a></li></ol>
+     Optional sub-links under a toc-link:
+       <ul class="sub"><li><a href="#id">…</a></li></ul>
+     .toc-link.active (added by the IntersectionObserver script at the
+     bottom of the page skeleton) highlights the section in view. -------- */
+  .layout{
+    min-height:100vh;
+    width:100%;
+  }
+  nav.sidebar{
+    width:280px;
+    flex-shrink:0;
+    background:var(--sidebar);
+    color:var(--sidebar-text);
+    padding:28px 22px 40px;
+    position:fixed;
+    top:0;
+    left:0;
+    height:100vh;
+    overflow-y:auto;
+    z-index:10;
+  }
+  nav.sidebar::-webkit-scrollbar{width:8px;}
+  nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
+
+  .sidebar .kicker{
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:6px;
+  }
+  .sidebar .course-title{
+    font-family:"Source Serif 4", Georgia, serif;
+    font-size:21px;
+    color:#fff;
+    margin:0 0 4px;
+  }
+  .sidebar .course-topic{
+    font-size:13.5px;
+    color:var(--sidebar-text);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin:0 0 18px;
+  }
+  .sidebar .nav-heading{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin:18px 0 6px;
+  }
+  .sidebar .nav-heading:first-of-type{ margin-top:0; }
+  .sidebar ol{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:section;
+  }
+  .sidebar > ol > li{
+    counter-increment:section;
+    margin-bottom:2px;
+  }
+  .sidebar a.toc-link{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    text-decoration:none;
+    color:var(--sidebar-text);
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:14px;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .sidebar a.toc-link::before{
+    content:counter(section, decimal-leading-zero);
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:11px;
+    color:var(--sidebar-text-dim);
+    padding-top:2px;
+  }
+  .sidebar a.toc-link:hover, .sidebar a.toc-link.active{
+    background:var(--sidebar-hover);
+    color:#fff;
+  }
+  .sidebar ul.sub{
+    list-style:none;
+    margin:2px 0 8px 26px;
+    padding:0;
+    border-left:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar ul.sub li a{
+    display:block;
+    text-decoration:none;
+    color:var(--sidebar-text-dim);
+    font-size:12.5px;
+    padding:5px 0 5px 14px;
+    transition:color 0.15s ease;
+  }
+  .sidebar ul.sub li a:hover{color:#fff;}
+
+  main{
+    display:block;
+    margin-left:280px;
+    padding:0 0 100px;
+  }
+  /* ---- Hero banner (top of main, above the content column) -----------
+     <div class="hero">
+       <div class="kicker">Eyebrow</div>
+       <h1>Title</h1>
+       <p class="dek">Description</p>
+       <span class="byline">Faculty-in-Charge: <strong>Name</strong></span>
+     </div> ------------------------------------------------------------- */
+  .hero{
+    background:linear-gradient(155deg, var(--accent-deep) 0%, var(--sidebar) 65%);
+    color:#fff;
+    padding:64px 56px 46px;
+  }
+  .hero .kicker{
+    text-transform:uppercase;
+    letter-spacing:0.16em;
+    font-size:12px;
+    color:#AFC3E4;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    color:#fff;
+    font-size:38px;
+    margin:0 0 10px;
+    max-width:900px;
+  }
+  .hero p.dek{
+    max-width:820px;
+    color:#D6E0F1;
+    font-size:16px;
+    margin:0 0 22px;
+  }
+  .hero .byline{
+    font-size:14px;
+    color:#AFC3E4;
+    border-top:1px solid rgba(255,255,255,0.18);
+    padding-top:14px;
+    display:inline-block;
+  }
+  .hero .byline strong{color:#fff; font-weight:600;}
+
+  /* ---- Content column --------------------------------------------------
+     .content-inner is the comfortable-reading-width wrapper inside <main>.
+     Each page section is a <section class="chapter" id="anchor"> with an
+     .eyebrow label (group name, matches the sidebar nav-heading) and an h2.
+     Use .lede for an intro paragraph with a gold left rule. --------------- */
+  .content-inner{
+    padding:0 56px;
+    max-width:960px;
+  }
+
+  section.chapter{
+    padding-top:52px;
+    scroll-margin-top:24px;
+  }
+  section.chapter:first-of-type{padding-top:40px;}
+
+  .chapter .eyebrow{
+    font-size:13px;
+    color:var(--accent);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .chapter h2{
+    font-size:27px;
+    margin:0 0 16px;
+    padding-bottom:14px;
+    border-bottom:2px solid var(--border);
+  }
+  .chapter h3{
+    font-size:19px;
+    margin:30px 0 10px;
+    color:var(--accent-deep);
+  }
+  .chapter h4{
+    font-size:15.5px;
+    margin:20px 0 8px;
+    color:var(--accent-deep);
+  }
+  .chapter p{
+    font-size:15.5px;
+    color:var(--ink);
+    margin:0 0 14px;
+  }
+  .chapter ul, .chapter ol.plain{
+    padding-left:22px;
+    margin:0 0 16px;
+  }
+  .chapter li{
+    font-size:15.5px;
+    margin-bottom:6px;
+  }
+  .lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    border-left:3px solid var(--gold);
+    padding-left:16px;
+    margin:0 0 22px;
+  }
+
+  /* ---- Definition / emphasis callout ------------------------------------
+     <blockquote class="def"><strong>Term</strong> — explanation…</blockquote>
+     ------------------------------------------------------------------- */
+  blockquote.def{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--accent);
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+  blockquote.def strong{color:var(--ink); font-family:"Source Serif 4", serif;}
+
+  /* ---- Data table --------------------------------------------------------
+     <table class="compare">
+       <thead><tr><th>Col</th><th>Col</th></tr></thead>
+       <tbody><tr><td class="num">Value</td><td>...</td></tr></tbody>
+     </table>
+     Row modifiers: tr.deadline (amber highlight), tr.lowgrade (red highlight)
+     td.num bolds/colors a key figure (grade, week number, percentage). ---- */
+  table.compare{
+    width:100%;
+    border-collapse:collapse;
+    margin:8px 0 20px;
+    font-size:14.5px;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  table.compare th{
+    background:var(--sidebar);
+    color:#fff;
+    text-align:left;
+    padding:10px 14px;
+    font-weight:600;
+    font-size:13px;
+  }
+  table.compare td{
+    padding:10px 14px;
+    border-top:1px solid var(--border);
+    vertical-align:top;
+  }
+  table.compare tr:nth-child(even) td{background:#F6F8FC;}
+  table.compare td.num{ font-weight:600; color:var(--accent-deep); white-space:nowrap; }
+  table.compare tr.deadline td{ background:var(--neutral-bg); color:var(--neutral); font-style:italic; }
+  table.compare tr.lowgrade td{ background:var(--incorrect-bg); color:var(--incorrect); font-weight:600; }
+
+  /* ---- Bio / reference card ------------------------------------------
+     <div class="scholar-card">
+       <span class="tag">Label</span>
+       <h4>Name</h4>
+       <p>Bio text…</p>
+       <ul class="fic-links"><li>Email: <a href="mailto:...">...</a></li></ul>
+     </div> ------------------------------------------------------------- */
+  .scholar-card{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+    margin-bottom:18px;
+    scroll-margin-top:24px;
+  }
+  .scholar-card h4{
+    margin:0 0 4px;
+    font-size:16.5px;
+    color:var(--ink);
+  }
+  .scholar-card .tag{
+    display:inline-block;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:#EAF0FA;
+    padding:2px 8px;
+    border-radius:4px;
+    margin-bottom:10px;
+  }
+  .scholar-card p{margin:0 0 6px; font-size:14.5px;}
+  .scholar-card .fic-links{ margin:10px 0 0; padding-left:18px; font-size:14px; }
+  .scholar-card .fic-links li{ margin-bottom:3px; }
+
+  /* ---- Numbered list (learning outcomes, rules, steps) ----------------
+     <ol class="commandments"><li>Item text</li></ol>
+     Numbers are auto-generated in gold via a CSS counter. ---------------- */
+  .commandments{
+    counter-reset:cmd;
+    padding:0;
+    list-style:none;
+    margin:0 0 20px;
+    display:grid;
+    gap:8px;
+  }
+  .commandments li{
+    counter-increment:cmd;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 14px 12px 44px;
+    position:relative;
+    font-size:14.5px;
+  }
+  .commandments li::before{
+    content:counter(cmd);
+    position:absolute;
+    left:12px;
+    top:10px;
+    font-family:"Source Serif 4", serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--gold);
+  }
+
+  /* ---- Process/flow chips -----------------------------------------------
+     <div class="flow">
+       <span class="step">Step A</span><span class="arrow">→</span>
+       <span class="step">Step B</span>
+     </div> ------------------------------------------------------------- */
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:center;
+    margin:6px 0 22px;
+  }
+  .flow .step{
+    background:var(--accent-deep);
+    color:#fff;
+    padding:8px 13px;
+    border-radius:20px;
+    font-size:13.5px;
+    white-space:nowrap;
+  }
+  .flow .arrow{color:var(--ink-soft); font-size:15px;}
+
+  /* Reference / requirement box */
+  /* ---- Reference / notes box ---------------------------------------------
+     <div class="refbox">
+       <div class="refbox-label">Heading</div>
+       <ul><li><strong>Key</strong> → meaning</li></ul>
+     </div> ------------------------------------------------------------- */
+  .refbox{
+    background:#F4F7FC;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 22px;
+  }
+  .refbox .refbox-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent-deep);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .refbox ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .refbox li{
+    font-size:14px;
+    margin-bottom:4px;
+  }
+  .refbox a{
+    text-decoration:none;
+    border-bottom:1px dotted var(--accent);
+  }
+  .refbox a:hover{border-bottom-style:solid;}
+
+  /* ---- Weighted requirement row (percentage + description) --------------
+     <div class="req-card">
+       <div class="pct">25<sub>%</sub></div>
+       <div><h4>Title</h4><p>Description…</p></div>
+     </div> ------------------------------------------------------------- */
+  .req-card{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:12px;
+  }
+  .req-card .pct{
+    font-family:"Source Serif 4", serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--accent-deep);
+    flex:0 0 62px;
+    text-align:center;
+  }
+  .req-card .pct sub{ font-size:13px; font-weight:400; color:var(--ink-soft); }
+  .req-card h4{ margin:0 0 4px; font-size:15.5px; }
+  .req-card p{ margin:0; font-size:14px; color:var(--ink-soft); }
+
+  /* ---- Highlighted key-idea panel (gradient, for closing/summary blocks)
+     <div class="keyidea">
+       <h3>Headline</h3>
+       <p>Supporting text…</p>
+       Optional two-column list: <div class="qgrid"><div class="col">
+       <div class="col-label">Label</div><ul><li>Item</li></ul></div></div>
+     </div> ------------------------------------------------------------- */
+  .keyidea{
+    background:linear-gradient(155deg, var(--accent-deep), var(--sidebar));
+    color:#fff;
+    border-radius:12px;
+    padding:28px 30px;
+    margin:8px 0 10px;
+  }
+  .keyidea h3{color:#fff; margin-top:0;}
+  .keyidea p{ color:#E3EAF6; }
+  .keyidea .qgrid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 24px;
+    margin-top:14px;
+  }
+  .keyidea .qgrid .col{ flex:1 1 220px; }
+  .keyidea .qgrid .col-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#AFC3E4;
+    margin-bottom:6px;
+  }
+  .keyidea .qgrid ul{margin:0; padding-left:18px;}
+  .keyidea .qgrid li{font-size:14px; margin-bottom:5px; color:#E3EAF6;}
+
+  /* ---- Warning / important-notice callout (red) -----------------------
+     <div class="callout"><strong>Heads up.</strong> Notice text…</div> --- */
+  .callout{
+    background:var(--incorrect-bg);
+    border:1px solid #F0C6C1;
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 20px;
+    font-size:14.5px;
+    color:var(--incorrect);
+  }
+  .callout strong{ color:var(--incorrect); }
+
+  /* ---- Pull-quote list ---------------------------------------------------
+     <ul class="quotes"><li>"Quote text"<span>— Attribution</span></li></ul>
+     ------------------------------------------------------------------- */
+  .quotes{
+    list-style:none;
+    padding:0;
+    margin:10px 0 0;
+    display:grid;
+    gap:12px;
+  }
+  .quotes li{
+    border-left:3px solid var(--gold);
+    padding:2px 0 2px 16px;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .quotes li span{
+    display:block;
+    font-style:normal;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-top:3px;
+  }
+
+  /* ---- Page-level footnote & footer --------------------------------------
+     <p class="ai-note page-note">Footnote text, placed outside all
+       <section> elements, right before <footer>.</p>
+     <footer>Page footer text</footer>
+     .ai-note (without .page-note) can also be used inside a section as a
+     smaller inline note with just a top rule. --------------------------- */
+  .ai-note{
+    margin-top:26px;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  .ai-note.page-note{
+    max-width:820px;
+    margin:36px auto 0;
+    padding:16px 56px 0;
+    text-align:center;
+    border-top:1px solid var(--border);
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 10px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-left:280px;
+  }
+
+  @media (max-width: 880px){
+    nav.sidebar{
+      position:relative;
+      width:100%;
+      height:auto;
+      max-height:none;
+    }
+    main{ margin-left:0; }
+    footer{ margin-left:0; }
+    .hero{padding:40px 24px 32px;}
+    .content-inner{padding:0 22px;}
+    .req-card{ flex-wrap:wrap; }
+  }
+
+  /* ---- Page-specific additions (quiz, progress bar) ---- */
+  .sidebar .instructor{
+    font-size:12.5px;
+    color:var(--sidebar-text-dim);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin-bottom:18px;
+  }
+  .sidebar .progress-wrap{
+    margin-top:22px;
+    padding-top:16px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar .progress-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:8px;
+  }
+  .progress-track{
+    width:100%;
+    height:6px;
+    background:rgba(255,255,255,0.1);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--gold), #D8B65A);
+    transition:width 0.4s ease;
+  }
+  .progress-count{
+    margin-top:6px;
+    font-size:12px;
+    color:var(--sidebar-text-dim);
+  }
+  .hero-inner{
+    max-width:904px;
+  }
+
+  /* Sticky check-in progress bar (fixed to bottom of the viewport) */
+  body{ padding-bottom:44px; }
+  .progress-dock{
+    position:fixed;
+    left:280px;
+    right:0;
+    bottom:0;
+    z-index:20;
+    background:#D8B65A;
+    border-top:1px solid #C9A548;
+    box-shadow:0 -2px 10px rgba(22,36,62,0.16);
+    color:var(--sidebar);
+  }
+  .progress-dock-inner{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:8px 56px;
+    max-width:1016px;
+  }
+  .progress-dock-label{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    font-weight:600;
+    color:var(--sidebar);
+    opacity:0.8;
+    white-space:nowrap;
+  }
+  .progress-dock .progress-track{
+    flex:1;
+    height:6px;
+    background:rgba(22,36,62,0.18);
+  }
+  .progress-dock .progress-fill{
+    background:var(--sidebar);
+  }
+  .progress-dock .progress-count{
+    margin-top:0;
+    font-size:12px;
+    font-weight:600;
+    color:var(--sidebar);
+    white-space:nowrap;
+  }
+  @media (max-width: 880px){
+    .progress-dock{ left:0; }
+    .progress-dock-inner{ padding:7px 22px; gap:10px; }
+    .progress-dock-label{ display:none; }
+  }
+
+  /* Quiz component (not part of the shared theme) */
+  .quiz{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--gold);
+    border-radius:8px;
+    padding:20px 22px;
+    margin:8px 0 28px;
+  }
+  .quiz .quiz-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .quiz p.q-prompt{
+    font-size:15.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin:0 0 12px;
+  }
+  .quiz .options{
+    display:grid;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .quiz label.opt{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:14.5px;
+    color:var(--ink);
+    padding:8px 10px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .quiz label.opt:hover{border-color:var(--accent); background:#F4F7FC;}
+  .quiz input[type="radio"]{margin-top:3px;}
+  .quiz button.check-btn{
+    background:var(--accent-deep);
+    color:#fff;
+    border:none;
+    padding:9px 18px;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .quiz button.check-btn:hover{background:var(--accent);}
+  .quiz .feedback{
+    margin-top:14px;
+    padding:12px 14px;
+    border-radius:6px;
+    font-size:14px;
+    display:none;
+  }
+  .quiz .feedback.show{display:block;}
+  .feedback-correct{background:var(--correct-bg); color:var(--correct); border:1px solid #BFE3CF;}
+  .feedback-incorrect{background:var(--incorrect-bg); color:var(--incorrect); border:1px solid #F0C6C1;}
+  .feedback-neutral{background:var(--neutral-bg); color:var(--neutral); border:1px solid #EEDCA6;}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <div class="kicker">IS 201 · Chapter 2</div>
+    <div class="course-title">Topic 5</div>
+    <p class="course-topic">AI Ethics</p>
+
+    <div class="nav-heading">Introduction</div>
+    <ol id="toc">
+      <li><a class="toc-link" href="#intro" data-target="intro">Can vs. Should</a></li>
+      <li><a class="toc-link" href="#why-is" data-target="why-is">Why This Matters to IS</a></li>
+    </ol>
+
+    <div class="nav-heading">Understanding AI and Its Ethical Context</div>
+    <ol style="counter-reset:section 2">
+      <li><a class="toc-link" href="#industrial" data-target="industrial">From 4IR to 5IR</a></li>
+      <li><a class="toc-link" href="#understanding" data-target="understanding">Understanding AI First</a></li>
+      <li><a class="toc-link" href="#opportunities" data-target="opportunities">Opportunities and Risks</a></li>
+    </ol>
+
+    <div class="nav-heading">Core Ethical Principles for AI</div>
+    <ol style="counter-reset:section 5">
+      <li><a class="toc-link" href="#accountability" data-target="accountability">Responsibility &amp; Accountability</a></li>
+      <li><a class="toc-link" href="#human-control" data-target="human-control">Meaningful Human Control</a></li>
+      <li><a class="toc-link" href="#literacy" data-target="literacy">AI Literacy &amp; Competence</a></li>
+      <li><a class="toc-link" href="#fairness" data-target="fairness">Fairness &amp; Non-Discrimination</a></li>
+      <li><a class="toc-link" href="#transparency" data-target="transparency">Transparency &amp; Explainability</a></li>
+      <li><a class="toc-link" href="#privacy" data-target="privacy">Privacy &amp; Data Protection</a></li>
+      <li><a class="toc-link" href="#safety" data-target="safety">Safety &amp; Prevention of Harm</a></li>
+      <li><a class="toc-link" href="#sustainability" data-target="sustainability">Sustainability</a></li>
+    </ol>
+
+    <div class="nav-heading">Applying AI Ethics</div>
+    <ol style="counter-reset:section 13">
+      <li><a class="toc-link" href="#practice" data-target="practice">From Principles to Practice</a></li>
+      <li><a class="toc-link" href="#control" data-target="control">Who Remains in Control?</a></li>
+    </ol>
+
+    <div class="nav-heading">Wrap-up</div>
+    <ol style="counter-reset:section 15">
+      <li><a class="toc-link" href="#takeaways" data-target="takeaways">Key Takeaways</a></li>
+      <li><a class="toc-link" href="#references" data-target="references">References</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="kicker">IS 201 · Chapter 2 — Ethical Issues in Computing</div>
+        <h1>Topic 5 — AI Ethics</h1>
+        <p class="dek">A guided reading on how AI systems should be designed, developed, deployed, and used — from the shift toward a human-centered Fifth Industrial Revolution, to eight core ethical principles for AI, to applying them in real decisions where humans remain responsible and accountable.</p>
+        <span class="byline">Faculty-in-Charge: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027</span>
+      </div>
+    </div>
+
+    <div class="content-inner">
+
+      <!-- 1. Introduction -->
+      <section class="chapter" id="intro">
+        <div class="eyebrow">01 · Introduction</div>
+        <h2>Can vs. Should</h2>
+        <p class="lede">Artificial Intelligence is no longer confined to research laboratories or specialized computing applications.</p>
+        <p>AI systems increasingly influence how people communicate, learn, work, create, make decisions, access services, and interact with institutions. <strong>Generative AI</strong> has made this transformation even more visible by placing systems capable of producing text, images, audio, video, and computer code directly into the hands of ordinary users.</p>
+        <p>But the growing capability of AI also creates an important ethical question.</p>
+
+        <div class="keyidea">
+          <h3>Just because AI can do something, does that mean it should?</h3>
+          <p>AI ethics examines how AI systems should be designed, developed, deployed, and used so that technological progress remains consistent with human values, rights, responsibilities, and well-being.</p>
+        </div>
+      </section>
+
+      <!-- 2. Why This Matters -->
+      <section class="chapter" id="why-is">
+        <div class="eyebrow">02 · Introduction</div>
+        <h2>Why This Matters to Information Systems Students and Professionals</h2>
+        <p class="lede">AI is increasingly becoming part of the information systems used by organizations.</p>
+        <p>IS professionals may encounter AI in business applications, analytics, decision-support systems, automated workflows, customer services, and other digital platforms.</p>
+        <p>Even when IS professionals are not directly developing AI models, they may be involved in:</p>
+        <div class="flow">
+          <span class="step">Selecting</span><span class="arrow">→</span>
+          <span class="step">Implementing</span><span class="arrow">→</span>
+          <span class="step">Integrating</span><span class="arrow">→</span>
+          <span class="step">Managing</span><span class="arrow">→</span>
+          <span class="step">Evaluating</span>
+        </div>
+        <p>The decisions made in these roles can affect organizations, users, and other stakeholders.</p>
+        <p>Understanding AI ethics is therefore part of responsible IS practice. As AI becomes more deeply embedded in information systems, IS students and professionals need to consider not only <strong>what these systems can do</strong>, but also <strong>how they should be designed, implemented, and used responsibly</strong>.</p>
+
+        <blockquote class="def"><strong>Remember</strong> — Technical capability alone does not determine responsible use.</blockquote>
+
+        <div class="quiz" id="q1">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">1. An IS graduate says: "I won't be building AI models — I'll just be choosing and integrating vendor AI tools into our HR system. So AI ethics isn't really my concern." What is the problem with this view?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q1" value="a"> Nothing — AI ethics applies only to people who develop AI models</label>
+            <label class="opt"><input type="radio" name="q1" value="b"> Selecting, implementing, integrating, and managing AI-enabled systems are decisions that can affect users and stakeholders, so AI ethics is part of responsible IS practice</label>
+            <label class="opt"><input type="radio" name="q1" value="c"> Vendor AI tools are already certified as ethical, so no further evaluation is needed</label>
+            <label class="opt"><input type="radio" name="q1" value="d"> AI ethics only matters once the system has caused harm</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q1')">Check answer</button>
+          <div class="feedback" id="q1-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 3. 4IR to 5IR -->
+      <section class="chapter" id="industrial">
+        <div class="eyebrow">03 · Understanding AI and Its Ethical Context</div>
+        <h2>From the Fourth to the Fifth Industrial Revolution</h2>
+        <p class="lede">The rise of AI can be understood within the broader transformation associated with the Fourth Industrial Revolution (4IR).</p>
+        <p>Earlier industrial revolutions transformed society through mechanization, electricity and mass production, and later computers and digital technologies.</p>
+        <div class="flow">
+          <span class="step">Mechanization</span><span class="arrow">→</span>
+          <span class="step">Electricity &amp; mass production</span><span class="arrow">→</span>
+          <span class="step">Computers &amp; digital tech</span><span class="arrow">→</span>
+          <span class="step">4IR: Convergence</span><span class="arrow">→</span>
+          <span class="step">5IR: Human-centered</span>
+        </div>
+        <p>The 4IR extends this transformation through the increasing <strong>convergence of digital, physical, and biological technologies</strong>. Artificial intelligence, big data, cloud computing, robotics, the Internet of Things, biotechnology, and other emerging technologies increasingly interact within connected and intelligent systems.</p>
+        <p>AI is particularly significant because it allows computer systems to perform tasks traditionally associated with aspects of human intelligence. In practical terms, AI systems can learn patterns from large amounts of data, classify information, make predictions, recommend actions, automate tasks, and generate new content.</p>
+        <p>AI is therefore converging with virtually every aspect of modern life. In research, for example, it can already assist throughout the research lifecycle, from ideation and literature review to analysis, writing, and dissemination.</p>
+
+        <p>But the 4IR also raises a deeper question: <strong>should technological progress be measured only by how much can be automated, optimized, predicted, or generated?</strong></p>
+        <p>This concern leads to discussions surrounding the <strong>Fifth Industrial Revolution (5IR)</strong>. Whereas the 4IR is strongly associated with technological convergence, intelligent systems, and automation, the 5IR emphasizes a more <strong>human-centered, sustainable, resilient, and socially responsible</strong> relationship with technology.</p>
+
+        <div class="keyidea">
+          <h3>The emphasis begins to shift</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">4IR asks</div>
+              <ul><li>What becomes possible when technologies become intelligent and interconnected?</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">5IR asks</div>
+              <ul><li>How can these technologies serve people, society, and the environment responsibly?</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:18px;">This shift is crucial to computer ethics. Technological capability alone cannot determine whether a technology should be developed or used in a particular way. The central question therefore changes from <strong>"What can AI do?"</strong> to:</p>
+        <blockquote class="def"><strong>What should AI do, for whom, and toward what kind of society?</strong> — That is where AI ethics enters the discussion.</blockquote>
+
+        <div class="quiz" id="q2">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">2. A city government is evaluating a new AI system. Which question best reflects the emphasis of the Fifth Industrial Revolution (5IR)?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q2" value="a"> How many government tasks can this system fully automate?</label>
+            <label class="opt"><input type="radio" name="q2" value="b"> How quickly can it connect to our IoT sensors and cloud platforms?</label>
+            <label class="opt"><input type="radio" name="q2" value="c"> How will this system serve citizens, society, and the environment responsibly?</label>
+            <label class="opt"><input type="radio" name="q2" value="d"> Is this the most technologically advanced system on the market?</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q2')">Check answer</button>
+          <div class="feedback" id="q2-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 4. Understanding AI -->
+      <section class="chapter" id="understanding">
+        <div class="eyebrow">04 · Understanding AI and Its Ethical Context</div>
+        <h2>Understanding AI Before Discussing AI Ethics</h2>
+        <p class="lede">Responsible use begins with understanding the technology itself.</p>
+
+        <h3>Artificial Intelligence</h3>
+        <blockquote class="def"><strong>Artificial Intelligence (AI)</strong> — computer systems designed to perform tasks associated with human intelligence. AI systems typically learn patterns from large amounts of data and use those patterns to perform tasks such as classification, prediction, and generation.</blockquote>
+        <p>This dependence on data is important. The behavior of an AI system is influenced not only by its algorithms but also by <strong>the data used to develop and train it</strong>.</p>
+
+        <h3>Generative Artificial Intelligence</h3>
+        <blockquote class="def"><strong>Generative AI (GenAI)</strong> — a type of AI designed to create new content such as text, images, audio, video, or computer code. It learns patterns from large datasets and uses those patterns to generate new outputs based on what it has learned.</blockquote>
+
+        <h3>Large Language Models</h3>
+        <blockquote class="def"><strong>Large Language Model (LLM)</strong> — a type of generative AI designed to produce human-like text.</blockquote>
+        <p>At a simplified level, language models learn to <strong>predict likely continuations of text</strong>. Given an input, the model estimates what words or tokens are likely to come next based on patterns learned during training.</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Term</th><th>What it refers to</th><th>Example output</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>AI</strong></td><td>Broad category: systems performing tasks associated with human intelligence</td><td>Classification, prediction, recommendation</td></tr>
+            <tr><td><strong>Generative AI</strong></td><td>AI that creates new content from learned patterns</td><td>Text, images, audio, video, code</td></tr>
+            <tr><td><strong>LLM</strong></td><td>Generative AI that produces human-like text</td><td>Answers, summaries, essays, drafts</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout"><strong>Fluency is not understanding.</strong> The fluency of an LLM should not be confused with human-like understanding. LLMs recognize patterns and generate responses using statistical relationships learned from enormous amounts of textual data.</div>
+        <p>Understanding this basic characteristic of AI is important when evaluating both its capabilities and its limitations.</p>
+
+        <div class="quiz" id="q3">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">3. A chatbot gives a student a smooth, confident, well-written explanation of a legal provision. What does this section suggest about how to interpret that fluency?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q3" value="a"> The model generates likely text from learned statistical patterns — fluency does not guarantee understanding or accuracy</label>
+            <label class="opt"><input type="radio" name="q3" value="b"> A fluent answer shows the model has human-like understanding of the law</label>
+            <label class="opt"><input type="radio" name="q3" value="c"> Confident wording means the model has verified its answer against legal sources</label>
+            <label class="opt"><input type="radio" name="q3" value="d"> LLM behavior depends only on its algorithm, not on its training data</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q3')">Check answer</button>
+          <div class="feedback" id="q3-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 5. Opportunities and Risks -->
+      <section class="chapter" id="opportunities">
+        <div class="eyebrow">05 · Understanding AI and Its Ethical Context</div>
+        <h2>AI Brings Both Opportunities and Risks</h2>
+        <p class="lede">AI should not automatically be treated as either beneficial or harmful.</p>
+        <p>Its ethical significance depends on <strong>how it is designed, what data it uses, how it is deployed, who controls it, and who is affected by it</strong>.</p>
+
+        <table class="compare">
+          <thead>
+            <tr><th>Opportunities</th><th>Risks</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Increase productivity</td><td>Produce inaccurate information</td></tr>
+            <tr><td>Support learning and research</td><td>Reproduce bias</td></tr>
+            <tr><td>Improve accessibility</td><td>Expose sensitive data</td></tr>
+            <tr><td>Analyze large datasets and assist decision-making</td><td>Enable misinformation</td></tr>
+            <tr><td>Automate repetitive tasks</td><td>Encourage overreliance</td></tr>
+            <tr><td>Enable new forms of creativity and innovation</td><td>Contribute to other forms of harm</td></tr>
+          </tbody>
+        </table>
+        <p>Powerful tools used without sufficient critical understanding can compromise <strong>accuracy, ethics, and integrity</strong>.</p>
+        <p>AI is therefore neither inherently ethical nor unethical. Ethical questions arise from the ways AI systems are <strong>designed, developed, deployed, governed, and used</strong>.</p>
+
+        <div class="keyidea">
+          <h3>The central concern</h3>
+          <p>How can AI be used responsibly and wisely?</p>
+        </div>
+
+        <div class="quiz" id="q4" style="margin-top:28px;">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">4. Two classmates debate. One says "AI is inherently good — it boosts productivity." The other says "AI is inherently harmful — it spreads misinformation." What position does this section take?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q4" value="a"> The first classmate is right, because the benefits outweigh the risks</label>
+            <label class="opt"><input type="radio" name="q4" value="b"> The second classmate is right, because the risks outweigh the benefits</label>
+            <label class="opt"><input type="radio" name="q4" value="c"> Neither matters — AI's ethics is determined only by its algorithm</label>
+            <label class="opt"><input type="radio" name="q4" value="d"> Both are oversimplified — AI's ethical significance depends on how it is designed, what data it uses, how it is deployed and governed, and who is affected</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q4')">Check answer</button>
+          <div class="feedback" id="q4-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 6. Responsibility and Accountability -->
+      <section class="chapter" id="accountability">
+        <div class="eyebrow">06 · Core Ethical Principles for AI</div>
+        <h2>Responsibility and Accountability</h2>
+        <p class="lede">Guide question: What responsibilities do people and institutions have, and who ultimately answers for the consequences?</p>
+
+        <blockquote class="def"><strong>Responsibility</strong> — the duties and obligations associated with the development, deployment, and use of AI.</blockquote>
+        <p>Different actors may have different responsibilities:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Actor</th><th>May be responsible for…</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Developers</strong></td><td>Testing systems and addressing known risks</td></tr>
+            <tr><td><strong>Organizations</strong></td><td>Establishing appropriate safeguards and policies</td></tr>
+            <tr><td><strong>Professionals and users</strong></td><td>Evaluating AI outputs before acting on them</td></tr>
+          </tbody>
+        </table>
+
+        <blockquote class="def"><strong>Accountability</strong> — answerability. It asks who can be called upon to explain, justify, and take ownership of AI-related decisions, actions, and consequences.</blockquote>
+
+        <div class="keyidea">
+          <h3>Put simply</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Responsibility asks</div>
+              <ul><li>What are people and institutions expected to do?</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">Accountability asks</div>
+              <ul><li>Who must answer for what was done and what resulted from it?</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:18px;">AI systems do not eliminate either responsibility or accountability.</p>
+
+        <div class="quiz" id="q5">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">5. A bank's policy says loan officers must review AI credit scores before approving loans. After a wrongful denial, the bank president is asked by regulators to explain and justify what happened. Which pairing is correct?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q5" value="a"> The review policy is accountability; answering to regulators is responsibility</label>
+            <label class="opt"><input type="radio" name="q5" value="b"> The review policy describes a responsibility (what officers are expected to do); answering to regulators is accountability (being answerable for what happened)</label>
+            <label class="opt"><input type="radio" name="q5" value="c"> Both are the AI system's responsibility, since it generated the score</label>
+            <label class="opt"><input type="radio" name="q5" value="d"> Responsibility and accountability mean exactly the same thing</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q5')">Check answer</button>
+          <div class="feedback" id="q5-feedback"></div>
+        </div>
+
+        <h3>Hallucination</h3>
+        <p>This becomes especially important because generative AI can produce <strong>hallucinations</strong>.</p>
+        <blockquote class="def"><strong>Hallucination</strong> — AI-generated content that may be grammatically correct, authoritative in tone, and highly convincing while still being factually incorrect. AI systems may fabricate facts, references, quotations, explanations, or other information.</blockquote>
+        <p>For example, an AI system may generate convincing academic citations that do not actually exist. If those references are used without verification, <strong>responsibility for verification remains with the person using them</strong>. If the resulting work is submitted, published, or used in making a decision, the relevant person or institution remains accountable for that use.</p>
+        <p>Similarly, reliance on an AI recommendation in making a consequential professional decision does not automatically transfer accountability to the AI system.</p>
+        <p>The <a href="https://www.unesco.org/en/artificial-intelligence/recommendation-ethics" target="_blank" rel="noopener">UNESCO Recommendation on the Ethics of Artificial Intelligence</a> emphasizes responsibility and accountability throughout the AI lifecycle. Human or legal responsibility should remain attributable for AI-related decisions and actions.</p>
+
+        <div class="keyidea">
+          <h3>AI assists. Humans remain accountable.</h3>
+          <p>If humans remain responsible and accountable for AI-assisted actions and decisions, they must also retain a meaningful role in making those decisions.</p>
+        </div>
+
+        <div class="quiz" id="q6" style="margin-top:28px;">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">6. A student's term paper is flagged because three of its references don't exist. The student says: "It's not my fault — the AI made them up." How should this be evaluated?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q6" value="a"> The student is right — the AI hallucinated, so the AI is accountable</label>
+            <label class="opt"><input type="radio" name="q6" value="b"> The AI developer is solely accountable for the fake references</label>
+            <label class="opt"><input type="radio" name="q6" value="c"> No one is accountable, since hallucinations are a known limitation</label>
+            <label class="opt"><input type="radio" name="q6" value="d"> The AI hallucinated, but responsibility for verifying the references — and accountability for submitting them — remains with the student</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q6')">Check answer</button>
+          <div class="feedback" id="q6-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 7. Human Judgment and Meaningful Human Control -->
+      <section class="chapter" id="human-control">
+        <div class="eyebrow">07 · Core Ethical Principles for AI</div>
+        <h2>Human Judgment and Meaningful Human Control</h2>
+        <p class="lede">Guide question: Who retains decision-making authority?</p>
+        <p>Accountability becomes difficult to defend if people are held answerable for decisions over which they exercise no meaningful control.</p>
+        <p>Responsible AI therefore requires more than simply placing a human somewhere in the process. Human involvement should be <strong>meaningful</strong>. People should retain genuine authority to:</p>
+        <div class="flow">
+          <span class="step">Examine</span><span class="arrow">·</span>
+          <span class="step">Question</span><span class="arrow">·</span>
+          <span class="step">Intervene</span><span class="arrow">·</span>
+          <span class="step">Override</span><span class="arrow">·</span>
+          <span class="step">Reject</span>
+        </div>
+        <p>…AI-generated outputs and recommendations where appropriate.</p>
+
+        <div class="callout"><strong>The rubber-stamp problem.</strong> As AI systems become more capable and convenient, the risk of overreliance increases. A "human in the loop" provides little meaningful oversight if the human merely approves whatever an AI system recommends without critically examining it.</div>
+
+        <div class="keyidea">
+          <h3>AI should augment human capability, not replace human judgment.</h3>
+          <p>AI-generated outputs should not be accepted or reproduced uncritically. Critical thinking should not be outsourced to AI, and AI-generated outputs should not be assumed to be accurate or authoritative.</p>
+        </div>
+
+        <p style="margin-top:18px;">This principle applies across contexts:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Who</th><th>Retains responsibility for…</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>A teacher</strong></td><td>Academic judgment</td></tr>
+            <tr><td><strong>A physician</strong></td><td>Professional judgment</td></tr>
+            <tr><td><strong>A manager</strong></td><td>Organizational decisions</td></tr>
+            <tr><td><strong>A student</strong></td><td>Learning</td></tr>
+            <tr><td><strong>A public institution</strong></td><td>Decisions affecting citizens</td></tr>
+          </tbody>
+        </table>
+        <p>UNESCO describes this principle as <strong>Human Oversight and Determination</strong>. AI may support human decision-making, but human autonomy and meaningful oversight should be preserved.</p>
+        <p>Meaningful human control also requires sufficient understanding of the technology being overseen.</p>
+
+        <div class="quiz" id="q7">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">7. A company says its AI hiring tool has "a human in the loop." In practice, one HR staffer clicks "Approve" on about 300 AI shortlists a day and has never rejected one. What does this section suggest?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q7" value="a"> This is not meaningful human control — the staffer is functioning as a rubber stamp rather than genuinely examining or overriding outputs</label>
+            <label class="opt"><input type="radio" name="q7" value="b"> The requirement is satisfied because a human technically approves every decision</label>
+            <label class="opt"><input type="radio" name="q7" value="c"> Never rejecting a shortlist proves the AI is always accurate</label>
+            <label class="opt"><input type="radio" name="q7" value="d"> Human involvement is unnecessary once an AI tool is in use</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q7')">Check answer</button>
+          <div class="feedback" id="q7-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 8. AI Literacy and Competence -->
+      <section class="chapter" id="literacy">
+        <div class="eyebrow">08 · Core Ethical Principles for AI</div>
+        <h2>AI Literacy and Competence</h2>
+        <p class="lede">Guide question: What knowledge and competence are necessary to exercise that authority responsibly?</p>
+        <p>The widespread availability of AI creates an unusual situation. People can use highly sophisticated technologies without necessarily understanding how those technologies work, what their limitations are, or what risks their use may create.</p>
+        <p><strong>Ease of use should not be confused with competence.</strong></p>
+        <p>If humans are expected to exercise meaningful judgment and remain responsible and accountable for AI-assisted decisions, they need sufficient <strong>AI literacy and competence</strong> to do so. Responsible AI use requires understanding:</p>
+        <ul>
+          <li>what AI can and cannot do, and how AI systems can fail;</li>
+          <li>hallucination and inaccuracy;</li>
+          <li>bias and discrimination;</li>
+          <li>effective and responsible prompting, and appropriate tool selection;</li>
+          <li>privacy and security implications;</li>
+          <li>verification of AI-generated outputs; and</li>
+          <li>broader social and environmental consequences.</li>
+        </ul>
+
+        <div class="keyidea">
+          <h3>Convenience without competence creates ethical risk.</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Not just</div>
+              <ul><li>Knowing how to operate an AI tool</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">But understanding</div>
+              <ul><li>What the tool is doing, what its outputs mean, its limitations, the risks involved, and how outputs should be evaluated</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:18px;">UNESCO's principle of <strong>Awareness and Literacy</strong> similarly recognizes that people need sufficient knowledge and skills to make informed decisions about AI and participate meaningfully in societies increasingly shaped by it.</p>
+
+        <h3>How the First Three Principles Connect</h3>
+        <table class="compare">
+          <thead>
+            <tr><th>Principle</th><th>What it establishes</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">Responsibility</td><td>What people and institutions are expected to do</td></tr>
+            <tr><td class="num">Accountability</td><td>Who must answer for AI-related decisions and consequences</td></tr>
+            <tr><td class="num">Meaningful human control</td><td>That humans retain genuine decision-making authority</td></tr>
+            <tr><td class="num">AI literacy &amp; competence</td><td>That informed exercise of that authority is possible</td></tr>
+          </tbody>
+        </table>
+
+        <div class="quiz" id="q8">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">8. A new office staffer says: "I use AI chatbots every day — they're so easy. So I'm already AI-literate enough to use them for drafting official reports." What is the flaw in this reasoning?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q8" value="a"> There is none — frequent use is the same as AI literacy</label>
+            <label class="opt"><input type="radio" name="q8" value="b"> AI literacy only matters for people who build AI models</label>
+            <label class="opt"><input type="radio" name="q8" value="c"> Ease of use is not competence — AI literacy also requires understanding limitations, risks like hallucination and bias, and how to verify outputs</label>
+            <label class="opt"><input type="radio" name="q8" value="d"> Official reports should never involve any technology</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q8')">Check answer</button>
+          <div class="feedback" id="q8-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 9. Fairness -->
+      <section class="chapter" id="fairness">
+        <div class="eyebrow">09 · Core Ethical Principles for AI</div>
+        <h2>Fairness and Non-Discrimination</h2>
+        <p class="lede">Guide question: Are the benefits, risks, and outcomes of AI distributed fairly?</p>
+        <p>AI systems learn from data created within human societies. That data may contain existing social, cultural, economic, racial, gender, or other forms of bias. Consequently, AI can <strong>inherit these biases and sometimes amplify them</strong>.</p>
+        <p>Training data may also overrepresent some populations and underrepresent others. Large language models, for example, may reflect a <strong>Western orientation</strong> when their training data disproportionately represent Western or English-language sources.</p>
+
+        <blockquote class="def"><strong>Scenario</strong> — An AI-assisted hiring system is trained primarily on historical hiring decisions. If those historical decisions favored particular groups, the system may learn patterns that reproduce those inequalities. The system does not need to be deliberately programmed to discriminate for discriminatory outcomes to occur.</blockquote>
+
+        <p>Several questions therefore become ethically important:</p>
+        <ol class="commandments">
+          <li>Who is represented in the data?</li>
+          <li>Who is missing?</li>
+          <li>Who benefits from the system?</li>
+          <li>Who may be disadvantaged?</li>
+          <li>How can affected people challenge an unfair decision?</li>
+        </ol>
+        <p>This principle takes its name from UNESCO's principle of <strong>Fairness and Non-Discrimination</strong>, which emphasizes that AI should not reinforce prejudice, discrimination, or existing inequalities.</p>
+        <p>Fairness also requires <strong>sensitivity to context</strong>. An AI system that performs well for one population, language, culture, or country may not necessarily perform equally well elsewhere.</p>
+
+        <div class="quiz" id="q9">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">9. A developer defends a résumé-screening model: "It can't be discriminatory — we never told it to consider gender or ethnicity." Based on this section, what is the strongest response?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q9" value="a"> The developer is right — discrimination requires deliberate programming</label>
+            <label class="opt"><input type="radio" name="q9" value="b"> If it learned from biased historical hiring data, it can reproduce those inequalities even without being explicitly programmed to discriminate</label>
+            <label class="opt"><input type="radio" name="q9" value="c"> AI models are mathematically neutral and cannot be biased</label>
+            <label class="opt"><input type="radio" name="q9" value="d"> Fairness only matters if applicants file a complaint</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q9')">Check answer</button>
+          <div class="feedback" id="q9-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 10. Transparency -->
+      <section class="chapter" id="transparency">
+        <div class="eyebrow">10 · Core Ethical Principles for AI</div>
+        <h2>Transparency and Explainability</h2>
+        <p class="lede">Guide question: Can the use and decisions of AI be understood and meaningfully questioned?</p>
+        <p>Responsible AI should not operate as an unquestionable <strong>black box</strong>.</p>
+
+        <blockquote class="def"><strong>Transparency</strong> — making relevant information about AI systems and their use visible and accessible. People affected by AI may need to know that AI is being used, what role it plays, what information it uses, how it contributes to a decision or output, and who is responsible for the system.</blockquote>
+        <blockquote class="def"><strong>Explainability</strong> — goes further by asking whether people can meaningfully understand <em>why</em> an AI system produced a particular result.</blockquote>
+
+        <p>This becomes especially important when AI affects consequential decisions involving employment, education, healthcare, finance, public services, or other important areas of life.</p>
+        <p>Consider a student who is denied a scholarship because an algorithm classifies the student as "high risk." Simply stating that <em>the computer produced the decision</em> would not provide a meaningful explanation. A person affected by an important automated decision should have some meaningful way of <strong>understanding, questioning, or challenging</strong> that decision.</p>
+        <p>UNESCO's principle of <strong>Transparency and Explainability</strong> recognizes these as important conditions for protecting human rights, enabling accountability, and sustaining public trust.</p>
+
+        <div class="keyidea">
+          <h3>Understandable and contestable</h3>
+          <p>Transparency is not merely about revealing technical details. It is also about making AI-mediated decisions understandable and contestable.</p>
+        </div>
+
+        <div class="quiz" id="q10" style="margin-top:28px;">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">10. A student's scholarship application is rejected. When she asks why, the office replies: "The system flagged you as high risk. We can't say more — that's just what the algorithm decided." Which principle is most directly at stake?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q10" value="a"> Sustainability</label>
+            <label class="opt"><input type="radio" name="q10" value="b"> AI literacy of the student</label>
+            <label class="opt"><input type="radio" name="q10" value="c"> None — algorithmic decisions don't need to be explained</label>
+            <label class="opt"><input type="radio" name="q10" value="d"> Transparency and explainability — she has no meaningful way to understand, question, or challenge a consequential automated decision</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q10')">Check answer</button>
+          <div class="feedback" id="q10-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 11. Privacy -->
+      <section class="chapter" id="privacy">
+        <div class="eyebrow">11 · Core Ethical Principles for AI</div>
+        <h2>Privacy and Data Protection</h2>
+        <p class="lede">Guide question: Is data being collected, shared, and used responsibly?</p>
+        <p>AI systems depend heavily on data. This creates a direct connection between AI ethics and the ethical issues surrounding privacy and data discussed earlier in the course.</p>
+        <p>People may provide AI systems with personal information, student records, organizational documents, unpublished manuscripts, interview transcripts, photographs, confidential communications, proprietary information, or other sensitive data.</p>
+        <p><strong>But not all information should be shared with AI.</strong></p>
+
+        <div class="callout"><strong>Third-party AI risks.</strong> Using third-party AI systems may create risks of unintended data exposure, unauthorized processing, inappropriate secondary use, or loss of control over sensitive information.</div>
+
+        <p>Having access to data does not necessarily mean having ethical authority to disclose it. Before information is entered into an AI system, there should be a <strong>legitimate and ethical basis</strong> for sharing and processing that information.</p>
+        <p>UNESCO's principle of the <strong>Right to Privacy and Data Protection</strong> emphasizes that privacy and personal data should be protected throughout the AI system lifecycle.</p>
+
+        <blockquote class="def"><strong>Two requirements</strong> — Responsible AI requires both <em>data protection</em> and <em>data judgment</em>.</blockquote>
+
+        <div class="quiz" id="q11">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">11. A faculty member wants to save time by pasting a spreadsheet of students' names, ID numbers, and grades into a free public chatbot to generate personalized feedback. What is the core ethical concern?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q11" value="a"> Having access to student records does not by itself give ethical authority to disclose them to a third-party AI system, which may expose or reuse the data</label>
+            <label class="opt"><input type="radio" name="q11" value="b"> There is no concern, since the faculty member already has legitimate access to the records</label>
+            <label class="opt"><input type="radio" name="q11" value="c"> The only concern is whether the feedback will be well written</label>
+            <label class="opt"><input type="radio" name="q11" value="d"> AI should never be used for any part of teaching</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q11')">Check answer</button>
+          <div class="feedback" id="q11-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 12. Safety -->
+      <section class="chapter" id="safety">
+        <div class="eyebrow">12 · Core Ethical Principles for AI</div>
+        <h2>Safety and Prevention of Harm</h2>
+        <p class="lede">Guide question: What harms could result, and are the safeguards proportionate to the risks?</p>
+        <p>AI systems can create harm even when harm was not intended. An inaccurate medical recommendation, discriminatory hiring model, unsafe autonomous system, misleading deepfake, or incorrect AI-generated instruction can have consequences beyond the computer itself.</p>
+        <p>Responsible AI therefore requires <strong>anticipating possible harms before deploying a system</strong>. Important considerations include:</p>
+        <ul>
+          <li>the likelihood and severity of harm;</li>
+          <li>who may be affected;</li>
+          <li>whether the system can be adequately tested;</li>
+          <li>whether humans can intervene when necessary; and</li>
+          <li>what happens when the system fails.</li>
+        </ul>
+
+        <p>UNESCO addresses these concerns through two closely related principles:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>UNESCO principle</th><th>Asks…</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Proportionality and Do No Harm</strong></td><td>Is the use of AI appropriate and proportionate to a legitimate objective, and can unnecessary harm be avoided?</td></tr>
+            <tr><td><strong>Safety and Security</strong></td><td>Are unwanted harms and vulnerabilities prevented throughout the AI system lifecycle?</td></tr>
+          </tbody>
+        </table>
+        <p>The degree of scrutiny and protection should therefore reflect the potential consequences of the system. An AI system recommending music does not require the same level of ethical scrutiny as an AI system influencing medical treatment, criminal justice, employment, or access to essential services.</p>
+
+        <div class="keyidea">
+          <h3>The greater the potential harm, the stronger the safeguards should be.</h3>
+        </div>
+
+        <div class="quiz" id="q12" style="margin-top:28px;">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">12. An IS team is deploying two AI systems: one suggests songs for a campus radio playlist; the other helps triage patients at the university clinic. How should their safeguards compare?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q12" value="a"> Both should receive exactly the same level of scrutiny, since both are AI</label>
+            <label class="opt"><input type="radio" name="q12" value="b"> The playlist system needs more scrutiny because more students use it</label>
+            <label class="opt"><input type="radio" name="q12" value="c"> The triage system needs much stronger safeguards, testing, and human intervention, because the potential harm is far greater</label>
+            <label class="opt"><input type="radio" name="q12" value="d"> Neither needs safeguards if the vendor guarantees accuracy</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q12')">Check answer</button>
+          <div class="feedback" id="q12-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 13. Sustainability -->
+      <section class="chapter" id="sustainability">
+        <div class="eyebrow">13 · Core Ethical Principles for AI</div>
+        <h2>Sustainability</h2>
+        <p class="lede">Guide question: Are the long-term social, economic, and environmental costs of AI justified?</p>
+        <p>AI may appear entirely digital, but AI systems depend on physical, economic, and social resources. Training and operating large AI systems require computing resources, data centers, electricity, cooling systems, hardware, infrastructure, and human labor. At scale, the development and use of AI can therefore have consequences that extend far beyond the immediate user or application.</p>
+        <p>Environmental impacts are particularly visible. Large-scale computing consumes energy and water and depends on physical infrastructure and hardware whose production and disposal also carry environmental costs.</p>
+        <p>But <strong>sustainability is broader than environmental impact alone</strong>.</p>
+
+        <div class="flow">
+          <span class="step">Social</span><span class="arrow">+</span>
+          <span class="step">Economic</span><span class="arrow">+</span>
+          <span class="step">Cultural</span><span class="arrow">+</span>
+          <span class="step">Environmental</span>
+        </div>
+
+        <p>UNESCO's principle of <strong>Sustainability</strong> encourages AI to be evaluated in relation to its wider social, economic, cultural, and environmental consequences. The question is not merely whether an AI system works today, but whether its development and use contribute to forms of technological progress that can be sustained without undermining human and planetary well-being.</p>
+        <p>Responsible AI therefore requires attention to broader societal and environmental impacts, including implications for labor, resource consumption, energy use, and long-term human and ecological well-being.</p>
+
+        <blockquote class="def"><strong>Remember</strong> — A technologically impressive solution is not necessarily a sustainable one.</blockquote>
+
+        <div class="quiz" id="q13">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">13. A company argues its new AI system is "sustainable" because its data center runs on solar power — while the system is also designed to replace most of its local support workforce. What does this section suggest?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q13" value="a"> The claim is fully justified, since sustainability is only about energy sources</label>
+            <label class="opt"><input type="radio" name="q13" value="b"> Sustainability is broader than environmental impact — social and economic consequences such as effects on labor must also be weighed</label>
+            <label class="opt"><input type="radio" name="q13" value="c"> Sustainability does not apply to AI because AI is purely digital</label>
+            <label class="opt"><input type="radio" name="q13" value="d"> Any system that works well today is automatically sustainable</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q13')">Check answer</button>
+          <div class="feedback" id="q13-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 14. From Principles to Practice -->
+      <section class="chapter" id="practice">
+        <div class="eyebrow">14 · Applying AI Ethics</div>
+        <h2>From Principles to Practice</h2>
+        <p class="lede">Ethical principles are necessary, but principles alone do not automatically determine what should be done.</p>
+
+        <blockquote class="def"><strong>Scenario</strong> — A university wants to use AI to identify students who may be at risk of dropping out. Early identification might allow the university to provide academic assistance, counseling, or other interventions.</blockquote>
+
+        <p>The system could provide significant benefits. But several ethical questions immediately arise:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Principle</th><th>Question for the dropout-prediction system</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Responsibility &amp; Accountability</strong></td><td>What responsibilities does the university have when developing or using the system, and who must answer if it misclassifies a student or contributes to harm?</td></tr>
+            <tr><td><strong>Meaningful Human Control</strong></td><td>Does the AI merely flag cases for human review, or does it automatically make decisions about students?</td></tr>
+            <tr><td><strong>AI Literacy &amp; Competence</strong></td><td>Do the people interpreting the prediction understand what the model can and cannot tell them?</td></tr>
+            <tr><td><strong>Fairness &amp; Non-Discrimination</strong></td><td>Does the model work fairly across different groups of students, or could its data and predictions disadvantage particular groups?</td></tr>
+            <tr><td><strong>Transparency &amp; Explainability</strong></td><td>Are students aware that AI is being used, and can the university explain why a student was classified as "at risk"?</td></tr>
+            <tr><td><strong>Privacy &amp; Data Protection</strong></td><td>What student data are being collected and analyzed, and is their use appropriate?</td></tr>
+            <tr><td><strong>Safety &amp; Prevention of Harm</strong></td><td>Could an incorrect classification stigmatize students, affect how they are treated, or cause other harm?</td></tr>
+            <tr><td><strong>Sustainability</strong></td><td>Are the technological, social, economic, and environmental resources required justified by the expected benefits?</td></tr>
+          </tbody>
+        </table>
+        <p>The same AI system can therefore appear beneficial under one ethical consideration and problematic under another. This is why <strong>ethical reasoning remains necessary</strong>.</p>
+
+        <div class="quiz" id="q14">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">14. Suppose the university configures the system so that any student flagged "at risk" is automatically removed from the honors program, with no adviser reviewing the case. Which principle is most directly violated?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q14" value="a"> Sustainability</label>
+            <label class="opt"><input type="radio" name="q14" value="b"> Privacy and data protection only</label>
+            <label class="opt"><input type="radio" name="q14" value="c"> None — automation makes the process more efficient</label>
+            <label class="opt"><input type="radio" name="q14" value="d"> Human judgment and meaningful human control — the AI is making a consequential decision instead of flagging cases for human review</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q14')">Check answer</button>
+          <div class="feedback" id="q14-feedback"></div>
+        </div>
+
+        <h3>Connecting AI Ethics to the Four Ethical Frameworks</h3>
+        <p>The eight AI ethics principles can also be connected to the four ethical frameworks discussed earlier in the course. Each principle has a particularly strong conceptual connection to one of these frameworks.</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Ethical Framework</th><th>Core AI Ethics Principles</th><th>Central Connection</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">Consequentialism</td><td>Safety and Prevention of Harm; Sustainability</td><td>Focuses on the consequences of AI, including immediate harms, risks, benefits, and long-term social and environmental impacts.</td></tr>
+            <tr><td class="num">Deontology</td><td>Responsibility and Accountability; Human Judgment and Meaningful Human Control; Privacy and Data Protection</td><td>Focuses on duties, obligations, rights, human autonomy, and answerability in the development and use of AI.</td></tr>
+            <tr><td class="num">Virtue Ethics</td><td>AI Literacy and Competence</td><td>Focuses on the qualities needed for responsible AI practice, including competence, prudence, critical judgment, and intellectual responsibility.</td></tr>
+            <tr><td class="num">Justice and Fairness</td><td>Fairness and Non-Discrimination; Transparency and Explainability</td><td>Focuses on equitable treatment and whether people affected by AI can understand, question, and challenge AI-mediated decisions.</td></tr>
+          </tbody>
+        </table>
+        <p>These groupings represent the <strong>strongest conceptual connection</strong> between each AI ethics principle and the four ethical frameworks. They are not exclusive. The same principle may be examined through more than one ethical framework.</p>
+        <p>For example, privacy is strongly connected to deontology because it involves rights and duties, but privacy violations can also be examined through their consequences. Sustainability has a strong connection to consequentialism because of its concern with long-term impacts, but it can also raise questions of justice across populations and generations.</p>
+        <p>Likewise, AI-related problems such as <strong>hallucination, overreliance, bias, and privacy breaches are not themselves ethical frameworks or principles</strong>. They are risks or problems that can be examined through the eight AI ethics principles and, in turn, analyzed using the four ethical frameworks.</p>
+
+        <div class="keyidea">
+          <h3>Principles and frameworks work together</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">The eight AI ethics principles</div>
+              <ul><li>Identify <em>what</em> ethical concerns should be examined</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">The four ethical frameworks</div>
+              <ul><li>Provide ways of reasoning about <em>why</em> those concerns matter and <em>how</em> they should be evaluated</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:18px;">AI ethics therefore does not replace the ethical frameworks studied earlier. Instead, it provides a technological context in which those frameworks can be applied to the particular challenges created by AI.</p>
+
+        <div class="quiz" id="q15">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">15. A classmate claims: "Hallucination is one of the four ethical frameworks, and AI literacy connects most strongly to consequentialism." Which correction is accurate?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q15" value="a"> Hallucination is a risk, not a framework or principle; AI literacy connects most strongly to virtue ethics, which focuses on qualities like competence, prudence, and critical judgment</label>
+            <label class="opt"><input type="radio" name="q15" value="b"> Both claims are correct</label>
+            <label class="opt"><input type="radio" name="q15" value="c"> Hallucination is an AI ethics principle; AI literacy connects most strongly to deontology</label>
+            <label class="opt"><input type="radio" name="q15" value="d"> Each AI ethics principle can be examined through only one framework, so the mapping is fixed</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q15')">Check answer</button>
+          <div class="feedback" id="q15-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 15. Who Remains in Control -->
+      <section class="chapter" id="control">
+        <div class="eyebrow">15 · Applying AI Ethics</div>
+        <h2>The Central Ethical Question: Who Remains in Control?</h2>
+        <p class="lede">AI ethics ultimately concerns more than the capabilities of machines. It concerns the choices made by people.</p>
+        <p>AI systems are developed by people, trained using data produced by people and societies, deployed by organizations, and used to make or support decisions affecting other people. Increasing technological capability therefore does not eliminate human responsibility or accountability.</p>
+
+        <p>Three ideas bring the discussion together:</p>
+        <ul class="quotes">
+          <li>AI assists. Humans remain accountable.<span>— Responsibility and Accountability</span></li>
+          <li>AI should augment human capability, not replace human judgment.<span>— Human Judgment and Meaningful Human Control</span></li>
+          <li>Convenience without competence creates ethical risk.<span>— AI Literacy and Competence</span></li>
+        </ul>
+
+        <p style="margin-top:22px;">Responsibility establishes the duties and obligations associated with AI. Accountability establishes who must answer for decisions and consequences. Meaningful human control preserves genuine human authority over consequential decisions. AI literacy and competence make the informed and responsible exercise of that authority possible.</p>
+        <p>These principles operate alongside broader ethical concerns involving <strong>fairness, transparency, privacy, safety, and sustainability</strong>.</p>
+
+        <div class="keyidea">
+          <h3>The central ethical question</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Not simply</div>
+              <ul><li>What can AI do?</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">But</div>
+              <ul><li>What should AI be allowed to do, what should remain distinctly human, and who remains responsible and accountable for the consequences?</li></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 16. Key Takeaways -->
+      <section class="chapter" id="takeaways">
+        <div class="eyebrow">16 · Wrap-up</div>
+        <h2>Key Takeaways</h2>
+        <ol class="commandments">
+          <li><strong>Capability is not permission.</strong> Just because AI can do something does not mean it should — AI ethics asks what AI should do, for whom, and toward what kind of society.</li>
+          <li><strong>The 5IR re-centers people.</strong> Beyond automation and convergence, technology should serve people, society, and the environment responsibly.</li>
+          <li><strong>Understand the technology first.</strong> AI learns patterns from data; LLMs predict likely text. Fluency is not understanding.</li>
+          <li><strong>AI is neither inherently ethical nor unethical.</strong> Ethical questions arise from how it is designed, developed, deployed, governed, and used.</li>
+          <li><strong>AI assists. Humans remain accountable.</strong> Hallucinated or AI-recommended content does not shift responsibility or accountability to the machine.</li>
+          <li><strong>Human control must be meaningful.</strong> A human who rubber-stamps AI outputs provides no real oversight; AI should augment, not replace, human judgment.</li>
+          <li><strong>Convenience without competence creates ethical risk.</strong> AI literacy means understanding limitations, risks, and how to verify outputs — not just how to use a tool.</li>
+          <li><strong>Fairness, transparency, and privacy matter.</strong> AI can inherit bias, must be understandable and contestable, and should only receive data there is a legitimate basis to share.</li>
+          <li><strong>Safeguards should scale with potential harm, and costs should be sustainable.</strong> Higher-stakes systems need stronger protections, and social, economic, and environmental costs must be justified.</li>
+          <li><strong>Principles identify concerns; frameworks help reason about them.</strong> The eight AI ethics principles connect to consequentialism, deontology, virtue ethics, and justice and fairness.</li>
+        </ol>
+      </section>
+
+      <!-- 17. References -->
+      <section class="chapter" id="references">
+        <div class="eyebrow">17 · Wrap-up</div>
+        <h2>References and Further Reading</h2>
+
+        <div class="refbox">
+          <div class="refbox-label">Key References</div>
+          <ul>
+            <li>UNESCO. (2021). <a href="https://www.unesco.org/en/artificial-intelligence/recommendation-ethics" target="_blank" rel="noopener"><em>Recommendation on the Ethics of Artificial Intelligence.</em></a></li>
+            <li>Association for Computing Machinery. (2018). <a href="https://www.acm.org/code-of-ethics" target="_blank" rel="noopener"><em>ACM Code of Ethics and Professional Conduct.</em></a></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<footer>IS 201: Computer Ethics · Topic 5 — AI Ethics · Dr. Reinald Adrian Pugoy</footer>
+
+<div class="progress-dock" role="status" aria-live="polite">
+  <div class="progress-dock-inner">
+    <div class="progress-dock-label">Check-in progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-count" id="progressCount">0 of 15 answered correctly</div>
+  </div>
+</div>
+
+<script>
+  // Quiz checking
+  function checkQuiz(id){
+    const quiz = document.getElementById(id);
+    const optionsDiv = quiz.querySelector('.options');
+    const correctValue = optionsDiv.dataset.correct;
+    const selected = quiz.querySelector('input[name="'+id+'"]:checked');
+    const feedback = document.getElementById(id+'-feedback');
+
+    if(!selected){
+      feedback.className = 'feedback show feedback-neutral';
+      feedback.textContent = 'Please select an answer first.';
+      return;
+    }
+
+    const isCorrect = selected.value === correctValue;
+    feedback.className = 'feedback show ' + (isCorrect ? 'feedback-correct' : 'feedback-incorrect');
+    feedback.textContent = isCorrect ? '✓ Correct.' : '✗ Not quite — review the section above and try again.';
+
+    if(isCorrect && !quiz.dataset.solved){
+      quiz.dataset.solved = 'true';
+      updateProgress();
+    }
+  }
+
+  function updateProgress(){
+    const totalQuizzes = document.querySelectorAll('.quiz').length;
+    const solved = document.querySelectorAll('.quiz[data-solved="true"]').length;
+    document.getElementById('progressFill').style.width = (solved/totalQuizzes*100) + '%';
+    document.getElementById('progressCount').textContent = solved + ' of ' + totalQuizzes + ' answered correctly';
+  }
+
+  // Sidebar active-link highlighting on scroll
+  const sections = document.querySelectorAll('section.chapter');
+  const tocLinks = document.querySelectorAll('.toc-link');
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        tocLinks.forEach(link=>{
+          link.classList.toggle('active', link.dataset.target === id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+
+  sections.forEach(sec => observer.observe(sec));
+
+  updateProgress();
+</script>
+
+</body>
+</html>

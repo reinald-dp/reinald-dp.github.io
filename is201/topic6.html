@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IS 201 — Topic 6: Software Development Ethics</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   IS 201 — Shared Course Page Theme
+   ==========================================================================
+   One stylesheet for every IS 201 page (course guide, topic readings, etc.)
+   so they all look and feel the same.
+
+   HOW TO USE ON A NEW PAGE
+   --------------------------------------------------------------------------
+   1. Link this file in <head>:
+        <link rel="stylesheet" href="theme.css">
+   2. (Optional) For pixel-perfect type, load the two fonts referenced in
+      the font stacks below — IBM Plex Sans and Source Serif 4. Without
+      them the page falls back to system fonts and still looks correct:
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+   3. Copy the page skeleton below and fill in your own sidebar links and
+      <section class="chapter"> blocks.
+   4. Reuse the component classes documented in each section of this file
+      (blockquote.def, table.compare, .req-card, .scholar-card, .keyidea,
+      .callout, .quotes, .commandments, .refbox, .flow) instead of writing
+      new CSS — that's what keeps every page consistent.
+
+   PAGE SKELETON
+   --------------------------------------------------------------------------
+   <div class="layout">
+     <nav class="sidebar" aria-label="Table of contents">
+       <div class="kicker">IS 201 · Computer Ethics</div>
+       <div class="course-title">Page Title</div>
+       <p class="course-topic">Subtitle / term</p>
+
+       <div class="nav-heading">Section Group</div>
+       <ol>
+         <li><a class="toc-link" href="#anchor">Link label</a></li>
+       </ol>
+     </nav>
+
+     <main>
+       <div class="hero">
+         <div class="kicker">Eyebrow text</div>
+         <h1>Page Title</h1>
+         <p class="dek">One or two sentence description.</p>
+         <span class="byline">Faculty-in-Charge: <strong>Name</strong></span>
+       </div>
+
+       <div class="content-inner">
+         <section class="chapter" id="anchor">
+           <div class="eyebrow">Section Group</div>
+           <h2>Section Title</h2>
+           <p>Body copy…</p>
+         </section>
+       </div>
+     </main>
+   </div>
+
+   <p class="ai-note page-note">Optional closing footnote.</p>
+   <footer>Page footer text</footer>
+   ========================================================================== */
+
+/* ---- Design tokens -------------------------------------------------------
+   Change colors/fonts for the whole site by editing these variables only. */
+:root{
+    --bg:#EEF2F8;
+    --paper:#FFFFFF;
+    --ink:#1B2333;
+    --ink-soft:#4A5568;
+    --sidebar:#16243E;
+    --sidebar-hover:#22385F;
+    --sidebar-text:#C6D2E8;
+    --sidebar-text-dim:#7E93B8;
+    --accent:#2F5D9C;
+    --accent-deep:#1E3F6E;
+    --gold:#A9822F;
+    --border:#DAE1EC;
+    --correct:#1E7B57;
+    --correct-bg:#E5F4EC;
+    --incorrect:#B03B33;
+    --incorrect-bg:#FBEAE8;
+    --neutral:#8A6D1E;
+    --neutral-bg:#FBF3E1;
+  }
+  /* ---- Base & typography ---------------------------------------------- */
+*{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"IBM Plex Sans", -apple-system, Segoe UI, Roboto, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{
+    font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+    color:var(--ink);
+    line-height:1.25;
+    font-weight:600;
+  }
+  a{color:var(--accent-deep);}
+  a:hover{color:var(--accent);}
+
+  /* ---- Page layout: sidebar + main ------------------------------------
+     .layout wraps everything; nav.sidebar is the sticky dark TOC column.
+     Sidebar TOC markup:
+       <div class="nav-heading">Group label</div>
+       <ol><li><a class="toc-link" href="#id">Label</a></li></ol>
+     Optional sub-links under a toc-link:
+       <ul class="sub"><li><a href="#id">…</a></li></ul>
+     .toc-link.active (added by the IntersectionObserver script at the
+     bottom of the page skeleton) highlights the section in view. -------- */
+  .layout{
+    min-height:100vh;
+    width:100%;
+  }
+  nav.sidebar{
+    width:280px;
+    flex-shrink:0;
+    background:var(--sidebar);
+    color:var(--sidebar-text);
+    padding:28px 22px 40px;
+    position:fixed;
+    top:0;
+    left:0;
+    height:100vh;
+    overflow-y:auto;
+    z-index:10;
+  }
+  nav.sidebar::-webkit-scrollbar{width:8px;}
+  nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
+
+  .sidebar .kicker{
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:6px;
+  }
+  .sidebar .course-title{
+    font-family:"Source Serif 4", Georgia, serif;
+    font-size:21px;
+    color:#fff;
+    margin:0 0 4px;
+  }
+  .sidebar .course-topic{
+    font-size:13.5px;
+    color:var(--sidebar-text);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin:0 0 18px;
+  }
+  .sidebar .nav-heading{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin:18px 0 6px;
+  }
+  .sidebar .nav-heading:first-of-type{ margin-top:0; }
+  .sidebar ol{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:section;
+  }
+  .sidebar > ol > li{
+    counter-increment:section;
+    margin-bottom:2px;
+  }
+  .sidebar a.toc-link{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    text-decoration:none;
+    color:var(--sidebar-text);
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:14px;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .sidebar a.toc-link::before{
+    content:counter(section, decimal-leading-zero);
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:11px;
+    color:var(--sidebar-text-dim);
+    padding-top:2px;
+  }
+  .sidebar a.toc-link:hover, .sidebar a.toc-link.active{
+    background:var(--sidebar-hover);
+    color:#fff;
+  }
+  .sidebar ul.sub{
+    list-style:none;
+    margin:2px 0 8px 26px;
+    padding:0;
+    border-left:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar ul.sub li a{
+    display:block;
+    text-decoration:none;
+    color:var(--sidebar-text-dim);
+    font-size:12.5px;
+    padding:5px 0 5px 14px;
+    transition:color 0.15s ease;
+  }
+  .sidebar ul.sub li a:hover{color:#fff;}
+
+  main{
+    display:block;
+    margin-left:280px;
+    padding:0 0 100px;
+  }
+  /* ---- Hero banner (top of main, above the content column) -----------
+     <div class="hero">
+       <div class="kicker">Eyebrow</div>
+       <h1>Title</h1>
+       <p class="dek">Description</p>
+       <span class="byline">Faculty-in-Charge: <strong>Name</strong></span>
+     </div> ------------------------------------------------------------- */
+  .hero{
+    background:linear-gradient(155deg, var(--accent-deep) 0%, var(--sidebar) 65%);
+    color:#fff;
+    padding:64px 56px 46px;
+  }
+  .hero .kicker{
+    text-transform:uppercase;
+    letter-spacing:0.16em;
+    font-size:12px;
+    color:#AFC3E4;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    color:#fff;
+    font-size:38px;
+    margin:0 0 10px;
+    max-width:900px;
+  }
+  .hero p.dek{
+    max-width:820px;
+    color:#D6E0F1;
+    font-size:16px;
+    margin:0 0 22px;
+  }
+  .hero .byline{
+    font-size:14px;
+    color:#AFC3E4;
+    border-top:1px solid rgba(255,255,255,0.18);
+    padding-top:14px;
+    display:inline-block;
+  }
+  .hero .byline strong{color:#fff; font-weight:600;}
+
+  /* ---- Content column --------------------------------------------------
+     .content-inner is the comfortable-reading-width wrapper inside <main>.
+     Each page section is a <section class="chapter" id="anchor"> with an
+     .eyebrow label (group name, matches the sidebar nav-heading) and an h2.
+     Use .lede for an intro paragraph with a gold left rule. --------------- */
+  .content-inner{
+    padding:0 56px;
+    max-width:960px;
+  }
+
+  section.chapter{
+    padding-top:52px;
+    scroll-margin-top:24px;
+  }
+  section.chapter:first-of-type{padding-top:40px;}
+
+  .chapter .eyebrow{
+    font-size:13px;
+    color:var(--accent);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .chapter h2{
+    font-size:27px;
+    margin:0 0 16px;
+    padding-bottom:14px;
+    border-bottom:2px solid var(--border);
+  }
+  .chapter h3{
+    font-size:19px;
+    margin:30px 0 10px;
+    color:var(--accent-deep);
+  }
+  .chapter h4{
+    font-size:15.5px;
+    margin:20px 0 8px;
+    color:var(--accent-deep);
+  }
+  .chapter p{
+    font-size:15.5px;
+    color:var(--ink);
+    margin:0 0 14px;
+  }
+  .chapter ul, .chapter ol.plain{
+    padding-left:22px;
+    margin:0 0 16px;
+  }
+  .chapter li{
+    font-size:15.5px;
+    margin-bottom:6px;
+  }
+  .lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    border-left:3px solid var(--gold);
+    padding-left:16px;
+    margin:0 0 22px;
+  }
+
+  /* ---- Definition / emphasis callout ------------------------------------
+     <blockquote class="def"><strong>Term</strong> — explanation…</blockquote>
+     ------------------------------------------------------------------- */
+  blockquote.def{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--accent);
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+  blockquote.def strong{color:var(--ink); font-family:"Source Serif 4", serif;}
+
+  /* ---- Data table --------------------------------------------------------
+     <table class="compare">
+       <thead><tr><th>Col</th><th>Col</th></tr></thead>
+       <tbody><tr><td class="num">Value</td><td>...</td></tr></tbody>
+     </table>
+     Row modifiers: tr.deadline (amber highlight), tr.lowgrade (red highlight)
+     td.num bolds/colors a key figure (grade, week number, percentage). ---- */
+  table.compare{
+    width:100%;
+    border-collapse:collapse;
+    margin:8px 0 20px;
+    font-size:14.5px;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  table.compare th{
+    background:var(--sidebar);
+    color:#fff;
+    text-align:left;
+    padding:10px 14px;
+    font-weight:600;
+    font-size:13px;
+  }
+  table.compare td{
+    padding:10px 14px;
+    border-top:1px solid var(--border);
+    vertical-align:top;
+  }
+  table.compare tr:nth-child(even) td{background:#F6F8FC;}
+  table.compare td.num{ font-weight:600; color:var(--accent-deep); white-space:nowrap; }
+  table.compare tr.deadline td{ background:var(--neutral-bg); color:var(--neutral); font-style:italic; }
+  table.compare tr.lowgrade td{ background:var(--incorrect-bg); color:var(--incorrect); font-weight:600; }
+
+  /* ---- Bio / reference card ------------------------------------------
+     <div class="scholar-card">
+       <span class="tag">Label</span>
+       <h4>Name</h4>
+       <p>Bio text…</p>
+       <ul class="fic-links"><li>Email: <a href="mailto:...">...</a></li></ul>
+     </div> ------------------------------------------------------------- */
+  .scholar-card{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+    margin-bottom:18px;
+    scroll-margin-top:24px;
+  }
+  .scholar-card h4{
+    margin:0 0 4px;
+    font-size:16.5px;
+    color:var(--ink);
+  }
+  .scholar-card .tag{
+    display:inline-block;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:#EAF0FA;
+    padding:2px 8px;
+    border-radius:4px;
+    margin-bottom:10px;
+  }
+  .scholar-card p{margin:0 0 6px; font-size:14.5px;}
+  .scholar-card .fic-links{ margin:10px 0 0; padding-left:18px; font-size:14px; }
+  .scholar-card .fic-links li{ margin-bottom:3px; }
+
+  /* ---- Numbered list (learning outcomes, rules, steps) ----------------
+     <ol class="commandments"><li>Item text</li></ol>
+     Numbers are auto-generated in gold via a CSS counter. ---------------- */
+  .commandments{
+    counter-reset:cmd;
+    padding:0;
+    list-style:none;
+    margin:0 0 20px;
+    display:grid;
+    gap:8px;
+  }
+  .commandments li{
+    counter-increment:cmd;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 14px 12px 44px;
+    position:relative;
+    font-size:14.5px;
+  }
+  .commandments li::before{
+    content:counter(cmd);
+    position:absolute;
+    left:12px;
+    top:10px;
+    font-family:"Source Serif 4", serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--gold);
+  }
+
+  /* ---- Process/flow chips -----------------------------------------------
+     <div class="flow">
+       <span class="step">Step A</span><span class="arrow">→</span>
+       <span class="step">Step B</span>
+     </div> ------------------------------------------------------------- */
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:center;
+    margin:6px 0 22px;
+  }
+  .flow .step{
+    background:var(--accent-deep);
+    color:#fff;
+    padding:8px 13px;
+    border-radius:20px;
+    font-size:13.5px;
+    white-space:nowrap;
+  }
+  .flow .arrow{color:var(--ink-soft); font-size:15px;}
+
+  /* Reference / requirement box */
+  /* ---- Reference / notes box ---------------------------------------------
+     <div class="refbox">
+       <div class="refbox-label">Heading</div>
+       <ul><li><strong>Key</strong> → meaning</li></ul>
+     </div> ------------------------------------------------------------- */
+  .refbox{
+    background:#F4F7FC;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 22px;
+  }
+  .refbox .refbox-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent-deep);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .refbox ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .refbox li{
+    font-size:14px;
+    margin-bottom:4px;
+  }
+  .refbox a{
+    text-decoration:none;
+    border-bottom:1px dotted var(--accent);
+  }
+  .refbox a:hover{border-bottom-style:solid;}
+
+  /* ---- Weighted requirement row (percentage + description) --------------
+     <div class="req-card">
+       <div class="pct">25<sub>%</sub></div>
+       <div><h4>Title</h4><p>Description…</p></div>
+     </div> ------------------------------------------------------------- */
+  .req-card{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:12px;
+  }
+  .req-card .pct{
+    font-family:"Source Serif 4", serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--accent-deep);
+    flex:0 0 62px;
+    text-align:center;
+  }
+  .req-card .pct sub{ font-size:13px; font-weight:400; color:var(--ink-soft); }
+  .req-card h4{ margin:0 0 4px; font-size:15.5px; }
+  .req-card p{ margin:0; font-size:14px; color:var(--ink-soft); }
+
+  /* ---- Highlighted key-idea panel (gradient, for closing/summary blocks)
+     <div class="keyidea">
+       <h3>Headline</h3>
+       <p>Supporting text…</p>
+       Optional two-column list: <div class="qgrid"><div class="col">
+       <div class="col-label">Label</div><ul><li>Item</li></ul></div></div>
+     </div> ------------------------------------------------------------- */
+  .keyidea{
+    background:linear-gradient(155deg, var(--accent-deep), var(--sidebar));
+    color:#fff;
+    border-radius:12px;
+    padding:28px 30px;
+    margin:8px 0 10px;
+  }
+  .keyidea h3{color:#fff; margin-top:0;}
+  .keyidea p{ color:#E3EAF6; }
+  .keyidea .qgrid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 24px;
+    margin-top:14px;
+  }
+  .keyidea .qgrid .col{ flex:1 1 220px; }
+  .keyidea .qgrid .col-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#AFC3E4;
+    margin-bottom:6px;
+  }
+  .keyidea .qgrid ul{margin:0; padding-left:18px;}
+  .keyidea .qgrid li{font-size:14px; margin-bottom:5px; color:#E3EAF6;}
+
+  /* ---- Warning / important-notice callout (red) -----------------------
+     <div class="callout"><strong>Heads up.</strong> Notice text…</div> --- */
+  .callout{
+    background:var(--incorrect-bg);
+    border:1px solid #F0C6C1;
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 20px;
+    font-size:14.5px;
+    color:var(--incorrect);
+  }
+  .callout strong{ color:var(--incorrect); }
+
+  /* ---- Pull-quote list ---------------------------------------------------
+     <ul class="quotes"><li>"Quote text"<span>— Attribution</span></li></ul>
+     ------------------------------------------------------------------- */
+  .quotes{
+    list-style:none;
+    padding:0;
+    margin:10px 0 0;
+    display:grid;
+    gap:12px;
+  }
+  .quotes li{
+    border-left:3px solid var(--gold);
+    padding:2px 0 2px 16px;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .quotes li span{
+    display:block;
+    font-style:normal;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-top:3px;
+  }
+
+  /* ---- Page-level footnote & footer --------------------------------------
+     <p class="ai-note page-note">Footnote text, placed outside all
+       <section> elements, right before <footer>.</p>
+     <footer>Page footer text</footer>
+     .ai-note (without .page-note) can also be used inside a section as a
+     smaller inline note with just a top rule. --------------------------- */
+  .ai-note{
+    margin-top:26px;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  .ai-note.page-note{
+    max-width:820px;
+    margin:36px auto 0;
+    padding:16px 56px 0;
+    text-align:center;
+    border-top:1px solid var(--border);
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 10px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-left:280px;
+  }
+
+  @media (max-width: 880px){
+    nav.sidebar{
+      position:relative;
+      width:100%;
+      height:auto;
+      max-height:none;
+    }
+    main{ margin-left:0; }
+    footer{ margin-left:0; }
+    .hero{padding:40px 24px 32px;}
+    .content-inner{padding:0 22px;}
+    .req-card{ flex-wrap:wrap; }
+  }
+
+  /* ---- Page-specific additions (quiz, progress bar) ---- */
+  .sidebar .instructor{
+    font-size:12.5px;
+    color:var(--sidebar-text-dim);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin-bottom:18px;
+  }
+  .sidebar .progress-wrap{
+    margin-top:22px;
+    padding-top:16px;
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar .progress-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:8px;
+  }
+  .progress-track{
+    width:100%;
+    height:6px;
+    background:rgba(255,255,255,0.1);
+    border-radius:4px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--gold), #D8B65A);
+    transition:width 0.4s ease;
+  }
+  .progress-count{
+    margin-top:6px;
+    font-size:12px;
+    color:var(--sidebar-text-dim);
+  }
+  .hero-inner{
+    max-width:904px;
+  }
+
+  /* Sticky check-in progress bar (fixed to bottom of the viewport) */
+  body{ padding-bottom:44px; }
+  .progress-dock{
+    position:fixed;
+    left:280px;
+    right:0;
+    bottom:0;
+    z-index:20;
+    background:#D8B65A;
+    border-top:1px solid #C9A548;
+    box-shadow:0 -2px 10px rgba(22,36,62,0.16);
+    color:var(--sidebar);
+  }
+  .progress-dock-inner{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:8px 56px;
+    max-width:1016px;
+  }
+  .progress-dock-label{
+    font-size:10.5px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    font-weight:600;
+    color:var(--sidebar);
+    opacity:0.8;
+    white-space:nowrap;
+  }
+  .progress-dock .progress-track{
+    flex:1;
+    height:6px;
+    background:rgba(22,36,62,0.18);
+  }
+  .progress-dock .progress-fill{
+    background:var(--sidebar);
+  }
+  .progress-dock .progress-count{
+    margin-top:0;
+    font-size:12px;
+    font-weight:600;
+    color:var(--sidebar);
+    white-space:nowrap;
+  }
+  @media (max-width: 880px){
+    .progress-dock{ left:0; }
+    .progress-dock-inner{ padding:7px 22px; gap:10px; }
+    .progress-dock-label{ display:none; }
+  }
+
+  /* Quiz component (not part of the shared theme) */
+  .quiz{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--gold);
+    border-radius:8px;
+    padding:20px 22px;
+    margin:8px 0 28px;
+  }
+  .quiz .quiz-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--gold);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .quiz p.q-prompt{
+    font-size:15.5px;
+    font-weight:600;
+    color:var(--ink);
+    margin:0 0 12px;
+  }
+  .quiz .options{
+    display:grid;
+    gap:8px;
+    margin-bottom:14px;
+  }
+  .quiz label.opt{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    font-size:14.5px;
+    color:var(--ink);
+    padding:8px 10px;
+    border:1px solid var(--border);
+    border-radius:6px;
+    cursor:pointer;
+    transition:border-color 0.15s ease, background 0.15s ease;
+  }
+  .quiz label.opt:hover{border-color:var(--accent); background:#F4F7FC;}
+  .quiz input[type="radio"]{margin-top:3px;}
+  .quiz button.check-btn{
+    background:var(--accent-deep);
+    color:#fff;
+    border:none;
+    padding:9px 18px;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:600;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .quiz button.check-btn:hover{background:var(--accent);}
+  .quiz .feedback{
+    margin-top:14px;
+    padding:12px 14px;
+    border-radius:6px;
+    font-size:14px;
+    display:none;
+  }
+  .quiz .feedback.show{display:block;}
+  .feedback-correct{background:var(--correct-bg); color:var(--correct); border:1px solid #BFE3CF;}
+  .feedback-incorrect{background:var(--incorrect-bg); color:var(--incorrect); border:1px solid #F0C6C1;}
+  .feedback-neutral{background:var(--neutral-bg); color:var(--neutral); border:1px solid #EEDCA6;}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <div class="kicker">IS 201 · Chapter 2</div>
+    <div class="course-title">Topic 6</div>
+    <p class="course-topic">Software Development Ethics</p>
+
+    <div class="nav-heading">Introduction</div>
+    <ol id="toc">
+      <li><a class="toc-link" href="#intro" data-target="intro">An Ethical Practice</a></li>
+      <li><a class="toc-link" href="#why-is" data-target="why-is">Why This Matters to IS</a></li>
+    </ol>
+
+    <div class="nav-heading">Eight Dimensions of Responsible Development</div>
+    <ol style="counter-reset:section 2">
+      <li><a class="toc-link" href="#quality" data-target="quality">Quality &amp; Reliability</a></li>
+      <li><a class="toc-link" href="#secure" data-target="secure">Secure Development</a></li>
+      <li><a class="toc-link" href="#privacy" data-target="privacy">Privacy by Design</a></li>
+      <li><a class="toc-link" href="#inclusive" data-target="inclusive">Inclusive &amp; Ethical Design</a></li>
+      <li><a class="toc-link" href="#testing" data-target="testing">Testing &amp; Deployment</a></li>
+      <li><a class="toc-link" href="#maintenance" data-target="maintenance">Maintenance &amp; Sustainability</a></li>
+      <li><a class="toc-link" href="#reuse" data-target="reuse">Code Reuse &amp; IP</a></li>
+      <li><a class="toc-link" href="#transparency" data-target="transparency">Transparency &amp; Documentation</a></li>
+      <li><a class="toc-link" href="#summary" data-target="summary">The Eight Dimensions at a Glance</a></li>
+    </ol>
+
+    <div class="nav-heading">Professional Standards and Judgment</div>
+    <ol style="counter-reset:section 11">
+      <li><a class="toc-link" href="#codes" data-target="codes">Professional Codes of Ethics</a></li>
+      <li><a class="toc-link" href="#frameworks" data-target="frameworks">Applying the Four Frameworks</a></li>
+      <li><a class="toc-link" href="#conflicts" data-target="conflicts">When Responsibilities Conflict</a></li>
+    </ol>
+
+    <div class="nav-heading">Wrap-up</div>
+    <ol style="counter-reset:section 14">
+      <li><a class="toc-link" href="#takeaways" data-target="takeaways">Key Takeaways</a></li>
+      <li><a class="toc-link" href="#references" data-target="references">References</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="kicker">IS 201 · Chapter 2 — Ethical Issues in Computing</div>
+        <h1>Topic 6 — Software Development Ethics</h1>
+        <p class="dek">A guided reading on the ethical responsibilities that run through the software lifecycle — quality, security, privacy, inclusive design and dark patterns, testing, maintenance, code reuse, documentation, professional codes, and how to reason through conflicting duties.</p>
+        <span class="byline">Faculty-in-Charge: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027</span>
+      </div>
+    </div>
+
+    <div class="content-inner">
+
+      <!-- 1. Introduction -->
+      <section class="chapter" id="intro">
+        <div class="eyebrow">01 · Introduction</div>
+        <h2>Software Development as an Ethical Practice</h2>
+        <p class="lede">Software is not neutral. The decisions made during its design, development, testing, deployment, and maintenance can affect people's privacy, security, access to services, opportunities, and even safety.</p>
+        <p>For information systems students and professionals, ethical responsibility therefore extends beyond making software that simply "works."</p>
+        <p>Software development involves a continuous series of choices. Developers decide what a system should do, what data it should collect, which users and situations it should accommodate, what risks are acceptable, and when a system is ready for deployment. These may appear to be purely technical decisions, but many have <strong>ethical consequences</strong>.</p>
+
+        <blockquote class="def"><strong>Scenario</strong> — A developer discovers a serious security vulnerability shortly before a scheduled system launch. Fixing it would delay deployment. Ignoring it would allow the project to meet its deadline, but users could be exposed to harm.</blockquote>
+
+        <div class="keyidea">
+          <h3>Two different questions</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">The technical question</div>
+              <ul><li><em>Can</em> the system be deployed?</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">The ethical question</div>
+              <ul><li><em>Should</em> it be deployed?</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <p style="margin-top:18px;">Professional responsibility requires developers to consider both. This is especially important because <strong>users often cannot independently evaluate the software they depend on</strong>. They trust developers, organizations, and technology professionals to exercise appropriate care on their behalf.</p>
+
+        <div class="quiz" id="q1">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">1. Two days before launch, a developer finds a serious vulnerability. The system compiles, passes its functional tests, and runs smoothly. A teammate says: "It works, so it's ready." What is missing from this reasoning?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q1" value="a"> Nothing — if the system runs correctly, it is ready to deploy</label>
+            <label class="opt"><input type="radio" name="q1" value="b"> The team should have used a different programming language</label>
+            <label class="opt"><input type="radio" name="q1" value="c"> <span>It only answers whether the system <em>can</em> be deployed, not whether it <em>should</em> be, given that users could be exposed to harm</span></label>
+            <label class="opt"><input type="radio" name="q1" value="d"> Users can evaluate the software's security themselves, so the developer need not worry</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q1')">Check answer</button>
+          <div class="feedback" id="q1-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 2. Why This Matters -->
+      <section class="chapter" id="why-is">
+        <div class="eyebrow">02 · Introduction</div>
+        <h2>Why This Matters to Information Systems Students and Professionals</h2>
+        <p class="lede">Information systems professionals may work as developers, analysts, project managers, database administrators, system administrators, cybersecurity professionals, consultants, or technology leaders. Even those who do not write code directly make decisions that shape software systems.</p>
+
+        <p>You may someday decide:</p>
+        <ul>
+          <li>what requirements a system should have;</li>
+          <li>what information it should collect;</li>
+          <li>which risks are acceptable;</li>
+          <li>whether testing is sufficient;</li>
+          <li>whether a vulnerability must be fixed immediately; or</li>
+          <li>whether a system is ready for deployment.</li>
+        </ul>
+        <p>Software development ethics therefore concerns more than programming. It concerns <strong>professional judgment throughout the lifecycle of an information system</strong>.</p>
+
+        <div class="keyidea">
+          <h3>The central question</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Not simply</div>
+              <ul><li>Can we build it?</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">But also</div>
+              <ul><li>Should we build it this way, and are we prepared to take responsibility for its consequences?</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz" id="q2" style="margin-top:28px;">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">2. A project manager says: "I don't write a single line of code, so software development ethics doesn't really apply to me." Based on this section, what is the best response?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q2" value="a"> Decisions about requirements, data collection, acceptable risk, and readiness for deployment shape the software, so they carry ethical responsibility too</label>
+            <label class="opt"><input type="radio" name="q2" value="b"> She is right — only programmers bear responsibility for how software behaves</label>
+            <label class="opt"><input type="radio" name="q2" value="c"> Ethics only applies once the software has been deployed</label>
+            <label class="opt"><input type="radio" name="q2" value="d"> Project managers are responsible only for budgets and schedules</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q2')">Check answer</button>
+          <div class="feedback" id="q2-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 3. Quality -->
+      <section class="chapter" id="quality">
+        <div class="eyebrow">03 · Eight Dimensions of Responsible Development</div>
+        <h2>Quality, Reliability, and Professional Responsibility</h2>
+        <p class="lede">Responsible software development involves more than writing functional code. Ethical responsibility extends across the software lifecycle, from initial design decisions to deployment, maintenance, and eventual retirement. The next eight sections highlight areas where technical decisions can have important consequences for users, organizations, and society.</p>
+
+        <p>Developers have an ethical responsibility to produce software with reasonable levels of <strong>quality, reliability, and safety appropriate to its purpose</strong>. Users depend on software to behave as expected, often without having the technical knowledge to evaluate its quality themselves.</p>
+        <p>Software does not need to be perfect. Virtually all sufficiently complex systems contain defects. The ethical issue is whether the software has been developed according to an <strong>appropriate professional standard</strong> given its purpose, users, and potential consequences of failure.</p>
+
+        <h3>Care Should Match the Potential Harm</h3>
+        <table class="compare">
+          <thead>
+            <tr><th>A similar failure in…</th><th>May result in…</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>A recreational application</strong></td><td>Inconvenience</td></tr>
+            <tr><td><strong>A financial, medical, transportation, or government information system</strong></td><td>Financial loss, incorrect decisions, disruption of essential services, or even physical harm</td></tr>
+          </tbody>
+        </table>
+
+        <p>Professional responsibility also requires developers to <strong>work within their competence</strong>, follow appropriate development practices, and communicate significant technical limitations. Deadlines, limited budgets, and organizational pressure are real constraints, but they do not eliminate the developer's responsibility toward the people who depend on the system.</p>
+
+        <blockquote class="def"><strong>Key principle</strong> — Software quality is not only a technical objective. It is also an ethical responsibility toward the people who rely on the system.</blockquote>
+
+        <div class="quiz" id="q3">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">3. The same rounding bug appears in two systems: a mobile puzzle game's score counter and a hospital's medication-dosage calculator. Which statement best reflects this section?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q3" value="a"> Both bugs are equally serious because a defect is a defect</label>
+            <label class="opt"><input type="radio" name="q3" value="b"> Neither is an ethical issue since all complex software contains defects</label>
+            <label class="opt"><input type="radio" name="q3" value="c"> Only the game developer is at fault, since games are released more often</label>
+            <label class="opt"><input type="radio" name="q3" value="d"> The expected level of care should reflect the context and potential harm — the dosage calculator demands a much higher standard</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q3')">Check answer</button>
+          <div class="feedback" id="q3-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 4. Secure Development -->
+      <section class="chapter" id="secure">
+        <div class="eyebrow">04 · Eight Dimensions of Responsible Development</div>
+        <h2>Secure Software Development</h2>
+        <p>Security is not merely something added after a system has been completed. Developers should consider security <strong>throughout the software development lifecycle</strong>.</p>
+
+        <div class="flow">
+          <span class="step">Requirements</span><span class="arrow">→</span>
+          <span class="step">Design</span><span class="arrow">→</span>
+          <span class="step">Implementation</span><span class="arrow">→</span>
+          <span class="step">Testing</span><span class="arrow">→</span>
+          <span class="step">Deployment</span><span class="arrow">→</span>
+          <span class="step">Maintenance</span>
+        </div>
+
+        <p>Poor development practices can introduce vulnerabilities through insecure authentication, improper access controls, inadequate input validation, exposed credentials, outdated dependencies, insecure configuration, or other weaknesses. Once deployed, these vulnerabilities can expose users and organizations to <strong>data breaches, fraud, service disruption, and other forms of harm</strong>.</p>
+
+        <div class="refbox">
+          <div class="refbox-label">Developer responsibilities</div>
+          <ul>
+            <li>Following secure coding practices</li>
+            <li>Protecting credentials and sensitive information</li>
+            <li>Applying appropriate authentication and access controls</li>
+            <li>Keeping libraries and dependencies updated</li>
+            <li>Conducting security testing</li>
+            <li>Addressing known vulnerabilities</li>
+            <li>Designing systems with potential misuse and attacks in mind</li>
+          </ul>
+        </div>
+
+        <p>Not every vulnerability can be anticipated or prevented. The ethical issue becomes particularly important when developers or organizations <strong>know about significant security risks but fail to respond appropriately</strong>.</p>
+        <p>This connects directly with cybersecurity ethics from <strong>Topic 4</strong>. A vulnerability may originate from a technical mistake, but knowingly leaving serious vulnerabilities unresolved can become an ethical issue because the consequences are often borne by users, customers, employees, or the public.</p>
+
+        <blockquote class="def"><strong>Key principle</strong> — Security is part of software quality and professional responsibility, not an optional feature added after development.</blockquote>
+
+        <div class="quiz" id="q4">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">4. A team's security scan flags a library with a known, serious vulnerability. The lead says: "We haven't been breached yet, so let's leave it for now." Why is this ethically significant?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q4" value="a"> It isn't — vulnerabilities only matter after they are exploited</label>
+            <label class="opt"><input type="radio" name="q4" value="b"> The team knows about a significant risk and is failing to respond appropriately, while users bear the potential consequences</label>
+            <label class="opt"><input type="radio" name="q4" value="c"> Every vulnerability in every system must be prevented before any code is written</label>
+            <label class="opt"><input type="radio" name="q4" value="d"> Security is the job of the cybersecurity team, not the developers</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q4')">Check answer</button>
+          <div class="feedback" id="q4-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 5. Privacy by Design -->
+      <section class="chapter" id="privacy">
+        <div class="eyebrow">05 · Eight Dimensions of Responsible Development</div>
+        <h2>Privacy by Design</h2>
+        <p class="lede">Software systems increasingly collect and process personal information. Developers therefore influence privacy through seemingly ordinary design decisions — what data is collected, how it is stored, who can access it, how long it is retained, and what happens to it afterward.</p>
+
+        <blockquote class="def"><strong>Consider</strong> — Should an application collect a user's location if the feature does not actually require it?</blockquote>
+
+        <p>A system may technically be capable of collecting large amounts of information, but <strong>technical capability does not automatically justify collection</strong>. Collecting unnecessary data can create privacy risks even when there is no immediate misuse. Once information has been collected and stored, it can potentially be exposed, accessed improperly, or used for purposes users did not originally expect.</p>
+
+        <h3>Questions for Privacy-Conscious Development</h3>
+        <ul>
+          <li>What personal information is genuinely necessary for the system to function?</li>
+          <li>Are users adequately informed about what is being collected and why?</li>
+          <li>How long should the information be retained?</li>
+          <li>Who should have access to it?</li>
+          <li>Is sensitive information adequately protected?</li>
+          <li>Can users exercise meaningful control over their information?</li>
+          <li>Can the same purpose be achieved with less personal data?</li>
+        </ul>
+
+        <blockquote class="def"><strong>Privacy by design</strong> — considering privacy from the beginning of system development rather than addressing it only after the system has already been built. Privacy requirements can influence system architecture, database design, access controls, default settings, interfaces, and data-retention policies.</blockquote>
+
+        <p>Developers should therefore think of privacy not merely as a policy statement or consent form, but as something that must be <strong>implemented through technical and design decisions</strong>.</p>
+        <p>The connection to <strong>Topic 3</strong> is important: principles such as consent, data minimization, transparency, purpose limitation, and responsible data stewardship ultimately have to be translated into how actual information systems are designed and operated.</p>
+
+        <div class="keyidea">
+          <h3>Privacy is a design responsibility.</h3>
+          <p>Privacy protection is not only the responsibility of users or privacy officers. It is also a software design responsibility.</p>
+        </div>
+
+        <div class="quiz" id="q5" style="margin-top:28px;">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">5. A simple flashlight app asks for access to the user's precise location and full contact list "in case we need it for future features." Which principle from this section is most directly at stake?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q5" value="a"> None — if users click "Allow," any collection is justified</label>
+            <label class="opt"><input type="radio" name="q5" value="b"> Availability — the app must work offline</label>
+            <label class="opt"><input type="radio" name="q5" value="c"> Privacy by design and data minimization — collect only what the system genuinely needs</label>
+            <label class="opt"><input type="radio" name="q5" value="d"> Code reuse — the app may be using a third-party library</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q5')">Check answer</button>
+          <div class="feedback" id="q5-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 6. Inclusive and Ethical Design -->
+      <section class="chapter" id="inclusive">
+        <div class="eyebrow">06 · Eight Dimensions of Responsible Development</div>
+        <h2>User-Centered, Inclusive, and Ethical Design</h2>
+        <p>Developers make assumptions about who their users are and how they will interact with a system. Those assumptions can unintentionally <strong>exclude users or influence their choices</strong>.</p>
+        <p>A system might work well for developers during testing but create difficulties for people with disabilities, older devices, slow internet connections, limited digital literacy, or different linguistic and cultural backgrounds.</p>
+
+        <div class="keyidea">
+          <h3>Does it work — and for whom?</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Not only</div>
+              <ul><li>Does the system work?</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">But also</div>
+              <ul><li>For whom does it work, who might be excluded, and does the design respect users' choices?</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <h3>Important Considerations</h3>
+        <ul>
+          <li>Accessibility and usability</li>
+          <li>Affordability and device requirements</li>
+          <li>Bandwidth limitations</li>
+          <li>Language and cultural context</li>
+          <li>Differing levels of digital literacy</li>
+          <li>Respect for user autonomy</li>
+        </ul>
+        <p>Inclusive design does not mean that every system must accommodate every possible user. It means that developers should <strong>identify relevant users, recognize foreseeable barriers, and avoid unnecessary exclusion</strong>.</p>
+        <p>Ethical design also requires attention to how interfaces influence user decisions. Good interface design should help users understand their options and make informed choices rather than deliberately steering them toward decisions that primarily benefit the organization.</p>
+
+        <div class="quiz" id="q6">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">6. A university's new learning portal was tested only on the developers' high-end laptops over fast office internet. After launch, students using older phones and prepaid mobile data can barely load the pages. What does this section suggest went wrong?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q6" value="a"> The team failed to identify its relevant users and recognize foreseeable barriers such as device and bandwidth limitations</label>
+            <label class="opt"><input type="radio" name="q6" value="b"> Nothing — the system works, so the developers met their responsibility</label>
+            <label class="opt"><input type="radio" name="q6" value="c"> Inclusive design requires accommodating every possible user, so the project should be abandoned</label>
+            <label class="opt"><input type="radio" name="q6" value="d"> The students are responsible for upgrading their devices</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q6')">Check answer</button>
+          <div class="feedback" id="q6-feedback"></div>
+        </div>
+
+        <h3>Dark Patterns and Manipulative Design</h3>
+        <p>Interfaces that deliberately manipulate or obstruct user choices are commonly called <strong>dark patterns</strong> or <strong>deceptive design patterns</strong>.</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Pattern</th><th>What it looks like</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Obstruction</strong></td><td>Making an action unnecessarily difficult, such as making cancellation much harder than subscription</td></tr>
+            <tr><td><strong>Sneaking</strong></td><td>Hiding or delaying important information, charges, or consequences</td></tr>
+            <tr><td><strong>Interface interference</strong></td><td>Visually emphasizing one choice while making alternatives difficult to find</td></tr>
+            <tr><td><strong>Forced action</strong></td><td>Requiring users to provide information or perform an unnecessary action to access a service</td></tr>
+            <tr><td><strong>Nagging</strong></td><td>Repeatedly asking users to enable, subscribe to, or accept something they have already declined</td></tr>
+            <tr><td><strong>False urgency or social proof</strong></td><td>Using misleading countdowns, availability claims, or claims about other users to pressure decisions</td></tr>
+            <tr><td><strong>Confirmshaming</strong></td><td>Using guilt-inducing language when users reject an option</td></tr>
+          </tbody>
+        </table>
+
+        <div class="callout"><strong>Working as designed.</strong> Dark patterns are ethically significant because the software may be functioning exactly as designed. The problem is the design itself.</div>
+
+        <p>Developers may not always decide which interface strategies an organization adopts, but they may be asked to implement them. Professional responsibility includes <strong>recognizing and raising concerns</strong> about designs that undermine user autonomy.</p>
+
+        <blockquote class="def"><strong>The ethical question</strong> — Was the software designed to help users make an informed choice, or to manipulate them toward a particular one?</blockquote>
+
+        <div class="quiz" id="q7">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">7. A shopping app's discount pop-up offers two buttons: a large bright "Yes, give me 20% off!" and a small grey link reading "No thanks, I prefer paying full price." The wording of the second option is an example of which dark pattern?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q7" value="a"> Sneaking</label>
+            <label class="opt"><input type="radio" name="q7" value="b"> Forced action</label>
+            <label class="opt"><input type="radio" name="q7" value="c"> Nagging</label>
+            <label class="opt"><input type="radio" name="q7" value="d"> Confirmshaming — using guilt-inducing language when users reject an option</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q7')">Check answer</button>
+          <div class="feedback" id="q7-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 7. Testing and Deployment -->
+      <section class="chapter" id="testing">
+        <div class="eyebrow">07 · Eight Dimensions of Responsible Development</div>
+        <h2>Testing, Quality Assurance, and Deployment</h2>
+        <p>Testing and quality assurance help determine whether software actually meets its requirements and is ready for deployment. They are therefore not merely technical activities, but important forms of <strong>risk management</strong>.</p>
+        <p>Before deployment, developers should have reasonable confidence that the system performs as intended and that foreseeable failures have been considered. Ethical questions arise when teams discover defects, have incomplete testing, or face pressure to release software despite unresolved problems.</p>
+
+        <blockquote class="def"><strong>Scenario</strong> — A team discovers several defects before launch. None prevents the system from running, but one occasionally produces incorrect user records. Management insists that the launch date cannot be moved.</blockquote>
+
+        <p>The ethical issue is not simply whether defects exist. Developers must consider:</p>
+        <ol class="commandments">
+          <li><strong>Severity</strong> — How serious is the defect?</li>
+          <li><strong>Likelihood</strong> — How often is it likely to occur?</li>
+          <li><strong>Consequences</strong> — What happens when it does?</li>
+          <li><strong>Affected stakeholders</strong> — Who bears the impact?</li>
+        </ol>
+
+        <p>This is why practices such as quality assurance, user acceptance testing, staged deployment, monitoring, rollback procedures, and incident response matter <strong>ethically as well as technically</strong>.</p>
+
+        <div class="keyidea">
+          <h3>Quality vs. testing</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Quality</div>
+              <ul><li>Describes the standard the software should meet</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">Testing &amp; QA</div>
+              <ul><li>Help determine whether that standard has actually been met before deployment</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz" id="q8" style="margin-top:28px;">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">8. In the scenario above, a developer argues: "The system runs, so the defects don't matter — let's launch." What should guide the team's decision instead?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q8" value="a"> Only whether management has approved the launch date</label>
+            <label class="opt"><input type="radio" name="q8" value="b"> The severity, likelihood, and consequences of the defects — especially incorrect user records — and who would be affected</label>
+            <label class="opt"><input type="radio" name="q8" value="c"> The total number of defects, regardless of what they do</label>
+            <label class="opt"><input type="radio" name="q8" value="d"> Nothing — software with any defect can never be deployed</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q8')">Check answer</button>
+          <div class="feedback" id="q8-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 8. Maintenance -->
+      <section class="chapter" id="maintenance">
+        <div class="eyebrow">08 · Eight Dimensions of Responsible Development</div>
+        <h2>Maintenance and Software Sustainability</h2>
+        <p class="lede">Software development does not end when a system is launched. Systems require ongoing maintenance throughout their useful life.</p>
+        <p>This may include updates, security patches, monitoring, documentation, performance improvements, dependency upgrades, and eventually replacement or retirement.</p>
+
+        <blockquote class="def"><strong>Technical debt</strong> — the result of short-term solutions that make future maintenance more difficult or costly.</blockquote>
+
+        <p>Technical debt is not automatically unethical. Teams often make reasonable compromises because of limited time, resources, or changing requirements. It becomes ethically significant when organizations <strong>knowingly allow technical debt to create substantial risks</strong> while continuing to depend on the system.</p>
+        <p>Software sustainability therefore requires developers and organizations to consider not only whether a system works today, but whether it can be <strong>maintained safely and effectively over time</strong>.</p>
+        <p>Developers should communicate important technical limitations honestly. Hiding deteriorating systems, unsupported components, or serious maintenance problems prevents decision-makers from understanding the risks they are accepting.</p>
+
+        <h3>Planning for Retirement</h3>
+        <p>Eventually, systems may also need to be retired. Responsible maintenance therefore includes planning for:</p>
+        <div class="flow">
+          <span class="step">Migration</span><span class="arrow">+</span>
+          <span class="step">Preservation or disposal of data</span><span class="arrow">+</span>
+          <span class="step">Continuity of essential services</span><span class="arrow">+</span>
+          <span class="step">Impact on remaining users</span>
+        </div>
+
+        <div class="quiz" id="q9">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">9. A developer knows the payroll system runs on components that no longer receive security updates. To avoid a budget fight, he tells management "everything is running fine." What is the main ethical problem?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q9" value="a"> There is none — the system is still running</label>
+            <label class="opt"><input type="radio" name="q9" value="b"> Any technical debt is automatically unethical</label>
+            <label class="opt"><input type="radio" name="q9" value="c"> Hiding unsupported components prevents decision-makers from understanding the risks they are accepting</label>
+            <label class="opt"><input type="radio" name="q9" value="d"> He should have retired the system on his own without telling anyone</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q9')">Check answer</button>
+          <div class="feedback" id="q9-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 9. Code Reuse -->
+      <section class="chapter" id="reuse">
+        <div class="eyebrow">09 · Eight Dimensions of Responsible Development</div>
+        <h2>Code Reuse and Intellectual Property</h2>
+        <p>Modern software development rarely begins entirely from scratch. Developers routinely build on <strong>open-source software, frameworks, libraries, APIs, code repositories, sample code, and increasingly AI-generated code</strong>. Reusing existing code can save time, reduce duplication, and allow developers to benefit from the work of broader software communities.</p>
+        <p>However, the ability to access or copy code does not automatically mean that it can be used without restriction. Software is subject to <strong>intellectual property rights and licensing conditions</strong>, and different licenses may impose different requirements regarding use, modification, distribution, attribution, or sharing of derivative work.</p>
+
+        <div class="refbox">
+          <div class="refbox-label">Developers should consider</div>
+          <ul>
+            <li>Software licenses and their conditions</li>
+            <li>Proper attribution where required</li>
+            <li>Compatibility between licenses</li>
+            <li>Ownership of proprietary source code</li>
+            <li>Security and reliability of third-party dependencies</li>
+            <li>Whether copied code is appropriate for the intended context</li>
+            <li>Whether reused or generated code can legally and ethically be incorporated into a project</li>
+          </ul>
+        </div>
+
+        <p>For example, code posted publicly on a repository may still have licensing restrictions. Likewise, source code created for an employer or client should not simply be copied into another project without appropriate authorization.</p>
+
+        <h3>Technical Responsibility for Reused Code</h3>
+        <p>A third-party library may contain vulnerabilities, become unsupported, or behave differently from what developers expect. Developers should therefore understand important dependencies rather than treating external code as <strong>automatically trustworthy</strong>.</p>
+
+        <h3>AI Coding Tools</h3>
+        <p>AI-generated code may contain errors, vulnerabilities, or code resembling existing sources. Developers should not assume that generated code is automatically correct, secure, original, or appropriate for a particular project.</p>
+
+        <div class="keyidea">
+          <h3>The developer remains responsible.</h3>
+          <p>Regardless of whether code was written personally, copied from an external source, obtained from an open-source project, or generated with AI, the developer remains responsible for the code incorporated into the software.</p>
+        </div>
+
+        <div class="quiz" id="q10" style="margin-top:28px;">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">10. A developer pastes an AI-generated login function into a production system without reviewing it. Weeks later, it turns out to contain a serious security flaw. Who is responsible for the code?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q10" value="a"> The developer — code incorporated into the software remains the developer's responsibility, whatever its source</label>
+            <label class="opt"><input type="radio" name="q10" value="b"> Only the AI tool, since it wrote the code</label>
+            <label class="opt"><input type="radio" name="q10" value="c"> No one — generated code is automatically correct and secure</label>
+            <label class="opt"><input type="radio" name="q10" value="d"> The users, for trusting the system</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q10')">Check answer</button>
+          <div class="feedback" id="q10-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 10. Transparency -->
+      <section class="chapter" id="transparency">
+        <div class="eyebrow">10 · Eight Dimensions of Responsible Development</div>
+        <h2>Transparency and Documentation</h2>
+        <p>Software development is collaborative. Other developers, administrators, managers, clients, and users may depend on information provided by the development team. Ethical professional practice therefore requires <strong>honest communication and appropriate documentation</strong> throughout the software lifecycle.</p>
+
+        <h3>Developers Should Not Knowingly Misrepresent</h3>
+        <table class="compare">
+          <thead>
+            <tr><th>Area</th><th>Examples of honest communication</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>System capabilities</strong></td><td>What the system can and cannot actually do</td></tr>
+            <tr><td><strong>Testing results</strong></td><td>What was tested, and what was not</td></tr>
+            <tr><td><strong>Security status</strong></td><td>Known vulnerabilities and their status</td></tr>
+            <tr><td><strong>Project progress</strong></td><td>Where the project really stands</td></tr>
+            <tr><td><strong>Known defects &amp; performance limitations</strong></td><td>Issues users or maintainers should be aware of</td></tr>
+            <tr><td><strong>Deployment risks</strong></td><td>Risks associated with going live</td></tr>
+          </tbody>
+        </table>
+
+        <p>Documentation should also record important requirements, design decisions, testing results, changes, known limitations, and significant risks. This helps other professionals understand how the system works, why particular decisions were made, and what issues may require attention.</p>
+        <p>Good documentation is especially important when systems are maintained by people who were not involved in their original development. It supports continuity, informed decision-making, troubleshooting, maintenance, and ultimately <strong>accountability</strong>.</p>
+
+        <blockquote class="def"><strong>When something goes wrong</strong>, appropriate documentation can help answer an important question: Who knew what, what decisions were made, and what actions were taken?</blockquote>
+
+        <div class="quiz" id="q11">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">11. Only half of the planned test cases have been run, but a team lead marks the status report "Testing complete" so the project looks on schedule. Which responsibility does this most directly violate?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q11" value="a"> Code reuse and intellectual property</label>
+            <label class="opt"><input type="radio" name="q11" value="b"> Inclusive design</label>
+            <label class="opt"><input type="radio" name="q11" value="c"> None — status reports are internal and have no ethical weight</label>
+            <label class="opt"><input type="radio" name="q11" value="d"> Transparency — developers should not knowingly misrepresent testing results or project progress</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q11')">Check answer</button>
+          <div class="feedback" id="q11-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 11. Summary of Eight Dimensions -->
+      <section class="chapter" id="summary">
+        <div class="eyebrow">11 · Eight Dimensions of Responsible Development</div>
+        <h2>The Eight Dimensions at a Glance</h2>
+        <table class="compare">
+          <thead>
+            <tr><th>Dimension</th><th>What a Software Developer Should Do</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Quality, Reliability, and Professional Responsibility</strong></td><td>Build software to an appropriate professional standard and communicate significant limitations.</td></tr>
+            <tr><td><strong>Secure Software Development</strong></td><td>Build security into the lifecycle and address known vulnerabilities.</td></tr>
+            <tr><td><strong>Privacy by Design</strong></td><td>Minimize data collection and build privacy protections into the system.</td></tr>
+            <tr><td><strong>User-Centered, Inclusive, and Ethical Design</strong></td><td>Design for relevant users, reduce barriers, and respect user autonomy.</td></tr>
+            <tr><td><strong>Testing, Quality Assurance, and Deployment</strong></td><td>Test adequately, assess defects, and deploy only when risks are acceptable.</td></tr>
+            <tr><td><strong>Maintenance and Software Sustainability</strong></td><td>Maintain systems, manage technical debt, and plan for long-term sustainability.</td></tr>
+            <tr><td><strong>Code Reuse and Intellectual Property</strong></td><td>Respect licenses and ownership, and carefully evaluate reused or generated code.</td></tr>
+            <tr><td><strong>Transparency and Documentation</strong></td><td>Communicate honestly and document important decisions, risks, limitations, and changes.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- 12. Professional Codes -->
+      <section class="chapter" id="codes">
+        <div class="eyebrow">12 · Professional Standards and Judgment</div>
+        <h2>Professional Codes of Ethics</h2>
+        <p class="lede">Ethical software development is not based only on personal judgment. Computing professionals also have professional standards that describe responsibilities toward users, employers, clients, colleagues, and society.</p>
+        <p>Two particularly relevant codes are the <strong>ACM Code of Ethics and Professional Conduct</strong> and the <strong>Software Engineering Code of Ethics and Professional Practice</strong> developed by the ACM and IEEE Computer Society.</p>
+
+        <h3>ACM Code of Ethics and Professional Conduct</h3>
+        <p>The <a href="https://www.acm.org/code-of-ethics" target="_blank" rel="noopener">ACM Code</a> identifies broad ethical principles for computing professionals. Among those especially relevant to software development are responsibilities to:</p>
+        <ul>
+          <li>contribute to society and human well-being;</li>
+          <li>avoid harm;</li>
+          <li>be honest and trustworthy;</li>
+          <li>respect privacy;</li>
+          <li>strive for high quality in professional work;</li>
+          <li>maintain professional competence;</li>
+          <li>evaluate systems and their risks thoroughly; and</li>
+          <li>design and implement systems that are robustly and usably secure.</li>
+        </ul>
+        <p>These principles show that a developer's responsibility does not end when code executes correctly. Developers should also consider whether the software is sufficiently <strong>reliable, secure, usable, and appropriate</strong> for the people affected by it.</p>
+
+        <h3>Software Engineering Code of Ethics and Professional Practice</h3>
+        <p>The <a href="https://www.computer.org/education/code-of-ethics" target="_blank" rel="noopener">Software Engineering Code</a> organizes professional responsibilities around eight principles:</p>
+        <ol class="commandments">
+          <li><strong>Public</strong> — Act consistently with the public interest.</li>
+          <li><strong>Client and Employer</strong> — Serve the legitimate interests of clients and employers while remaining consistent with the public interest.</li>
+          <li><strong>Product</strong> — Ensure that software products and related modifications meet the highest professional standards possible.</li>
+          <li><strong>Judgment</strong> — Maintain integrity and independence in professional judgment.</li>
+          <li><strong>Management</strong> — Promote ethical approaches to software development and maintenance.</li>
+          <li><strong>Profession</strong> — Advance the integrity and reputation of the profession.</li>
+          <li><strong>Colleagues</strong> — Be fair to and supportive of colleagues.</li>
+          <li><strong>Self</strong> — Continue learning and promote ethical professional practice.</li>
+        </ol>
+        <p>These principles are important because software development involves <strong>multiple responsibilities at the same time</strong>. A developer has responsibilities to an employer or client, but also to users and the public. Meeting a deadline or following a manager's instruction does not automatically remove professional responsibility for the consequences of the software.</p>
+
+        <div class="keyidea">
+          <h3>Beyond the person who pays</h3>
+          <p>A software professional's responsibility is not limited to satisfying the person who requested or paid for the system.</p>
+        </div>
+
+        <p style="margin-top:18px;">When developers encounter unsafe systems, inadequate testing, security vulnerabilities, deceptive design, or other potentially harmful practices, professional ethics provides grounds for <strong>questioning, documenting, communicating, and addressing</strong> those concerns.</p>
+
+        <h3>Professional Codes and Ethical Frameworks</h3>
+        <p>Professional codes complement the four ethical frameworks discussed earlier in the course. Ethical frameworks provide different ways of <strong>reasoning about what should be done</strong>, while professional codes describe the <strong>standards and responsibilities expected within the computing profession</strong>. Together, they help software professionals move beyond personal opinion when confronting difficult development decisions.</p>
+
+        <div class="quiz" id="q12">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">12. A client who is paying for an e-commerce app insists that the team hide the subscription-cancellation option deep in the settings menu. A developer says: "The client is paying, so whatever they want is fine." Which Software Engineering Code principle most directly challenges this view?</p>
+          <div class="options" data-correct="b">
+            <label class="opt"><input type="radio" name="q12" value="a"> Colleagues — be fair to and supportive of colleagues</label>
+            <label class="opt"><input type="radio" name="q12" value="b"> Public, together with Client and Employer — serve clients' legitimate interests while remaining consistent with the public interest</label>
+            <label class="opt"><input type="radio" name="q12" value="c"> Self — continue learning new programming languages</label>
+            <label class="opt"><input type="radio" name="q12" value="d"> None — the client's instructions settle the matter</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q12')">Check answer</button>
+          <div class="feedback" id="q12-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 13. Four Frameworks -->
+      <section class="chapter" id="frameworks">
+        <div class="eyebrow">13 · Professional Standards and Judgment</div>
+        <h2>Applying the Four Ethical Frameworks</h2>
+        <p>Ethical frameworks can help software professionals examine difficult development decisions systematically. Consider this situation:</p>
+
+        <blockquote class="def"><strong>Case: The banking app update</strong> — A development team is preparing to release an update to a mobile banking application. During final testing, they discover that under certain conditions, completed fund transfers are not immediately reflected in the user's transaction history. The money is transferred correctly, but the application may temporarily show outdated information. Management wants to release the update on schedule and fix the issue in a later patch.</blockquote>
+
+        <h3>Consequentialism</h3>
+        <p>Consequentialism focuses on the <strong>likely outcomes</strong> of the decision. Releasing the update on time may benefit the company and allow users to access new features. However, inaccurate transaction information could cause confusion, duplicate transfers, financial mistakes, customer complaints, or loss of trust. The team should consider the likelihood and severity of the potential benefits and harms associated with releasing or delaying the software.</p>
+
+        <h3>Deontology</h3>
+        <p>Deontology focuses on <strong>duties and obligations</strong>. Software developers have responsibilities to provide accurate information, communicate known limitations honestly, protect users, and avoid knowingly exposing them to preventable risks. The question is not only whether serious harm is likely; the team must also consider whether knowingly releasing software with the identified defect would violate its professional duties toward users.</p>
+
+        <h3>Virtue Ethics</h3>
+        <p>Virtue ethics asks <strong>what a good and responsible professional would do</strong>. Qualities such as honesty, competence, prudence, responsibility, and courage become important. Developers should disclose the problem rather than conceal or minimize it, and be willing to raise concerns when professional judgment conflicts with pressure to meet a deadline. The focus is on the kind of professional the developer chooses to be, not simply on compliance with instructions.</p>
+
+        <h3>Justice and Fairness</h3>
+        <p>Justice and fairness examine <strong>how the benefits, risks, and burdens</strong> of a decision are distributed. The company may benefit from releasing the update on schedule, while users bear most of the consequences if the software provides misleading transaction information. Some users may also be more vulnerable to financial disruption than others. The team should ask whether it is fair for users to bear risks created primarily by organizational pressure to meet a release schedule.</p>
+
+        <div class="quiz" id="q13">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">13. A team member asks: "Is it right that the company gets the benefit of an on-time release while customers — some of whom live paycheck to paycheck — carry the risk of making duplicate transfers?" Which framework is she using?</p>
+          <div class="options" data-correct="c">
+            <label class="opt"><input type="radio" name="q13" value="a"> Virtue ethics</label>
+            <label class="opt"><input type="radio" name="q13" value="b"> Deontology</label>
+            <label class="opt"><input type="radio" name="q13" value="c"> Justice and fairness — she is examining how benefits and burdens are distributed, including to more vulnerable users</label>
+            <label class="opt"><input type="radio" name="q13" value="d"> None — this is a purely technical question</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q13')">Check answer</button>
+          <div class="feedback" id="q13-feedback"></div>
+        </div>
+
+        <h3>Ethical Frameworks as Lenses</h3>
+        <table class="compare">
+          <thead>
+            <tr><th>Framework</th><th>Question it directs attention to</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Consequentialism</strong></td><td>What benefits or harms could result from developing, deploying, or continuing to operate the software?</td></tr>
+            <tr><td><strong>Deontology</strong></td><td>What duties do developers have regarding software quality, security, privacy, transparency, and user protection?</td></tr>
+            <tr><td><strong>Virtue ethics</strong></td><td>What would a responsible, competent, honest, and conscientious software professional do?</td></tr>
+            <tr><td><strong>Justice and fairness</strong></td><td>Who benefits from the software, who bears the risks or costs when it fails, and are some users unfairly disadvantaged?</td></tr>
+          </tbody>
+        </table>
+        <p>The frameworks do not provide automatic answers. Rather, they help software professionals <strong>examine technical decisions from several ethical perspectives</strong>.</p>
+
+        <div class="quiz" id="q14">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">14. A developer argues: "The money is transferred correctly, so the chance of serious harm is low — releasing is fine." A colleague replies: "Even if harm is unlikely, knowingly shipping software that shows users inaccurate information conflicts with our obligation to be honest with them." Which framework is the colleague drawing on?</p>
+          <div class="options" data-correct="a">
+            <label class="opt"><input type="radio" name="q14" value="a"> Deontology — focusing on duties such as providing accurate information, regardless of how likely harm is</label>
+            <label class="opt"><input type="radio" name="q14" value="b"> Consequentialism — focusing only on likely outcomes</label>
+            <label class="opt"><input type="radio" name="q14" value="c"> Justice and fairness — focusing on the distribution of benefits</label>
+            <label class="opt"><input type="radio" name="q14" value="d"> None — frameworks provide automatic answers, so no argument is needed</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q14')">Check answer</button>
+          <div class="feedback" id="q14-feedback"></div>
+        </div>
+      </section>
+
+      <!-- 14. When Responsibilities Conflict -->
+      <section class="chapter" id="conflicts">
+        <div class="eyebrow">14 · Professional Standards and Judgment</div>
+        <h2>When Responsibilities Conflict</h2>
+        <p class="lede">Software development ethics becomes most difficult when legitimate responsibilities conflict.</p>
+
+        <h3>Common Tensions</h3>
+        <table class="compare">
+          <thead>
+            <tr><th>On one side…</th><th>On the other…</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Meeting deadlines</td><td>Conducting adequate testing</td></tr>
+            <tr><td>Satisfying clients</td><td>Protecting users</td></tr>
+            <tr><td>Reducing costs</td><td>Improving accessibility</td></tr>
+            <tr><td>Collecting useful data</td><td>Protecting privacy</td></tr>
+            <tr><td>Releasing features quickly</td><td>Addressing security risks</td></tr>
+            <tr><td>Following management instructions</td><td>Exercising professional judgment</td></tr>
+            <tr><td>Meeting legal requirements</td><td>Considering broader ethical responsibilities</td></tr>
+          </tbody>
+        </table>
+
+        <p>There may be no solution that perfectly satisfies every stakeholder. Developers may have responsibilities to employers, clients, users, colleagues, the profession, and the broader public, and these responsibilities may sometimes point in different directions.</p>
+
+        <div class="callout"><strong>Legal is not the same as ethical.</strong> Legal compliance is important, but it does not settle every ethical question. A system may comply with applicable laws while still collecting unnecessary information, using manipulative interfaces, excluding some users, or exposing people to avoidable risks. Likewise, an instruction from a manager or client does not automatically make a development decision ethically responsible.</div>
+
+        <p>Ethical judgment therefore requires developers to:</p>
+        <div class="flow">
+          <span class="step">Identify competing responsibilities</span><span class="arrow">→</span>
+          <span class="step">Consider harms &amp; stakeholders</span><span class="arrow">→</span>
+          <span class="step">Consult professional standards</span><span class="arrow">→</span>
+          <span class="step">Communicate significant concerns</span>
+        </div>
+        <p>— rather than treating <strong>technical feasibility, organizational instructions, or legal compliance as the only considerations</strong>.</p>
+
+        <div class="quiz" id="q15">
+          <div class="quiz-label">Quick check</div>
+          <p class="q-prompt">15. A product owner says: "Our legal team confirmed the app complies with every applicable law, so there's nothing left to discuss ethically — including the countdown timers that claim 'Only 2 left!' when stock isn't actually limited." What is the best response?</p>
+          <div class="options" data-correct="d">
+            <label class="opt"><input type="radio" name="q15" value="a"> Agree — legal compliance settles every ethical question</label>
+            <label class="opt"><input type="radio" name="q15" value="b"> The countdown timers are fine as long as the software functions correctly</label>
+            <label class="opt"><input type="radio" name="q15" value="c"> Only the legal team is responsible for these decisions</label>
+            <label class="opt"><input type="radio" name="q15" value="d"> Legal compliance is important but doesn't settle every ethical question — a lawful app can still use manipulative design such as false urgency</label>
+          </div>
+          <button class="check-btn" onclick="checkQuiz('q15')">Check answer</button>
+          <div class="feedback" id="q15-feedback"></div>
+        </div>
+
+        <div class="keyidea">
+          <h3>Technical decisions have human consequences.</h3>
+          <p>The responsibility of an information systems professional is not simply to create systems that function, but to exercise sound professional judgment about how those systems are designed, developed, deployed, maintained, and eventually retired.</p>
+        </div>
+      </section>
+
+      <!-- 15. Key Takeaways -->
+      <section class="chapter" id="takeaways">
+        <div class="eyebrow">15 · Wrap-up</div>
+        <h2>Key Takeaways</h2>
+        <ol class="commandments">
+          <li><strong>Software is not neutral.</strong> Development decisions affect people's privacy, security, access to services, opportunities, and even safety.</li>
+          <li><strong>"Can we build it?" is not enough.</strong> Professionals must also ask whether to build it this way and whether they are prepared to take responsibility for its consequences.</li>
+          <li><strong>Care should match the stakes.</strong> Software need not be perfect, but it should meet a professional standard appropriate to its purpose and potential for harm.</li>
+          <li><strong>Security and privacy are built in, not bolted on.</strong> Both must be considered throughout the lifecycle and implemented through technical and design decisions.</li>
+          <li><strong>Design shapes choices.</strong> Inclusive design avoids unnecessary exclusion, and dark patterns are unethical even when the software works exactly as designed.</li>
+          <li><strong>Testing is risk management.</strong> Defects should be judged by severity, likelihood, consequences, and who is affected.</li>
+          <li><strong>Responsibility outlasts launch.</strong> Maintenance, technical debt, and eventual retirement all carry ethical obligations.</li>
+          <li><strong>You own the code you ship.</strong> Whether written, copied, open-source, or AI-generated, the developer remains responsible for it.</li>
+          <li><strong>Honesty enables accountability.</strong> Developers should not misrepresent capabilities, testing, security, or progress, and should document key decisions and risks.</li>
+          <li><strong>Codes, frameworks, and judgment work together.</strong> Professional codes and the four ethical frameworks help navigate conflicting responsibilities — and legal compliance alone does not settle every ethical question.</li>
+        </ol>
+      </section>
+
+      <!-- 16. References -->
+      <section class="chapter" id="references">
+        <div class="eyebrow">16 · Wrap-up</div>
+        <h2>References and Further Reading</h2>
+
+        <div class="refbox">
+          <div class="refbox-label">Key References</div>
+          <ul>
+            <li>Association for Computing Machinery. (2018). <a href="https://www.acm.org/code-of-ethics" target="_blank" rel="noopener"><em>ACM code of ethics and professional conduct.</em></a></li>
+            <li>Association for Computing Machinery &amp; IEEE Computer Society. (1999). <a href="https://www.computer.org/education/code-of-ethics" target="_blank" rel="noopener"><em>Software engineering code of ethics and professional practice.</em></a></li>
+            <li>National Institute of Standards and Technology. (2022). <a href="https://csrc.nist.gov/pubs/sp/800/218/final" target="_blank" rel="noopener"><em>Secure software development framework (SSDF) version 1.1: Recommendations for mitigating the risk of software vulnerabilities</em></a> (NIST SP 800-218).</li>
+            <li>OWASP Foundation. (n.d.). <a href="https://devguide.owasp.org/en/02-foundations/02-secure-development/" target="_blank" rel="noopener"><em>Secure development and integration.</em></a> <em>OWASP Developer Guide.</em></li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<footer>IS 201: Computer Ethics · Topic 6 — Software Development Ethics · Dr. Reinald Adrian Pugoy</footer>
+
+<div class="progress-dock" role="status" aria-live="polite">
+  <div class="progress-dock-inner">
+    <div class="progress-dock-label">Check-in progress</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-count" id="progressCount">0 of 15 answered correctly</div>
+  </div>
+</div>
+
+<script>
+  // Quiz checking
+  function checkQuiz(id){
+    const quiz = document.getElementById(id);
+    const optionsDiv = quiz.querySelector('.options');
+    const correctValue = optionsDiv.dataset.correct;
+    const selected = quiz.querySelector('input[name="'+id+'"]:checked');
+    const feedback = document.getElementById(id+'-feedback');
+
+    if(!selected){
+      feedback.className = 'feedback show feedback-neutral';
+      feedback.textContent = 'Please select an answer first.';
+      return;
+    }
+
+    const isCorrect = selected.value === correctValue;
+    feedback.className = 'feedback show ' + (isCorrect ? 'feedback-correct' : 'feedback-incorrect');
+    feedback.textContent = isCorrect ? '✓ Correct.' : '✗ Not quite — review the section above and try again.';
+
+    if(isCorrect && !quiz.dataset.solved){
+      quiz.dataset.solved = 'true';
+      updateProgress();
+    }
+  }
+
+  function updateProgress(){
+    const totalQuizzes = document.querySelectorAll('.quiz').length;
+    const solved = document.querySelectorAll('.quiz[data-solved="true"]').length;
+    document.getElementById('progressFill').style.width = (solved/totalQuizzes*100) + '%';
+    document.getElementById('progressCount').textContent = solved + ' of ' + totalQuizzes + ' answered correctly';
+  }
+
+  // Sidebar active-link highlighting on scroll
+  const sections = document.querySelectorAll('section.chapter');
+  const tocLinks = document.querySelectorAll('.toc-link');
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        tocLinks.forEach(link=>{
+          link.classList.toggle('active', link.dataset.target === id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+
+  sections.forEach(sec => observer.observe(sec));
+
+  updateProgress();
+</script>
+
+</body>
+</html>

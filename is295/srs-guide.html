@@ -540,12 +540,31 @@
     max-width:904px;
   }
   .chapter h3[id]{ scroll-margin-top:24px; }
+  .sidebar a.home-link{
+    display:block;
+    text-decoration:none;
+    background:var(--sidebar-hover);
+    color:#fff;
+    border:1px solid rgba(255,255,255,0.18);
+    border-radius:6px;
+    padding:9px 12px;
+    font-size:13.5px;
+    font-weight:500;
+    margin:0 0 20px;
+    transition:background 0.15s ease, border-color 0.15s ease;
+  }
+  .sidebar a.home-link:hover{
+    background:var(--accent);
+    border-color:var(--accent);
+    color:#fff;
+  }
 </style>
 <body>
 
 <div class="layout">
 
   <nav class="sidebar" aria-label="Table of contents">
+    <a class="home-link" href="https://reinald-dp.github.io/is295/">&larr; Back to IS 295 Home</a>
     <div class="course-title">IS 295 SRS</div>
     <p class="course-topic">Software Requirements Specification</p>
 

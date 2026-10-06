@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IS 295 — Software Requirements Specification</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   IS 201 — Shared Course Page Theme
+   ==========================================================================
+   One stylesheet for every IS 201 page (course guide, topic readings, etc.)
+   so they all look and feel the same.
+
+   HOW TO USE ON A NEW PAGE
+   --------------------------------------------------------------------------
+   1. Link this file in <head>:
+        <link rel="stylesheet" href="theme.css">
+   2. (Optional) For pixel-perfect type, load the two fonts referenced in
+      the font stacks below — IBM Plex Sans and Source Serif 4. Without
+      them the page falls back to system fonts and still looks correct:
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+   3. Copy the page skeleton below and fill in your own sidebar links and
+      <section class="chapter"> blocks.
+   4. Reuse the component classes documented in each section of this file
+      (blockquote.def, table.compare, .req-card, .scholar-card, .keyidea,
+      .callout, .quotes, .commandments, .refbox, .flow) instead of writing
+      new CSS — that's what keeps every page consistent.
+   ========================================================================== */
+
+/* ---- Design tokens ------------------------------------------------------- */
+:root{
+    --bg:#EEF2F8;
+    --paper:#FFFFFF;
+    --ink:#1B2333;
+    --ink-soft:#4A5568;
+    --sidebar:#16243E;
+    --sidebar-hover:#22385F;
+    --sidebar-text:#C6D2E8;
+    --sidebar-text-dim:#7E93B8;
+    --accent:#2F5D9C;
+    --accent-deep:#1E3F6E;
+    --gold:#A9822F;
+    --border:#DAE1EC;
+    --correct:#1E7B57;
+    --correct-bg:#E5F4EC;
+    --incorrect:#B03B33;
+    --incorrect-bg:#FBEAE8;
+    --neutral:#8A6D1E;
+    --neutral-bg:#FBF3E1;
+  }
+  /* ---- Base & typography ---------------------------------------------- */
+*{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"IBM Plex Sans", -apple-system, Segoe UI, Roboto, sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{
+    font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+    color:var(--ink);
+    line-height:1.25;
+    font-weight:600;
+  }
+  a{color:var(--accent-deep);}
+  a:hover{color:var(--accent);}
+
+  /* ---- Page layout: sidebar + main ------------------------------------ */
+  .layout{
+    min-height:100vh;
+    width:100%;
+  }
+  nav.sidebar{
+    width:280px;
+    flex-shrink:0;
+    background:var(--sidebar);
+    color:var(--sidebar-text);
+    padding:28px 22px 40px;
+    position:fixed;
+    top:0;
+    left:0;
+    height:100vh;
+    overflow-y:auto;
+    z-index:10;
+  }
+  nav.sidebar::-webkit-scrollbar{width:8px;}
+  nav.sidebar::-webkit-scrollbar-thumb{background:var(--sidebar-hover); border-radius:4px;}
+
+  .sidebar .kicker{
+    text-transform:uppercase;
+    font-size:11px;
+    letter-spacing:0.14em;
+    color:var(--sidebar-text-dim);
+    margin-bottom:6px;
+  }
+  .sidebar .course-title{
+    font-family:"Source Serif 4", Georgia, serif;
+    font-size:21px;
+    color:#fff;
+    margin:0 0 4px;
+  }
+  .sidebar .course-topic{
+    font-size:13.5px;
+    color:var(--sidebar-text);
+    padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,0.12);
+    margin:0 0 18px;
+  }
+  .sidebar .nav-heading{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--sidebar-text-dim);
+    margin:18px 0 6px;
+  }
+  .sidebar .nav-heading:first-of-type{ margin-top:0; }
+  .sidebar ol{
+    list-style:none;
+    margin:0;
+    padding:0;
+    counter-reset:section;
+  }
+  .sidebar > ol > li{
+    counter-increment:section;
+    margin-bottom:2px;
+  }
+  .sidebar a.toc-link{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    text-decoration:none;
+    color:var(--sidebar-text);
+    padding:8px 10px;
+    border-radius:6px;
+    font-size:14px;
+    transition:background 0.15s ease, color 0.15s ease;
+  }
+  .sidebar a.toc-link::before{
+    content:counter(section, decimal-leading-zero);
+    font-family:"IBM Plex Sans", sans-serif;
+    font-size:11px;
+    color:var(--sidebar-text-dim);
+    padding-top:2px;
+  }
+  .sidebar a.toc-link:hover, .sidebar a.toc-link.active{
+    background:var(--sidebar-hover);
+    color:#fff;
+  }
+  .sidebar ul.sub{
+    list-style:none;
+    margin:2px 0 8px 26px;
+    padding:0;
+    border-left:1px solid rgba(255,255,255,0.12);
+  }
+  .sidebar ul.sub li a{
+    display:block;
+    text-decoration:none;
+    color:var(--sidebar-text-dim);
+    font-size:12.5px;
+    padding:5px 0 5px 14px;
+    transition:color 0.15s ease;
+  }
+  .sidebar ul.sub li a:hover{color:#fff;}
+
+  main{
+    display:block;
+    margin-left:280px;
+    padding:0 0 100px;
+  }
+  /* ---- Hero banner ---------------------------------------------------- */
+  .hero{
+    background:linear-gradient(155deg, var(--accent-deep) 0%, var(--sidebar) 65%);
+    color:#fff;
+    padding:64px 56px 46px;
+  }
+  .hero .kicker{
+    text-transform:uppercase;
+    letter-spacing:0.16em;
+    font-size:12px;
+    color:#AFC3E4;
+    margin-bottom:14px;
+  }
+  .hero h1{
+    color:#fff;
+    font-size:38px;
+    margin:0 0 10px;
+    max-width:900px;
+  }
+  .hero p.dek{
+    max-width:820px;
+    color:#D6E0F1;
+    font-size:16px;
+    margin:0 0 22px;
+  }
+  .hero .byline{
+    font-size:14px;
+    color:#AFC3E4;
+    border-top:1px solid rgba(255,255,255,0.18);
+    padding-top:14px;
+    display:inline-block;
+  }
+  .hero .byline strong{color:#fff; font-weight:600;}
+
+  /* ---- Content column -------------------------------------------------- */
+  .content-inner{
+    padding:0 56px;
+    max-width:960px;
+  }
+
+  section.chapter{
+    padding-top:52px;
+    scroll-margin-top:24px;
+  }
+  section.chapter:first-of-type{padding-top:40px;}
+
+  .chapter .eyebrow{
+    font-size:13px;
+    color:var(--accent);
+    font-weight:600;
+    margin-bottom:6px;
+  }
+  .chapter h2{
+    font-size:27px;
+    margin:0 0 16px;
+    padding-bottom:14px;
+    border-bottom:2px solid var(--border);
+  }
+  .chapter h3{
+    font-size:19px;
+    margin:30px 0 10px;
+    color:var(--accent-deep);
+  }
+  .chapter h4{
+    font-size:15.5px;
+    margin:20px 0 8px;
+    color:var(--accent-deep);
+  }
+  .chapter p{
+    font-size:15.5px;
+    color:var(--ink);
+    margin:0 0 14px;
+  }
+  .chapter ul, .chapter ol.plain{
+    padding-left:22px;
+    margin:0 0 16px;
+  }
+  .chapter li{
+    font-size:15.5px;
+    margin-bottom:6px;
+  }
+  .lede{
+    font-size:17px;
+    color:var(--ink-soft);
+    border-left:3px solid var(--gold);
+    padding-left:16px;
+    margin:0 0 22px;
+  }
+
+  /* ---- Definition / emphasis callout ------------------------------------ */
+  blockquote.def{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-left:4px solid var(--accent);
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+  blockquote.def strong{color:var(--ink); font-family:"Source Serif 4", serif;}
+
+  /* ---- Data table -------------------------------------------------------- */
+  table.compare{
+    width:100%;
+    border-collapse:collapse;
+    margin:8px 0 20px;
+    font-size:14.5px;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  table.compare th{
+    background:var(--sidebar);
+    color:#fff;
+    text-align:left;
+    padding:10px 14px;
+    font-weight:600;
+    font-size:13px;
+  }
+  table.compare td{
+    padding:10px 14px;
+    border-top:1px solid var(--border);
+    vertical-align:top;
+  }
+  table.compare tr:nth-child(even) td{background:#F6F8FC;}
+  table.compare td.num{ font-weight:600; color:var(--accent-deep); white-space:nowrap; }
+  table.compare tr.deadline td{ background:var(--neutral-bg); color:var(--neutral); font-style:italic; }
+  table.compare tr.lowgrade td{ background:var(--incorrect-bg); color:var(--incorrect); font-weight:600; }
+
+  /* ---- Bio / reference card ------------------------------------------ */
+  .scholar-card{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:20px 22px;
+    margin-bottom:18px;
+    scroll-margin-top:24px;
+  }
+  .scholar-card h4{
+    margin:0 0 4px;
+    font-size:16.5px;
+    color:var(--ink);
+  }
+  .scholar-card .tag{
+    display:inline-block;
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    color:var(--accent);
+    background:#EAF0FA;
+    padding:2px 8px;
+    border-radius:4px;
+    margin-bottom:10px;
+  }
+  .scholar-card p{margin:0 0 6px; font-size:14.5px;}
+  .scholar-card .fic-links{ margin:10px 0 0; padding-left:18px; font-size:14px; }
+  .scholar-card .fic-links li{ margin-bottom:3px; }
+
+  /* ---- Numbered list ---------------------------------------------------- */
+  .commandments{
+    counter-reset:cmd;
+    padding:0;
+    list-style:none;
+    margin:0 0 20px;
+    display:grid;
+    gap:8px;
+  }
+  .commandments li{
+    counter-increment:cmd;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px 14px 12px 44px;
+    position:relative;
+    font-size:14.5px;
+  }
+  .commandments li::before{
+    content:counter(cmd);
+    position:absolute;
+    left:12px;
+    top:10px;
+    font-family:"Source Serif 4", serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--gold);
+  }
+
+  /* ---- Process/flow chips ----------------------------------------------- */
+  .flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    align-items:center;
+    margin:6px 0 22px;
+  }
+  .flow .step{
+    background:var(--accent-deep);
+    color:#fff;
+    padding:8px 13px;
+    border-radius:20px;
+    font-size:13.5px;
+    white-space:nowrap;
+  }
+  .flow .arrow{color:var(--ink-soft); font-size:15px;}
+
+  /* ---- Reference / notes box --------------------------------------------- */
+  .refbox{
+    background:#F4F7FC;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 22px;
+  }
+  .refbox .refbox-label{
+    font-size:11.5px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--accent-deep);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .refbox ul{
+    margin:0;
+    padding-left:18px;
+  }
+  .refbox li{
+    font-size:14px;
+    margin-bottom:4px;
+  }
+  .refbox a{
+    text-decoration:none;
+    border-bottom:1px dotted var(--accent);
+  }
+  .refbox a:hover{border-bottom-style:solid;}
+
+  /* ---- Weighted requirement row ------------------------------------------ */
+  .req-card{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 20px;
+    margin-bottom:12px;
+  }
+  .req-card .pct{
+    font-family:"Source Serif 4", serif;
+    font-size:28px;
+    font-weight:700;
+    color:var(--accent-deep);
+    flex:0 0 62px;
+    text-align:center;
+  }
+  .req-card .pct sub{ font-size:13px; font-weight:400; color:var(--ink-soft); }
+  .req-card h4{ margin:0 0 4px; font-size:15.5px; }
+  .req-card p{ margin:0; font-size:14px; color:var(--ink-soft); }
+
+  /* ---- Highlighted key-idea panel ---------------------------------------- */
+  .keyidea{
+    background:linear-gradient(155deg, var(--accent-deep), var(--sidebar));
+    color:#fff;
+    border-radius:12px;
+    padding:28px 30px;
+    margin:8px 0 10px;
+  }
+  .keyidea h3{color:#fff; margin-top:0;}
+  .keyidea p{ color:#E3EAF6; }
+  .keyidea .qgrid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px 24px;
+    margin-top:14px;
+  }
+  .keyidea .qgrid .col{ flex:1 1 220px; }
+  .keyidea .qgrid .col-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:#AFC3E4;
+    margin-bottom:6px;
+  }
+  .keyidea .qgrid ul{margin:0; padding-left:18px;}
+  .keyidea .qgrid li{font-size:14px; margin-bottom:5px; color:#E3EAF6;}
+
+  /* ---- Warning / important-notice callout (red) ----------------------- */
+  .callout{
+    background:var(--incorrect-bg);
+    border:1px solid #F0C6C1;
+    border-radius:8px;
+    padding:16px 18px;
+    margin:0 0 20px;
+    font-size:14.5px;
+    color:var(--incorrect);
+  }
+  .callout strong{ color:var(--incorrect); }
+
+  /* ---- Pull-quote list --------------------------------------------------- */
+  .quotes{
+    list-style:none;
+    padding:0;
+    margin:10px 0 0;
+    display:grid;
+    gap:12px;
+  }
+  .quotes li{
+    border-left:3px solid var(--gold);
+    padding:2px 0 2px 16px;
+    font-style:italic;
+    font-size:15px;
+    color:var(--ink);
+  }
+  .quotes li span{
+    display:block;
+    font-style:normal;
+    font-size:13px;
+    color:var(--ink-soft);
+    margin-top:3px;
+  }
+
+  /* ---- Page-level footnote & footer -------------------------------------- */
+  .ai-note{
+    margin-top:26px;
+    padding-top:16px;
+    border-top:1px solid var(--border);
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  .ai-note.page-note{
+    max-width:820px;
+    margin:36px auto 0;
+    padding:16px 56px 0;
+    text-align:center;
+    border-top:1px solid var(--border);
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 20px 10px;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-left:280px;
+  }
+
+  @media (max-width: 880px){
+    nav.sidebar{
+      position:relative;
+      width:100%;
+      height:auto;
+      max-height:none;
+    }
+    main{ margin-left:0; }
+    footer{ margin-left:0; }
+    .hero{padding:40px 24px 32px;}
+    .content-inner{padding:0 22px;}
+    .req-card{ flex-wrap:wrap; }
+  }
+
+  /* ---- Page-specific additions ---- */
+  .hero-inner{
+    max-width:904px;
+  }
+  .chapter h3[id]{ scroll-margin-top:24px; }
+</style>
+<body>
+
+<div class="layout">
+
+  <nav class="sidebar" aria-label="Table of contents">
+    <div class="kicker">IS 295a · System Blueprint</div>
+    <div class="course-title">IS 295 SRS</div>
+    <p class="course-topic">Software Requirements Specification</p>
+
+    <div class="nav-heading">Overview</div>
+    <ol>
+      <li><a class="toc-link" href="#overview" data-target="overview">What the SRS Is</a></li>
+      <li><a class="toc-link" href="#role" data-target="role">Role of the SRS in IS 295</a></li>
+    </ol>
+
+    <div class="nav-heading">The Nine Sections</div>
+    <ol style="counter-reset:section 2">
+      <li><a class="toc-link" href="#s1" data-target="s1">1 · Introduction</a>
+        <ul class="sub">
+          <li><a href="#s1-1">1.1 Purpose</a></li>
+          <li><a href="#s1-2">1.2 System Overview</a></li>
+          <li><a href="#s1-3">1.3 Scope</a></li>
+        </ul>
+      </li>
+      <li><a class="toc-link" href="#s2" data-target="s2">2 · Overall Description</a>
+        <ul class="sub">
+          <li><a href="#s2-1">2.1 Product Perspective</a></li>
+          <li><a href="#s2-2">2.2 User Classes</a></li>
+          <li><a href="#s2-3">2.3 Constraints &amp; Dependencies</a></li>
+        </ul>
+      </li>
+      <li><a class="toc-link" href="#s3" data-target="s3">3 · Functional Requirements</a>
+        <ul class="sub">
+          <li><a href="#s3-1">3.1 [Module or Feature Name]</a></li>
+          <li><a href="#s3-2">3.2 [Module or Feature Name]</a></li>
+          <li><a href="#s3-3">3.3 [Module or Feature Name]</a></li>
+          <li><a href="#s3-4">3.4 [Module or Feature Name]</a></li>
+          <li><a href="#s3-n">3.n [Module or Feature Name]</a></li>
+          <li><a href="#s3-fruc">FRs vs. Use Cases</a></li>
+        </ul>
+      </li>
+      <li><a class="toc-link" href="#s4" data-target="s4">4 · Use Cases</a>
+        <ul class="sub">
+          <li><a href="#s4-1">4.1 Use Case Diagram</a></li>
+          <li><a href="#s4-2">4.2 Use Case Specifications</a></li>
+          <li><a href="#s4-2-1">4.2.1 UC-01: [Use Case Name]</a></li>
+          <li><a href="#s4-2-2">4.2.2 UC-02: [Use Case Name]</a></li>
+          <li><a href="#s4-2-3">4.2.3 UC-03: [Use Case Name]</a></li>
+          <li><a href="#s4-2-n">4.2.n UC-n: [Use Case Name]</a></li>
+        </ul>
+      </li>
+      <li><a class="toc-link" href="#s5" data-target="s5">5 · Data Requirements</a>
+        <ul class="sub">
+          <li><a href="#s5-1">5.1 Major Data Entities</a></li>
+          <li><a href="#s5-2">5.2 ERD / Data Model</a></li>
+          <li><a href="#s5-3">5.3 Data Dictionary</a></li>
+        </ul>
+      </li>
+      <li><a class="toc-link" href="#s6" data-target="s6">6 · Interface Requirements</a>
+        <ul class="sub">
+          <li><a href="#s6-1">6.1 User Interface</a></li>
+          <li><a href="#s6-2">6.2 External Systems</a></li>
+          <li><a href="#s6-3">6.3 Other Interfaces</a></li>
+        </ul>
+      </li>
+      <li><a class="toc-link" href="#s7" data-target="s7">7 · Non-Functional Requirements</a>
+        <ul class="sub">
+          <li><a href="#s7-1">7.1 Security &amp; Privacy</a></li>
+          <li><a href="#s7-2">7.2 Performance</a></li>
+          <li><a href="#s7-3">7.3 Usability &amp; Accessibility</a></li>
+          <li><a href="#s7-4">7.4 Reliability &amp; Availability</a></li>
+          <li><a href="#s7-5">7.5 Other Quality Requirements</a></li>
+        </ul>
+      </li>
+      <li><a class="toc-link" href="#s8" data-target="s8">8 · Business Rules</a></li>
+      <li><a class="toc-link" href="#s9" data-target="s9">9 · Traceability Matrix</a></li>
+    </ol>
+
+    <div class="nav-heading">Wrap-up</div>
+    <ol style="counter-reset:section 11">
+      <li><a class="toc-link" href="#takeaways" data-target="takeaways">Key Takeaways</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="kicker">IS 295a · System Blueprint</div>
+        <h1>Software Requirements Specification (SRS)</h1>
+        <p class="dek">A section-by-section guide to specifying the information system you will build — what it must do, who will use it, the data it manages, the rules and interfaces it must respect, and the quality it must achieve.</p>
+        <span class="byline">Faculty-in-Charge: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027</span>
+      </div>
+    </div>
+
+    <div class="content-inner">
+
+      <!-- 1. Overview -->
+      <section class="chapter" id="overview">
+        <div class="eyebrow">01 · Overview</div>
+        <h2>What the SRS Is</h2>
+        <p class="lede">The Software Requirements Specification (SRS) forms part of the IS 295a System Blueprint. It translates the findings of the requirements analysis into a structured specification of the information system to be developed.</p>
+        <p>The SRS defines:</p>
+        <ol class="commandments">
+          <li>What the system must do.</li>
+          <li>Who will use it.</li>
+          <li>The data it must manage.</li>
+          <li>The rules and constraints governing its operation.</li>
+          <li>Its required interfaces.</li>
+          <li>The quality requirements it must satisfy.</li>
+        </ol>
+        <div class="keyidea">
+          <h3>The requirements baseline</h3>
+          <p>The SRS serves as the <strong>requirements baseline for system design, development, testing, and evaluation</strong>.</p>
+        </div>
+        <p style="margin-top:18px;">Requirements should therefore be:</p>
+        <div class="flow">
+          <span class="step">Clear</span><span class="arrow">·</span>
+          <span class="step">Specific</span><span class="arrow">·</span>
+          <span class="step">Consistent</span><span class="arrow">·</span>
+          <span class="step">Feasible</span><span class="arrow">·</span>
+          <span class="step">Verifiable</span>
+        </div>
+      </section>
+
+      <!-- 2. Role -->
+      <section class="chapter" id="role">
+        <div class="eyebrow">02 · Overview</div>
+        <h2>Role of the SRS in IS 295</h2>
+        <p class="lede">The SRS is a component of the IS 295a System Blueprint. It represents the requirements of the information system to be developed and provides the requirements baseline for the succeeding stages of the project.</p>
+        <p>The overall progression is:</p>
+        <div class="flow">
+          <span class="step">Needs Assessment</span><span class="arrow">→</span>
+          <span class="step">Requirements Analysis</span><span class="arrow">→</span>
+          <span class="step">SRS</span><span class="arrow">→</span>
+          <span class="step">System Design</span><span class="arrow">→</span>
+          <span class="step">Approved System Blueprint</span><span class="arrow">→</span>
+          <span class="step">Development</span><span class="arrow">→</span>
+          <span class="step">Testing and Evaluation</span><span class="arrow">→</span>
+          <span class="step">Final System</span>
+        </div>
+        <div class="keyidea">
+          <h3>IS 295a vs. IS 295b</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">IS 295a</div>
+              <ul><li>The SRS is prepared as part of the <strong>System Blueprint</strong>.</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">IS 295b</div>
+              <ul><li>The SRS is <strong>not submitted as a separate deliverable</strong>. IS 295b proceeds from the approved System Blueprint to system development, testing, and evaluation.</li></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Section 1 -->
+      <section class="chapter" id="s1">
+        <div class="eyebrow">03 · The Nine Sections</div>
+        <h2>Section 1. Introduction</h2>
+        <p class="lede">This section provides an overview of the system and establishes the scope of the SRS.</p>
+
+        <h3 id="s1-1">1.1 Purpose</h3>
+        <p>State the purpose of the SRS and identify the information system being specified. Briefly explain:</p>
+        <ul>
+          <li>what system the document covers;</li>
+          <li>what the SRS is intended to specify; and</li>
+          <li>how the SRS will guide the development of the system.</li>
+        </ul>
+
+        <h3 id="s1-2">1.2 System Overview</h3>
+        <p>Provide a concise description of the information system. Identify:</p>
+        <ul>
+          <li>the problem or operational need addressed by the system;</li>
+          <li>the general purpose of the system;</li>
+          <li>its intended users; and</li>
+          <li>its major capabilities.</li>
+        </ul>
+        <div class="callout"><strong>Keep it concise.</strong> This should provide only enough context to understand the requirements. It should not repeat the detailed discussion in the manuscript.</div>
+
+        <h3 id="s1-3">1.3 Scope</h3>
+        <p>Define the boundaries of the system. Specify:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Within scope</th><th>Outside scope</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Major functions included in the system</td><td>Important functions or processes outside the scope</td></tr>
+            <tr><td>Processes supported by the system</td><td></td></tr>
+            <tr><td>Users or organizational units covered</td><td></td></tr>
+          </tbody>
+        </table>
+        <blockquote class="def"><strong>Guiding question</strong> — What will the system cover, and what will it not cover?</blockquote>
+      </section>
+
+      <!-- 4. Section 2 -->
+      <section class="chapter" id="s2">
+        <div class="eyebrow">04 · The Nine Sections</div>
+        <h2>Section 2. Overall Description</h2>
+        <p class="lede">This section describes the general context in which the system is expected to operate.</p>
+
+        <h3 id="s2-1">2.1 Product Perspective</h3>
+        <p>Explain how the proposed system fits within the existing organizational and technological environment. Describe, where applicable:</p>
+        <ul>
+          <li>existing processes or systems that it will replace, improve, or complement;</li>
+          <li>its relationship with other systems; and</li>
+          <li>external services or platforms on which it will depend.</li>
+        </ul>
+        <blockquote class="def"><strong>System context diagram</strong> — A system context diagram may be included to show the system boundary and its interaction with users and external systems.</blockquote>
+
+        <h3 id="s2-2">2.2 User Classes and Characteristics</h3>
+        <p>Identify the major types of users who will interact with the system. For each user class, describe:</p>
+        <div class="flow">
+          <span class="step">Role</span><span class="arrow">·</span>
+          <span class="step">Responsibilities</span><span class="arrow">·</span>
+          <span class="step">System access or permissions</span><span class="arrow">·</span>
+          <span class="step">Characteristics affecting system use</span>
+        </div>
+        <p>Example:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>User Class</th><th>Description</th><th>Major Access/Responsibilities</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">Administrator</td><td>Manages the system</td><td>User management, configuration, reports</td></tr>
+            <tr><td class="num">Staff</td><td>Performs operational processes</td><td>Create, review, and update records</td></tr>
+            <tr><td class="num">End User</td><td>Accesses system services</td><td>Submit requests and track status</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="s2-3">2.3 Constraints, Assumptions, and Dependencies</h3>
+        <p>Identify conditions that may affect the design, development, or operation of the system. These may include:</p>
+        <ul>
+          <li>institutional policies;</li>
+          <li>legal or regulatory requirements;</li>
+          <li>required technologies or platforms;</li>
+          <li>existing infrastructure;</li>
+          <li>organizational procedures;</li>
+          <li>third-party systems or services; and</li>
+          <li>assumptions regarding users, data, or operating conditions.</li>
+        </ul>
+        <blockquote class="def"><strong>Remember</strong> — Include only those relevant to the proposed system.</blockquote>
+      </section>
+
+      <!-- 5. Section 3 -->
+      <section class="chapter" id="s3">
+        <div class="eyebrow">05 · The Nine Sections</div>
+        <h2>Section 3. Functional Requirements</h2>
+        <p class="lede">This section specifies what the system must do and constitutes the core of the SRS.</p>
+        <p>Functional Requirements (FRs) define the specific capabilities, behaviors, or services that the system must provide. They are written from the <strong>system's perspective</strong>. Organize the requirements according to major <strong>modules, features, or business functions</strong>.</p>
+        <p>Each functional requirement should:</p>
+        <ol class="commandments">
+          <li>Have a unique identifier.</li>
+          <li>Describe a specific system behavior or capability.</li>
+          <li>Be clear and unambiguous.</li>
+          <li>Be feasible within the project scope.</li>
+          <li>Be testable or verifiable.</li>
+        </ol>
+
+        <h3 id="s3-1">3.1 [Module or Feature Name]</h3>
+        <p>Briefly describe the module or feature, then list its requirements. Example:</p>
+        <blockquote class="def"><strong>FR-001</strong> — The system shall allow registered users to authenticate using their email address and password.</blockquote>
+        <blockquote class="def"><strong>FR-002</strong> — The system shall validate all required fields before accepting an application.</blockquote>
+        <blockquote class="def"><strong>FR-003</strong> — The system shall generate a unique reference number for each successfully submitted application.</blockquote>
+
+        <h3 id="s3-2">3.2 [Module or Feature Name]</h3>
+        <p>[Briefly describe the module or feature.] Continue with the succeeding requirements:</p>
+        <blockquote class="def"><strong>FR-004</strong> — The system shall…</blockquote>
+        <blockquote class="def"><strong>FR-005</strong> — The system shall…</blockquote>
+        <blockquote class="def"><strong>FR-006</strong> — The system shall…</blockquote>
+
+        <h3 id="s3-3">3.3 [Module or Feature Name]</h3>
+        <p>[Briefly describe the module or feature.]</p>
+        <blockquote class="def"><strong>FR-007</strong> — The system shall…</blockquote>
+        <blockquote class="def"><strong>FR-008</strong> — The system shall…</blockquote>
+        <blockquote class="def"><strong>FR-009</strong> — The system shall…</blockquote>
+
+        <h3 id="s3-4">3.4 [Module or Feature Name]</h3>
+        <p>[Briefly describe the module or feature.]</p>
+        <blockquote class="def"><strong>FR-010</strong> — The system shall…</blockquote>
+        <blockquote class="def"><strong>FR-011</strong> — The system shall…</blockquote>
+        <blockquote class="def"><strong>FR-012</strong> — The system shall…</blockquote>
+
+        <h3 id="s3-n">3.n [Module or Feature Name]</h3>
+        <p>[Briefly describe the module or feature.]</p>
+        <blockquote class="def"><strong>FR-0nn</strong> — The system shall…</blockquote>
+        <blockquote class="def"><strong>FR-0nn</strong> — The system shall…</blockquote>
+        <blockquote class="def"><strong>Populate as necessary</strong> — Add as many module subsections (3.5, 3.6, …) and requirements as your system needs. Continue numbering FRs sequentially across modules so every requirement keeps a unique identifier.</blockquote>
+        <div class="callout"><strong>Avoid vague statements</strong> such as <em>"The system should be user-friendly."</em> Requirements should describe behaviors or capabilities that can later be verified.</div>
+
+        <h3 id="s3-fruc">Functional Requirements vs. Use Cases</h3>
+        <p>Functional Requirements (FRs) and Use Cases (UCs) are related, but they serve different purposes.</p>
+        <div class="keyidea">
+          <h3>Two different questions</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Functional Requirements</div>
+              <ul><li>Describe <strong>what the system must do</strong>.</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">Use Cases</div>
+              <ul><li>Describe <strong>how an actor interacts with the system</strong> to accomplish a goal.</li></ul>
+            </div>
+          </div>
+        </div>
+        <table class="compare" style="margin-top:18px;">
+          <thead>
+            <tr><th>Aspect</th><th>Functional Requirement (FR)</th><th>Use Case (UC)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">Main question</td><td>What must the system do?</td><td>How does an actor accomplish a goal using the system?</td></tr>
+            <tr><td class="num">Perspective</td><td>System</td><td>Actor interacting with the system</td></tr>
+            <tr><td class="num">Focus</td><td>Specific capability or behavior</td><td>Goal-oriented interaction or workflow</td></tr>
+            <tr><td class="num">Typical form</td><td>"The system shall..."</td><td>Sequence of actor-system interactions</td></tr>
+            <tr><td class="num">Scope</td><td>Usually one specific requirement</td><td>May involve several functional requirements</td></tr>
+            <tr><td class="num">Example</td><td>FR-014: The system shall generate a unique reference number for each submitted application.</td><td>UC-03: Submit Application</td></tr>
+          </tbody>
+        </table>
+
+        <h4>One use case, several requirements</h4>
+        <p>For example, the use case <strong>UC-03: Submit Application</strong> may involve several functional requirements:</p>
+        <blockquote class="def"><strong>FR-010</strong> — The system shall allow an applicant to create a new application.</blockquote>
+        <blockquote class="def"><strong>FR-011</strong> — The system shall validate all required application fields before submission.</blockquote>
+        <blockquote class="def"><strong>FR-012</strong> — The system shall allow the applicant to upload required supporting documents.</blockquote>
+        <blockquote class="def"><strong>FR-013</strong> — The system shall record the date and time of submission.</blockquote>
+        <blockquote class="def"><strong>FR-014</strong> — The system shall generate a unique reference number for each successfully submitted application.</blockquote>
+        <blockquote class="def"><strong>FR-015</strong> — The system shall display a confirmation after successful submission.</blockquote>
+        <p>Thus:</p>
+        <div class="flow">
+          <span class="step">UC-03: Submit Application</span><span class="arrow">→</span>
+          <span class="step">FR-010</span><span class="step">FR-011</span><span class="step">FR-012</span>
+          <span class="step">FR-013</span><span class="step">FR-014</span><span class="step">FR-015</span>
+        </div>
+        <div class="callout"><strong>Don't simply rewrite one as the other.</strong> Students should not simply rewrite a use case as a functional requirement, or vice versa. A single use case may involve several functional requirements, while a functional requirement may support one or more use cases.</div>
+      </section>
+
+      <!-- 6. Section 4 -->
+      <section class="chapter" id="s4">
+        <div class="eyebrow">06 · The Nine Sections</div>
+        <h2>Section 4. Use Cases</h2>
+        <p class="lede">This section describes how actors interact with the system to accomplish specific goals.</p>
+        <p>Whereas Functional Requirements specify individual system capabilities, Use Cases organize those capabilities into meaningful interactions between actors and the system.</p>
+
+        <h3 id="s4-1">4.1 Use Case Diagram</h3>
+        <p>Provide a use case diagram showing:</p>
+        <ul>
+          <li>system boundary;</li>
+          <li>actors;</li>
+          <li>major use cases; and</li>
+          <li>relevant relationships among use cases.</li>
+        </ul>
+        <p>Use cases should represent <strong>meaningful user goals</strong>, rather than individual buttons, screens, or minor actions.</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Appropriate use cases (user goals)</th><th>Not separate use cases (actions within a use case)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Submit Application</td><td>Click Submit Button</td></tr>
+            <tr><td>Review Application</td><td>Enter Name</td></tr>
+            <tr><td>Approve Application</td><td>Display Error Message</td></tr>
+            <tr><td>Generate Report</td><td></td></tr>
+            <tr><td>Manage User Accounts</td><td></td></tr>
+          </tbody>
+        </table>
+        <blockquote class="def"><strong>Consistency</strong> — The use cases should be consistent with the functional requirements identified in Section 3.</blockquote>
+
+        <h3 id="s4-2">4.2 Use Case Specifications</h3>
+        <p>Provide detailed specifications for the major use cases. Suggested format (example):</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Element</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">Use Case ID</td><td>UC-03</td></tr>
+            <tr><td class="num">Use Case Name</td><td>Submit Application</td></tr>
+            <tr><td class="num">Primary Actor</td><td>Applicant</td></tr>
+            <tr><td class="num">Description</td><td>Allows an applicant to complete and submit an application</td></tr>
+            <tr><td class="num">Preconditions</td><td>Conditions that must exist before the use case begins</td></tr>
+            <tr><td class="num">Trigger</td><td>Event that initiates the use case</td></tr>
+            <tr><td class="num">Main Flow</td><td>Normal sequence of actor-system interactions</td></tr>
+            <tr><td class="num">Alternative/Exception Flows</td><td>Alternative paths, validation errors, or exceptions</td></tr>
+            <tr><td class="num">Postconditions</td><td>Expected state after completion</td></tr>
+            <tr><td class="num">Related Requirements</td><td>FR-010, FR-011, FR-012, FR-013, FR-014, FR-015</td></tr>
+          </tbody>
+        </table>
+
+        <h4>Main Flow</h4>
+        <p>The Main Flow may be presented as a numbered sequence or table:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Step</th><th>Actor/System</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Actor</td><td>Selects the option to create a new application</td></tr>
+            <tr><td class="num">2</td><td>System</td><td>Displays the application form</td></tr>
+            <tr><td class="num">3</td><td>Actor</td><td>Provides the required information and supporting documents</td></tr>
+            <tr><td class="num">4</td><td>System</td><td>Validates the submitted information</td></tr>
+            <tr><td class="num">5</td><td>Actor</td><td>Confirms submission</td></tr>
+            <tr><td class="num">6</td><td>System</td><td>Records the application and submission date</td></tr>
+            <tr><td class="num">7</td><td>System</td><td>Generates a unique reference number</td></tr>
+            <tr><td class="num">8</td><td>System</td><td>Displays confirmation of successful submission</td></tr>
+          </tbody>
+        </table>
+        <blockquote class="def"><strong>Major use cases only</strong> — Detailed specifications are required for major use cases. Minor interface actions do not need separate use case specifications.</blockquote>
+
+        <p>Use the templates below for your own major use cases. Each one should appear in your use case diagram.</p>
+
+        <h4 id="s4-2-1" style="scroll-margin-top:24px;">4.2.1 UC-01: [Use Case Name]</h4>
+        <table class="compare">
+          <thead>
+            <tr><th>Element</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">Use Case ID</td><td>UC-01</td></tr>
+            <tr><td class="num">Use Case Name</td><td>[Use Case Name]</td></tr>
+            <tr><td class="num">Primary Actor</td><td>[Actor]</td></tr>
+            <tr><td class="num">Description</td><td>[What this use case allows the actor to accomplish]</td></tr>
+            <tr><td class="num">Preconditions</td><td>[Conditions that must exist before the use case begins]</td></tr>
+            <tr><td class="num">Trigger</td><td>[Event that initiates the use case]</td></tr>
+            <tr><td class="num">Main Flow</td><td>[See main flow table]</td></tr>
+            <tr><td class="num">Alternative/Exception Flows</td><td>[Alternative paths, validation errors, or exceptions]</td></tr>
+            <tr><td class="num">Postconditions</td><td>[Expected state after completion]</td></tr>
+            <tr><td class="num">Related Requirements</td><td>[FR-xxx, FR-xxx, …]</td></tr>
+          </tbody>
+        </table>
+        <table class="compare">
+          <thead>
+            <tr><th>Step</th><th>Actor/System</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Actor</td><td>[Action]</td></tr>
+            <tr><td class="num">2</td><td>System</td><td>[Response]</td></tr>
+            <tr><td class="num">3</td><td>Actor</td><td>[Action]</td></tr>
+            <tr><td class="num">4</td><td>System</td><td>[Response]</td></tr>
+            <tr><td class="num">…</td><td>…</td><td>[Continue as necessary]</td></tr>
+          </tbody>
+        </table>
+
+        <h4 id="s4-2-2" style="scroll-margin-top:24px;">4.2.2 UC-02: [Use Case Name]</h4>
+        <table class="compare">
+          <thead>
+            <tr><th>Element</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">Use Case ID</td><td>UC-02</td></tr>
+            <tr><td class="num">Use Case Name</td><td>[Use Case Name]</td></tr>
+            <tr><td class="num">Primary Actor</td><td>[Actor]</td></tr>
+            <tr><td class="num">Description</td><td>[What this use case allows the actor to accomplish]</td></tr>
+            <tr><td class="num">Preconditions</td><td>[Conditions that must exist before the use case begins]</td></tr>
+            <tr><td class="num">Trigger</td><td>[Event that initiates the use case]</td></tr>
+            <tr><td class="num">Main Flow</td><td>[See main flow table]</td></tr>
+            <tr><td class="num">Alternative/Exception Flows</td><td>[Alternative paths, validation errors, or exceptions]</td></tr>
+            <tr><td class="num">Postconditions</td><td>[Expected state after completion]</td></tr>
+            <tr><td class="num">Related Requirements</td><td>[FR-xxx, FR-xxx, …]</td></tr>
+          </tbody>
+        </table>
+        <table class="compare">
+          <thead>
+            <tr><th>Step</th><th>Actor/System</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Actor</td><td>[Action]</td></tr>
+            <tr><td class="num">2</td><td>System</td><td>[Response]</td></tr>
+            <tr><td class="num">3</td><td>Actor</td><td>[Action]</td></tr>
+            <tr><td class="num">4</td><td>System</td><td>[Response]</td></tr>
+            <tr><td class="num">…</td><td>…</td><td>[Continue as necessary]</td></tr>
+          </tbody>
+        </table>
+
+        <h4 id="s4-2-3" style="scroll-margin-top:24px;">4.2.3 UC-03: [Use Case Name]</h4>
+        <table class="compare">
+          <thead>
+            <tr><th>Element</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">Use Case ID</td><td>UC-03</td></tr>
+            <tr><td class="num">Use Case Name</td><td>[Use Case Name]</td></tr>
+            <tr><td class="num">Primary Actor</td><td>[Actor]</td></tr>
+            <tr><td class="num">Description</td><td>[What this use case allows the actor to accomplish]</td></tr>
+            <tr><td class="num">Preconditions</td><td>[Conditions that must exist before the use case begins]</td></tr>
+            <tr><td class="num">Trigger</td><td>[Event that initiates the use case]</td></tr>
+            <tr><td class="num">Main Flow</td><td>[See main flow table]</td></tr>
+            <tr><td class="num">Alternative/Exception Flows</td><td>[Alternative paths, validation errors, or exceptions]</td></tr>
+            <tr><td class="num">Postconditions</td><td>[Expected state after completion]</td></tr>
+            <tr><td class="num">Related Requirements</td><td>[FR-xxx, FR-xxx, …]</td></tr>
+          </tbody>
+        </table>
+        <table class="compare">
+          <thead>
+            <tr><th>Step</th><th>Actor/System</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Actor</td><td>[Action]</td></tr>
+            <tr><td class="num">2</td><td>System</td><td>[Response]</td></tr>
+            <tr><td class="num">3</td><td>Actor</td><td>[Action]</td></tr>
+            <tr><td class="num">4</td><td>System</td><td>[Response]</td></tr>
+            <tr><td class="num">…</td><td>…</td><td>[Continue as necessary]</td></tr>
+          </tbody>
+        </table>
+
+        <h4 id="s4-2-n" style="scroll-margin-top:24px;">4.2.n UC-n: [Use Case Name]</h4>
+        <table class="compare">
+          <thead>
+            <tr><th>Element</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">Use Case ID</td><td>UC-n</td></tr>
+            <tr><td class="num">Use Case Name</td><td>[Use Case Name]</td></tr>
+            <tr><td class="num">Primary Actor</td><td>[Actor]</td></tr>
+            <tr><td class="num">Description</td><td>[What this use case allows the actor to accomplish]</td></tr>
+            <tr><td class="num">Preconditions</td><td>[Conditions that must exist before the use case begins]</td></tr>
+            <tr><td class="num">Trigger</td><td>[Event that initiates the use case]</td></tr>
+            <tr><td class="num">Main Flow</td><td>[See main flow table]</td></tr>
+            <tr><td class="num">Alternative/Exception Flows</td><td>[Alternative paths, validation errors, or exceptions]</td></tr>
+            <tr><td class="num">Postconditions</td><td>[Expected state after completion]</td></tr>
+            <tr><td class="num">Related Requirements</td><td>[FR-xxx, FR-xxx, …]</td></tr>
+          </tbody>
+        </table>
+        <table class="compare">
+          <thead>
+            <tr><th>Step</th><th>Actor/System</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">1</td><td>Actor</td><td>[Action]</td></tr>
+            <tr><td class="num">2</td><td>System</td><td>[Response]</td></tr>
+            <tr><td class="num">3</td><td>Actor</td><td>[Action]</td></tr>
+            <tr><td class="num">4</td><td>System</td><td>[Response]</td></tr>
+            <tr><td class="num">…</td><td>…</td><td>[Continue as necessary]</td></tr>
+          </tbody>
+        </table>
+        <blockquote class="def"><strong>Populate as necessary</strong> — Add one specification (4.2.4, 4.2.5, …) for each major use case in your system.</blockquote>
+      </section>
+
+      <!-- 7. Section 5 -->
+      <section class="chapter" id="s5">
+        <div class="eyebrow">07 · The Nine Sections</div>
+        <h2>Section 5. Data Requirements</h2>
+        <p class="lede">This section specifies the major data that the system is expected to capture, store, process, and retrieve.</p>
+
+        <h3 id="s5-1">5.1 Major Data Entities</h3>
+        <p>Identify and briefly describe the major data entities required by the system. Examples:</p>
+        <div class="flow">
+          <span class="step">User</span><span class="arrow">·</span>
+          <span class="step">Application</span><span class="arrow">·</span>
+          <span class="step">Transaction</span><span class="arrow">·</span>
+          <span class="step">Document</span><span class="arrow">·</span>
+          <span class="step">Evaluation</span><span class="arrow">·</span>
+          <span class="step">Notification</span>
+        </div>
+
+        <h3 id="s5-2">5.2 Entity-Relationship Diagram / Data Model</h3>
+        <p>Provide an ERD or other appropriate data model showing:</p>
+        <ul>
+          <li>entities;</li>
+          <li>major attributes;</li>
+          <li>relationships; and</li>
+          <li>cardinalities.</li>
+        </ul>
+        <blockquote class="def"><strong>Remember</strong> — The data model should support the functional requirements identified in the SRS.</blockquote>
+
+        <h3 id="s5-3">5.3 Data Dictionary</h3>
+        <p>Define the important data elements required by the system. Example:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Data Element</th><th>Description</th><th>Data Type</th><th>Required</th><th>Constraints</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">user_id</td><td>Unique identifier of a user</td><td>Integer</td><td>Yes</td><td>Primary key</td></tr>
+            <tr><td class="num">email</td><td>User email address</td><td>String</td><td>Yes</td><td>Must be unique</td></tr>
+            <tr><td class="num">submission_date</td><td>Date and time of submission</td><td>Date/Time</td><td>Yes</td><td>System generated</td></tr>
+          </tbody>
+        </table>
+        <blockquote class="def"><strong>Right-size the detail</strong> — The level of detail should be appropriate to the complexity of the proposed system.</blockquote>
+      </section>
+
+      <!-- 8. Section 6 -->
+      <section class="chapter" id="s6">
+        <div class="eyebrow">08 · The Nine Sections</div>
+        <h2>Section 6. Interface Requirements</h2>
+        <p class="lede">This section specifies how users and external systems are expected to interact with the proposed system.</p>
+
+        <h3 id="s6-1">6.1 User Interface Requirements</h3>
+        <p>Describe important requirements governing the user interface. These may include:</p>
+        <ul>
+          <li>major screens or interface components;</li>
+          <li>navigation;</li>
+          <li>form behavior;</li>
+          <li>validation and feedback;</li>
+          <li>responsive behavior;</li>
+          <li>accessibility considerations; and</li>
+          <li>error and confirmation messages.</li>
+        </ul>
+        <div class="keyidea">
+          <h3>Wireframes and mockups</h3>
+          <p><strong>Wireframes or mockups should be included where appropriate</strong> to illustrate the intended user interface. These represent the proposed interface and should be consistent with the functional requirements and use cases.</p>
+        </div>
+
+        <h3 id="s6-2">6.2 External System/Software Interfaces</h3>
+        <p>Identify required interfaces with external systems or services, where applicable. For each interface, describe:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Describe…</th><th>Example interfaces</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>External system or service</td><td>Authentication services</td></tr>
+            <tr><td>Purpose of the integration</td><td>APIs</td></tr>
+            <tr><td>Information exchanged</td><td>Email services</td></tr>
+            <tr><td>Relevant interface or communication method</td><td>Payment services</td></tr>
+            <tr><td></td><td>Existing institutional systems</td></tr>
+          </tbody>
+        </table>
+
+        <h3 id="s6-3">6.3 Other Interfaces</h3>
+        <p>Describe hardware, network, communication, or other interfaces <strong>only when relevant</strong> to the proposed system.</p>
+      </section>
+
+      <!-- 9. Section 7 -->
+      <section class="chapter" id="s7">
+        <div class="eyebrow">09 · The Nine Sections</div>
+        <h2>Section 7. Non-Functional Requirements</h2>
+        <p class="lede">This section specifies how well the system is expected to operate and identifies relevant quality and operational requirements.</p>
+        <div class="keyidea">
+          <h3>What vs. how well</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Functional Requirements</div>
+              <ul><li>Specify <strong>what</strong> the system must do.</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">Non-Functional Requirements</div>
+              <ul><li>Specify qualities, constraints, or performance expectations — <strong>how well</strong> the system operates.</li></ul>
+            </div>
+          </div>
+        </div>
+        <p style="margin-top:18px;">Only include categories applicable to the proposed system.</p>
+
+        <h3 id="s7-1">7.1 Security and Privacy</h3>
+        <p>Specify relevant requirements concerning:</p>
+        <ul>
+          <li>authentication;</li>
+          <li>authorization and access control;</li>
+          <li>protection of sensitive information;</li>
+          <li>audit logging;</li>
+          <li>session management; and</li>
+          <li>data privacy and protection.</li>
+        </ul>
+
+        <h3 id="s7-2">7.2 Performance</h3>
+        <p>Specify relevant requirements concerning:</p>
+        <ul>
+          <li>expected response time;</li>
+          <li>transaction processing;</li>
+          <li>expected number of users; and</li>
+          <li>workload or capacity.</li>
+        </ul>
+
+        <h3 id="s7-3">7.3 Usability and Accessibility</h3>
+        <p>Specify relevant requirements concerning:</p>
+        <ul>
+          <li>consistency of navigation;</li>
+          <li>error prevention and recovery;</li>
+          <li>accessibility;</li>
+          <li>responsive interfaces; and</li>
+          <li>user feedback.</li>
+        </ul>
+
+        <h3 id="s7-4">7.4 Reliability and Availability</h3>
+        <p>Specify relevant requirements concerning:</p>
+        <ul>
+          <li>expected system availability;</li>
+          <li>backup and recovery;</li>
+          <li>handling of failures; and</li>
+          <li>protection against data loss.</li>
+        </ul>
+
+        <h3 id="s7-5">7.5 Other Quality Requirements</h3>
+        <p>Specify other relevant requirements such as:</p>
+        <div class="flow">
+          <span class="step">Maintainability</span><span class="arrow">·</span>
+          <span class="step">Compatibility</span><span class="arrow">·</span>
+          <span class="step">Portability</span><span class="arrow">·</span>
+          <span class="step">Scalability</span>
+        </div>
+        <div class="callout"><strong>Relevance over completeness.</strong> Do not include a quality category merely for completeness. Non-functional requirements should be relevant to the proposed system and specific and verifiable whenever possible.</div>
+      </section>
+
+      <!-- 10. Section 8 -->
+      <section class="chapter" id="s8">
+        <div class="eyebrow">10 · The Nine Sections</div>
+        <h2>Section 8. Business Rules</h2>
+        <p class="lede">This section identifies organizational rules, policies, or conditions that govern the processes supported by the system.</p>
+        <p>Business Rules (BRs) describe <strong>rules originating from the organization or operational context</strong>, rather than the behavior of the software itself. Each business rule should have a unique identifier. Examples:</p>
+        <blockquote class="def"><strong>BR-001</strong> — An applicant may have only one active application per application cycle.</blockquote>
+        <blockquote class="def"><strong>BR-002</strong> — Applications submitted after the official deadline shall not be accepted.</blockquote>
+        <blockquote class="def"><strong>BR-003</strong> — Only users assigned the Approver role may approve an application.</blockquote>
+
+        <h3>From business rule to functional requirement</h3>
+        <p>Business rules may give rise to one or more functional requirements. For example:</p>
+        <div class="keyidea">
+          <h3>Rule → Requirement</h3>
+          <div class="qgrid">
+            <div class="col">
+              <div class="col-label">Business Rule</div>
+              <ul><li><strong>BR-002:</strong> Applications submitted after the official deadline shall not be accepted.</li></ul>
+            </div>
+            <div class="col">
+              <div class="col-label">Corresponding Functional Requirement</div>
+              <ul><li><strong>FR-027:</strong> The system shall prevent submission of applications after the configured application deadline.</li></ul>
+            </div>
+          </div>
+        </div>
+        <blockquote class="def" style="margin-top:18px;"><strong>Why the distinction matters</strong> — It helps establish why a particular system behavior is required.</blockquote>
+      </section>
+
+      <!-- 11. Section 9 -->
+      <section class="chapter" id="s9">
+        <div class="eyebrow">11 · The Nine Sections</div>
+        <h2>Section 9. Requirements Traceability Matrix</h2>
+        <p class="lede">The Requirements Traceability Matrix (RTM) establishes the relationship among the identified requirements and the analysis from which they were derived.</p>
+        <p>It provides a basis for determining whether the system, once developed, satisfies the requirements established in the System Blueprint. Suggested format:</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Requirement ID</th><th>Requirement</th><th>Source/Basis</th><th>Related Use Case</th><th>Module/Feature</th><th>Acceptance Criterion</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="num">FR-001</td><td>The system shall authenticate registered users</td><td>Stakeholder requirement</td><td>UC-01</td><td>Authentication</td><td>Valid registered users can successfully authenticate</td></tr>
+            <tr><td class="num">FR-005</td><td>The system shall allow users to submit applications</td><td>Process analysis</td><td>UC-03</td><td>Application</td><td>A complete application can be submitted and recorded</td></tr>
+            <tr><td class="num">NFR-003</td><td>The system shall enforce role-based access</td><td>Security requirement</td><td>Multiple</td><td>Access Control</td><td>Users can access only functions permitted for their assigned roles</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Source/Basis</h3>
+        <p>The Source/Basis should identify where the requirement originated, such as:</p>
+        <div class="flow">
+          <span class="step">Stakeholder interview</span><span class="arrow">·</span>
+          <span class="step">Survey or needs assessment</span><span class="arrow">·</span>
+          <span class="step">Process analysis</span><span class="arrow">·</span>
+          <span class="step">Document or policy analysis</span><span class="arrow">·</span>
+          <span class="step">Observation</span><span class="arrow">·</span>
+          <span class="step">Legal or regulatory requirement</span>
+        </div>
+
+        <h3>Acceptance Criterion</h3>
+        <blockquote class="def"><strong>Acceptance Criterion</strong> — Should state the condition that would indicate that the requirement has been satisfactorily implemented.</blockquote>
+      </section>
+
+      <!-- 12. Key Takeaways -->
+      <section class="chapter" id="takeaways">
+        <div class="eyebrow">12 · Wrap-up</div>
+        <h2>Key Takeaways</h2>
+        <ol class="commandments">
+          <li><strong>The SRS is the requirements baseline.</strong> It guides system design, development, testing, and evaluation, so every requirement must be clear, specific, consistent, feasible, and verifiable.</li>
+          <li><strong>Sections 1–2 set context, not discussion.</strong> Give only enough overview, scope, and environment to understand the requirements — don't repeat the manuscript.</li>
+          <li><strong>Functional requirements are the core.</strong> Uniquely numbered, written as "The system shall…", organized by module, and testable — never "user-friendly."</li>
+          <li><strong>FRs and use cases are different.</strong> FRs say what the system must do; use cases say how an actor reaches a goal. One use case may map to several FRs.</li>
+          <li><strong>Use cases are user goals,</strong> not buttons, screens, or messages. Specify major use cases in detail and link them to their FRs.</li>
+          <li><strong>The data model supports the FRs.</strong> Entities, ERD, and data dictionary are sized to the system's complexity.</li>
+          <li><strong>Interfaces stay consistent.</strong> Wireframes and mockups must match the FRs and use cases; external interfaces state purpose, data exchanged, and method.</li>
+          <li><strong>NFRs are relevant and verifiable.</strong> Include a quality category only when it applies to the system.</li>
+          <li><strong>Business rules explain why.</strong> Rules come from the organization and give rise to the FRs that enforce them.</li>
+          <li><strong>The RTM closes the loop.</strong> Each requirement traces to its source, use case, and module, with an acceptance criterion for judging the developed system.</li>
+        </ol>
+      </section>
+    </div>
+  </main>
+</div>
+
+<footer>IS 295 · Software Requirements Specification · Dr. Reinald Adrian Pugoy</footer>
+
+<script>
+  // Sidebar active-link highlighting on scroll
+  const sections = document.querySelectorAll('section.chapter');
+  const tocLinks = document.querySelectorAll('.toc-link');
+
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.getAttribute('id');
+        tocLinks.forEach(link=>{
+          link.classList.toggle('active', link.dataset.target === id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px' });
+
+  sections.forEach(sec => observer.observe(sec));
+</script>
+
+</body>
+</html>

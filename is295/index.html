@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IS 295 — Course Resources</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ---- Design tokens (shared with the IS 295 guide pages) ------------------ */
+:root{
+  --bg:#EEF2F8;
+  --paper:#FFFFFF;
+  --ink:#1B2333;
+  --ink-soft:#4A5568;
+  --sidebar:#16243E;
+  --sidebar-hover:#22385F;
+  --accent:#2F5D9C;
+  --accent-deep:#1E3F6E;
+  --accent-tint:#EAF0FA;
+  --gold:#A9822F;
+  --gold-tint:#FBF3E1;
+  --border:#DAE1EC;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:"IBM Plex Sans", -apple-system, "Segoe UI", Roboto, sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  line-height:1.6;
+}
+h1,h2,h3{
+  font-family:"Source Serif 4", Georgia, "Times New Roman", serif;
+  line-height:1.25;
+  font-weight:600;
+  margin:0;
+}
+a{color:var(--accent-deep);}
+
+/* ---- Hero ---------------------------------------------------------------- */
+.hero{
+  background:linear-gradient(155deg, var(--accent-deep) 0%, var(--sidebar) 65%);
+  color:#fff;
+  padding:72px 24px 120px;
+}
+.wrap{max-width:1040px; margin:0 auto;}
+.hero .kicker{
+  text-transform:uppercase;
+  letter-spacing:0.16em;
+  font-size:12px;
+  color:#AFC3E4;
+  margin-bottom:14px;
+}
+.hero h1{
+  color:#fff;
+  font-size:44px;
+  margin-bottom:12px;
+}
+.hero .dek{
+  max-width:720px;
+  color:#D6E0F1;
+  font-size:17px;
+  margin:0 0 24px;
+}
+.hero .byline{
+  font-size:14px;
+  color:#AFC3E4;
+  border-top:1px solid rgba(255,255,255,0.18);
+  padding-top:14px;
+  display:inline-block;
+}
+.hero .byline strong{color:#fff; font-weight:600;}
+
+/* ---- Resource groups ------------------------------------------------------ */
+.resources{
+  margin-top:-72px;
+  padding:0 24px;
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:24px;
+}
+.group{
+  background:var(--paper);
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(22,36,62,0.08);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+.group-head{
+  padding:26px 28px 20px;
+  border-bottom:1px solid var(--border);
+}
+.group-head .eyebrow{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+.group-head h2{font-size:24px; margin-bottom:8px;}
+.group-head p{margin:0; font-size:14.5px; color:var(--ink-soft);}
+
+.links{
+  list-style:none;
+  margin:0;
+  padding:12px;
+  display:grid;
+  gap:8px;
+}
+.res-link{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:16px 16px;
+  border-radius:10px;
+  text-decoration:none;
+  color:var(--ink);
+  border:1px solid transparent;
+  transition:background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.res-link:hover, .res-link:focus-visible{
+  background:var(--accent-tint);
+  border-color:var(--border);
+  outline:none;
+}
+.res-link:focus-visible{box-shadow:0 0 0 3px rgba(47,93,156,0.35);}
+
+.icon{
+  flex:0 0 44px;
+  height:44px;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+}
+.icon svg{width:22px; height:22px;}
+.icon.guide{background:var(--accent-deep); color:#fff;}
+.icon.template{background:var(--gold-tint); color:var(--gold); border:1px solid #EBD9AE;}
+
+.res-text{flex:1; min-width:0;}
+.res-title{display:block; font-weight:600; font-size:15.5px;}
+.res-desc{display:block; font-size:13.5px; color:var(--ink-soft);}
+
+.badge{
+  flex:0 0 auto;
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  padding:4px 9px;
+  border-radius:20px;
+  white-space:nowrap;
+}
+.badge.web{background:var(--accent-tint); color:var(--accent-deep);}
+.badge.docx{background:var(--gold-tint); color:var(--gold);}
+
+/* ---- Notes strip ---------------------------------------------------------- */
+.notes{
+  padding:40px 24px 0;
+}
+.notes-inner{
+  background:#F4F7FC;
+  border:1px solid var(--border);
+  border-left:4px solid var(--gold);
+  border-radius:10px;
+  padding:20px 24px;
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:8px 32px;
+}
+.notes h3{
+  grid-column:1 / -1;
+  font-size:17px;
+  color:var(--accent-deep);
+  margin-bottom:4px;
+}
+.notes p{margin:0; font-size:14.5px; color:var(--ink-soft);}
+.notes p strong{color:var(--ink);}
+
+footer{
+  text-align:center;
+  padding:48px 20px 32px;
+  font-size:12.5px;
+  color:var(--ink-soft);
+}
+
+@media (max-width: 800px){
+  .hero{padding:48px 16px 104px;}
+  .hero h1{font-size:34px;}
+  .resources{grid-template-columns:1fr; padding:0 16px;}
+  .notes{padding:32px 16px 0;}
+  .notes-inner{grid-template-columns:1fr;}
+}
+@media (max-width: 420px){
+  .badge{display:none;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">IS 295 · Course Resources</div>
+    <h1>IS 295 Resource Hub</h1>
+    <p class="dek">Writing guidelines and templates for the IS 295 manuscript and the Software Requirements Specification (SRS). Read the guidelines first, then download the matching template to start writing.</p>
+    <span class="byline">Prepared by: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027</span>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="resources" aria-label="Course resources">
+
+      <!-- Manuscript -->
+      <article class="group">
+        <div class="group-head">
+          <div class="eyebrow">01 · Manuscript</div>
+          <h2>IS 295 Manuscript</h2>
+          <p>Chapter-by-chapter structure for documenting the development and evaluation of your information system.</p>
+        </div>
+        <ul class="links">
+          <li>
+            <a class="res-link" href="https://reinald-dp.github.io/is295/manuscript-guide.html">
+              <span class="icon guide" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5z"/><path d="M4 19a2 2 0 0 1 2-2h12"/><path d="M8 7h6M8 11h6"/></svg>
+              </span>
+              <span class="res-text">
+                <span class="res-title">Manuscript Writing Guidelines</span>
+                <span class="res-desc">What each of the six chapters should contain</span>
+              </span>
+              <span class="badge web">Web page</span>
+            </a>
+          </li>
+          <li>
+            <a class="res-link" href="https://reinald-dp.github.io/is295/manuscript-template.docx" download>
+              <span class="icon template" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6M9.5 14.5 12 17l2.5-2.5"/></svg>
+              </span>
+              <span class="res-text">
+                <span class="res-title">Manuscript Template</span>
+                <span class="res-desc">Pre-formatted Word file with chapter headings</span>
+              </span>
+              <span class="badge docx">.docx</span>
+            </a>
+          </li>
+        </ul>
+      </article>
+
+      <!-- SRS -->
+      <article class="group">
+        <div class="group-head">
+          <div class="eyebrow">02 · SRS</div>
+          <h2>Software Requirements Specification</h2>
+          <p>How to specify the functional and non-functional requirements of the system you are building.</p>
+        </div>
+        <ul class="links">
+          <li>
+            <a class="res-link" href="https://reinald-dp.github.io/is295/srs-guide.html">
+              <span class="icon guide" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5z"/><path d="M4 19a2 2 0 0 1 2-2h12"/><path d="M8 7h6M8 11h6"/></svg>
+              </span>
+              <span class="res-text">
+                <span class="res-title">SRS Writing Guidelines</span>
+                <span class="res-desc">Sections and expectations for the SRS document</span>
+              </span>
+              <span class="badge web">Web page</span>
+            </a>
+          </li>
+          <li>
+            <a class="res-link" href="https://reinald-dp.github.io/is295/srs-guide.docx" download>
+              <span class="icon template" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6M9.5 14.5 12 17l2.5-2.5"/></svg>
+              </span>
+              <span class="res-text">
+                <span class="res-title">SRS Template</span>
+                <span class="res-desc">Pre-formatted Word file for your SRS</span>
+              </span>
+              <span class="badge docx">.docx</span>
+            </a>
+          </li>
+        </ul>
+      </article>
+
+    </section>
+
+    <section class="notes" aria-label="Which chapters apply">
+      <div class="notes-inner">
+        <h3>Which chapters to submit</h3>
+        <p><strong>IS 295a (Proposal):</strong> Chapters 1–4, describing the planned design, development, testing, and evaluation.</p>
+        <p><strong>IS 295b (Completed Study):</strong> Chapters 1–6, with Chapters 1–4 revised to reflect what was actually done.</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>IS 295 · Course Resources · Dr. Reinald Adrian Pugoy</footer>
+
+</body>
+</html>

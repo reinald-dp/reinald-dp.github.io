@@ -62,7 +62,7 @@ a{color:var(--accent-deep);}
   margin-bottom:12px;
 }
 .hero .dek{
-  max-width:720px;
+  max-width:none;
   color:#D6E0F1;
   font-size:17px;
   margin:0 0 24px;
@@ -162,6 +162,30 @@ a{color:var(--accent-deep);}
 .badge.docx{background:var(--gold-tint); color:var(--gold);}
 .badge.latex{background:#E5F4EC; color:#1E7B57;}
 .icon.latex{background:#E5F4EC; color:#1E7B57; border:1px solid #BFE3CF;}
+.pref{
+  display:inline-block;
+  vertical-align:2px;
+  margin-left:6px;
+  font-size:10.5px;
+  font-weight:600;
+  letter-spacing:0.06em;
+  text-transform:uppercase;
+  padding:2px 7px;
+  border-radius:4px;
+  background:#1E7B57;
+  color:#fff;
+}
+.latex-note{
+  margin:0 0 26px;
+  padding:14px 18px;
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.22);
+  border-left:4px solid #6FCF9F;
+  border-radius:8px;
+  font-size:15px;
+  color:#E3EAF6;
+}
+.latex-note strong{color:#fff;}
 
 /* ---- Notes strip ---------------------------------------------------------- */
 .notes{
@@ -209,9 +233,10 @@ footer{
 
 <header class="hero">
   <div class="wrap">
-    <div class="kicker">IS 295 · Course Resources</div>
+    <div class="kicker">Information Systems Capstone / Special Project</div>
     <h1>IS 295 Resource Hub</h1>
     <p class="dek">Writing guidelines and templates for the IS 295 manuscript and the Software Requirements Specification (SRS). Read the guidelines first, then download the matching template to start writing.</p>
+    <p class="latex-note"><strong>Use of LaTeX is highly preferred.</strong> It preserves the required formatting (headings, numbering, table of contents, and citations) no matter how often the document is edited, unlike Word files, which tend to break as content changes.</p>
     <span class="byline">Prepared by: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027</span>
   </div>
 </header>
@@ -241,6 +266,18 @@ footer{
             </a>
           </li>
           <li>
+            <a class="res-link" href="https://www.overleaf.com/read/znkxrqqkjgbg#0dfb0f" target="_blank" rel="noopener">
+              <span class="icon latex" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/><path d="m13.5 5-3 14"/></svg>
+              </span>
+              <span class="res-text">
+                <span class="res-title">Manuscript Template (LaTeX) <span class="pref">Preferred</span></span>
+                <span class="res-desc">Read-only Overleaf project; make a copy to edit</span>
+              </span>
+              <span class="badge latex">Overleaf</span>
+            </a>
+          </li>
+          <li>
             <a class="res-link" href="https://reinald-dp.github.io/is295/manuscript-template.docx" download>
               <span class="icon template" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6M9.5 14.5 12 17l2.5-2.5"/></svg>
@@ -250,18 +287,6 @@ footer{
                 <span class="res-desc">Pre-formatted Word file with chapter headings</span>
               </span>
               <span class="badge docx">.docx</span>
-            </a>
-          </li>
-          <li>
-            <a class="res-link" href="https://www.overleaf.com/read/znkxrqqkjgbg#0dfb0f" target="_blank" rel="noopener">
-              <span class="icon latex" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/><path d="m13.5 5-3 14"/></svg>
-              </span>
-              <span class="res-text">
-                <span class="res-title">Manuscript Template (LaTeX)</span>
-                <span class="res-desc">Read-only Overleaf project; make a copy to edit</span>
-              </span>
-              <span class="badge latex">Overleaf</span>
             </a>
           </li>
         </ul>
@@ -288,6 +313,18 @@ footer{
             </a>
           </li>
           <li>
+            <a class="res-link" href="https://www.overleaf.com/read/znkyfgwxcmdd#0d391c" target="_blank" rel="noopener">
+              <span class="icon latex" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/><path d="m13.5 5-3 14"/></svg>
+              </span>
+              <span class="res-text">
+                <span class="res-title">SRS Template (LaTeX) <span class="pref">Preferred</span></span>
+                <span class="res-desc">Read-only Overleaf project; make a copy to edit</span>
+              </span>
+              <span class="badge latex">Overleaf</span>
+            </a>
+          </li>
+          <li>
             <a class="res-link" href="https://reinald-dp.github.io/is295/srs-guide.docx" download>
               <span class="icon template" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6M9.5 14.5 12 17l2.5-2.5"/></svg>
@@ -297,18 +334,6 @@ footer{
                 <span class="res-desc">Pre-formatted Word file for your SRS</span>
               </span>
               <span class="badge docx">.docx</span>
-            </a>
-          </li>
-          <li>
-            <a class="res-link" href="https://www.overleaf.com/read/znkyfgwxcmdd#0d391c" target="_blank" rel="noopener">
-              <span class="icon latex" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/><path d="m13.5 5-3 14"/></svg>
-              </span>
-              <span class="res-text">
-                <span class="res-title">SRS Template (LaTeX)</span>
-                <span class="res-desc">Read-only Overleaf project; make a copy to edit</span>
-              </span>
-              <span class="badge latex">Overleaf</span>
             </a>
           </li>
         </ul>

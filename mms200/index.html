@@ -91,7 +91,7 @@ a{color:var(--accent-deep);}
 
 /* ---- Resource groups ------------------------------------------------------ */
 .resources{
-  margin-top:-72px;
+  margin-top:0;
   padding:0 24px;
   display:grid;
   grid-template-columns:repeat(2, 1fr);
@@ -205,6 +205,19 @@ a.res-link:focus-visible{box-shadow:0 0 0 3px rgba(47,93,156,0.35);}
 }
 .notes p{margin:0; font-size:14.5px; color:var(--ink-soft);}
 .notes p strong{color:var(--ink);}
+.chapters{grid-column:1 / -1; margin-top:12px; overflow-x:auto;}
+.chapters table{width:100%; border-collapse:collapse; font-size:14px; background:var(--paper); border:1px solid var(--border); border-radius:8px; overflow:hidden;}
+.chapters caption{text-align:left; font-weight:600; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold); padding:0 0 8px;}
+.chapters th, .chapters td{padding:9px 12px; text-align:left; border-bottom:1px solid var(--border); vertical-align:middle;}
+.chapters thead th{background:var(--accent-tint); color:var(--accent-deep); font-size:12.5px; font-weight:600;}
+.chapters tbody th{font-family:"Source Serif 4", Georgia, serif; color:var(--accent-deep); width:64px;}
+.chapters tbody tr:last-child th, .chapters tbody tr:last-child td{border-bottom:none;}
+.chapters td{color:var(--ink);}
+.chapters tr.later td, .chapters tr.later th{background:#FAFBFD;}
+.term{display:inline-block; font-size:11px; font-weight:600; padding:2px 7px; border-radius:4px; margin-right:4px; white-space:nowrap;}
+.term.a{background:var(--accent-deep); color:#fff;}
+.term.b{background:var(--gold-tint); color:#7A5C1C; border:1px solid #EBD9AE;}
+
 
 .adviser-note{
   margin:24px 24px 0;
@@ -221,6 +234,108 @@ a.res-link:focus-visible{box-shadow:0 0 0 3px rgba(47,93,156,0.35);}
 }
 .adviser-note svg{flex:0 0 22px; width:22px; height:22px; color:var(--gold); margin-top:1px;}
 .adviser-note strong{color:#3F300B;}
+
+
+/* ---- Overleaf how-to ------------------------------------------------------ */
+.howto{
+  margin:24px 24px 0;
+  background:var(--paper);
+  border:1px solid var(--border);
+  border-left:4px solid #1E7B57;
+  border-radius:10px;
+}
+.howto summary{
+  list-style:none;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 18px;
+  font-size:15px;
+  color:var(--ink);
+}
+.howto summary::-webkit-details-marker{display:none;}
+.howto summary svg{flex:0 0 20px; width:20px; height:20px; color:#1E7B57;}
+.howto summary span{flex:1;}
+.howto summary .chev{color:var(--ink-soft); transition:transform .2s ease;}
+.howto[open] summary .chev{transform:rotate(180deg);}
+.howto summary:focus-visible{outline:none; box-shadow:0 0 0 3px rgba(47,93,156,0.35); border-radius:10px;}
+.howto ol{margin:0; padding:0 22px 16px 58px; font-size:14.5px; color:var(--ink-soft);}
+.howto li{margin:4px 0;}
+.howto li strong{color:var(--ink);}
+@media (max-width: 800px){ .howto{margin:20px 16px 0;} }
+
+/* ---- Deadlines ------------------------------------------------------------ */
+.deadlines{margin-top:-72px; padding:0 24px;}
+.section-intro{padding:40px 24px 20px;}
+.section-intro-inner{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:18px 22px;
+  background:var(--accent-deep);
+  color:#fff;
+  border-radius:12px;
+  box-shadow:0 8px 22px rgba(22,36,62,0.12);
+}
+.section-intro-inner svg{flex:0 0 28px; width:28px; height:28px; color:#F2D58F;}
+.section-intro-inner p{margin:0; font-size:17px; font-weight:500; line-height:1.5;}
+.section-intro-inner strong{color:#F2D58F; font-weight:600;}
+.deadlines-inner{
+  background:var(--paper);
+  border:1px solid var(--border);
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(22,36,62,0.08);
+  padding:24px 28px;
+}
+.deadlines .eyebrow{
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+.deadlines h2{font-size:22px; margin-bottom:16px;}
+.timeline{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:10px;
+}
+.timeline li{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:12px 14px;
+  border:1px solid var(--border);
+  border-radius:10px;
+}
+.timeline li.key{background:var(--accent-tint);}
+.date{
+  flex:0 0 auto;
+  min-width:64px;
+  text-align:center;
+  border-radius:8px;
+  background:var(--accent-deep);
+  color:#fff;
+  padding:6px 8px;
+  line-height:1.15;
+}
+.date .mon{display:block; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:#C9D7EE;}
+.date .day{display:block; font-family:"Source Serif 4", Georgia, serif; font-size:22px; font-weight:700;}
+.date.multi .day{font-size:17px;}
+.event{flex:1; min-width:0;}
+.event-title{display:block; font-weight:600; font-size:15.5px;}
+.event-sub{display:block; font-size:13.5px; color:var(--ink-soft);}
+
+@media (max-width: 800px){
+  .deadlines{padding:0 16px;}
+  .section-intro{padding:32px 16px 16px;}
+  .section-intro-inner p{font-size:16px;}
+  .deadlines-inner{padding:20px 18px;}
+}
 
 footer{
   text-align:center;
@@ -248,14 +363,57 @@ footer{
   <div class="wrap">
     <div class="kicker">BA Multimedia Studies · Special Project</div>
     <h1>MMS 200 Resource Hub</h1>
-    <p class="dek">Writing guidelines and templates for the MMS 200 Special Project manuscript. Choose the track that matches your project, read its guidelines first, then make a copy of the matching template to start writing.</p>
     <p class="latex-note"><strong>Manuscript templates are provided in LaTeX.</strong> LaTeX preserves the required formatting (headings, numbering, table of contents, and citations) no matter how often the document is edited, unlike Word files, which tend to break as content changes.</p>
-    <span class="byline">Prepared by: <strong>Dr. Reinald Adrian Pugoy</strong> — First Semester, AY 2026–2027<br>Faculty of Information and Communication Studies, UP Open University</span>
+    <span class="byline">Prepared by: <strong>Dr. Reinald Adrian Pugoy</strong> — First Term, AY 2026–2027<br>Faculty of Information and Communication Studies, UP Open University</span>
   </div>
 </header>
 
 <main>
   <div class="wrap">
+    <section class="deadlines" aria-labelledby="deadlines-title">
+      <div class="deadlines-inner">
+        <div class="eyebrow">MMS 200a · First Term</div>
+        <h2 id="deadlines-title">Dates and Deadlines</h2>
+        <ol class="timeline">
+          <li>
+            <span class="date multi"><span class="mon">Nov</span><span class="day">9 · 24</span></span>
+            <span class="event">
+              <span class="event-title">Checkpoint Meetings</span>
+              <span class="event-sub">Monday, November 9 and Tuesday, November 24, 2026</span>
+            </span>
+          </li>
+          <li>
+            <span class="date"><span class="mon">Dec</span><span class="day">9</span></span>
+            <span class="event">
+              <span class="event-title">Initial Proposal Document Submission</span>
+              <span class="event-sub">Wednesday, December 9, 2026</span>
+            </span>
+          </li>
+          <li class="key">
+            <span class="date"><span class="mon">Dec</span><span class="day">10</span></span>
+            <span class="event">
+              <span class="event-title">Initial Proposal Defense</span>
+              <span class="event-sub">Thursday, December 10, 2026</span>
+            </span>
+          </li>
+          <li>
+            <span class="date"><span class="mon">Dec</span><span class="day">19</span></span>
+            <span class="event">
+              <span class="event-title">Revised/Final Proposal Document Submission</span>
+              <span class="event-sub">Saturday, December 19, 2026</span>
+            </span>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <div class="section-intro" role="note">
+      <div class="section-intro-inner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="m8 12 4 4 4-4"/></svg>
+        <p><strong>Choose the track that matches your project</strong>, read its guidelines first, then make a copy of the matching template to start writing.</p>
+      </div>
+    </div>
+
     <section class="resources" aria-label="Course resources">
 
       <!-- Software Development Project -->
@@ -302,46 +460,81 @@ footer{
         </div>
         <ul class="links">
           <li>
-            <div class="res-link disabled" aria-disabled="true">
-              <span class="icon" aria-hidden="true">
+            <a class="res-link" href="https://reinald-dp.github.io/mms200/rp-manuscript-guide.html">
+              <span class="icon guide" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2V5z"/><path d="M4 19a2 2 0 0 1 2-2h12"/><path d="M8 7h6M8 11h6"/></svg>
               </span>
               <span class="res-text">
                 <span class="res-title">Manuscript Writing Guidelines</span>
-                <span class="res-desc">Not yet available</span>
+                <span class="res-desc">What each chapter of the manuscript should contain</span>
               </span>
-              <span class="badge soon">Coming soon</span>
-            </div>
+              <span class="badge web">Web page</span>
+            </a>
           </li>
           <li>
-            <div class="res-link disabled" aria-disabled="true">
-              <span class="icon" aria-hidden="true">
+            <a class="res-link" href="https://www.overleaf.com/project/6af29585edde27abdd514df0/share#57feb76a364d6ca2bf1b1352a04768b942855755da1886a2" target="_blank" rel="noopener">
+              <span class="icon latex" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/><path d="m13.5 5-3 14"/></svg>
               </span>
               <span class="res-text">
-                <span class="res-title">Manuscript Template</span>
-                <span class="res-desc">Not yet available</span>
+                <span class="res-title">Manuscript Template (LaTeX)</span>
+                <span class="res-desc">Overleaf project; make a copy to edit</span>
               </span>
-              <span class="badge soon">Coming soon</span>
-            </div>
+              <span class="badge latex">Overleaf</span>
+            </a>
           </li>
         </ul>
       </article>
 
     </section>
 
+    <details class="howto">
+      <summary>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m8 7-5 5 5 5"/><path d="m16 7 5 5-5 5"/><path d="m13.5 5-3 14"/></svg>
+        <span><strong>New to LaTeX?</strong> How to make your own copy of the Overleaf template</span>
+        <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+      </summary>
+      <ol>
+        <li>Sign in to <a href="https://www.overleaf.com" target="_blank" rel="noopener">Overleaf</a>, or create a free account.</li>
+        <li>Open the template link for your track.</li>
+        <li>Click <strong>Menu</strong> (top-left), then <strong>Copy Project</strong>.</li>
+        <li>Rename the copy, e.g., <em>MMS200-Surname-ShortTitle</em>, and write only in your copy.</li>
+      </ol>
+    </details>
+
     <section class="notes" aria-label="Which documents to submit">
       <div class="notes-inner">
         <h3>Which documents to submit</h3>
-        <p><strong>MMS 200a (Proposal):</strong> The proposal chapters of the manuscript, describing what you plan to do and how.</p>
-        <p><strong>MMS 200b (Completed Special Project):</strong> The full manuscript, with the proposal chapters revised to reflect what was actually done.</p>
+        <p><strong>MMS 200a (Proposal):</strong> Chapters I–IV, describing the planned work, plus References and the Declaration of AI Use. Appendices as needed. Chapters V and VI are not included.</p>
+        <p><strong>MMS 200b (Completed Special Project):</strong> Chapters I–VI, plus References and the Declaration of AI Use. Revise Chapters I–IV to describe what was actually done; substantive changes from the approved proposal need your adviser&rsquo;s approval.</p>
+        <div class="chapters">
+          <table>
+            <caption>Manuscript chapters by track</caption>
+            <thead>
+              <tr>
+                <th scope="col">Chapter</th>
+                <th scope="col">Software Development Project</th>
+                <th scope="col">Research Project</th>
+                <th scope="col">Submitted in</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">I</th><td>Introduction</td><td>Introduction</td><td><span class="term a">200a</span><span class="term b">200b</span></td></tr>
+              <tr><th scope="row">II</th><td>Review of Related Works</td><td>Review of Related Literature</td><td><span class="term a">200a</span><span class="term b">200b</span></td></tr>
+              <tr><th scope="row">III</th><td>Design and Development Methodology</td><td>Theoretical and Conceptual Framework</td><td><span class="term a">200a</span><span class="term b">200b</span></td></tr>
+              <tr><th scope="row">IV</th><td>Testing and Evaluation Methodology</td><td>Research Methodology</td><td><span class="term a">200a</span><span class="term b">200b</span></td></tr>
+              <tr class="later"><th scope="row">V</th><td>Results and Discussion</td><td>Results and Discussion</td><td><span class="term b">200b</span></td></tr>
+              <tr class="later"><th scope="row">VI</th><td>Conclusion and Recommendations</td><td>Conclusion and Recommendations</td><td><span class="term b">200b</span></td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
 
   </div>
 </main>
 
-<footer>MMS 200 · Course Resources · Dr. Reinald Adrian Pugoy</footer>
+<footer>MMS 200 · Course Resources · Dr. Reinald Adrian Pugoy<br>Last updated: November 10, 2026</footer>
 
 </body>
 </html>

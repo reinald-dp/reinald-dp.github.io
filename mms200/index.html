@@ -48,7 +48,7 @@ a{color:var(--accent-deep);}
 .hero{
   background:linear-gradient(155deg, var(--accent-deep) 0%, var(--sidebar) 65%);
   color:#fff;
-  padding:56px 24px 64px;
+  padding:56px 24px 56px;
 }
 .wrap{max-width:1040px; margin:0 auto;}
 .hero .kicker{
@@ -61,7 +61,7 @@ a{color:var(--accent-deep);}
 .hero h1{
   color:#fff;
   font-size:44px;
-  margin-bottom:12px;
+  margin-bottom:10px;
 }
 .hero .dek{
   color:#D6E0F1;
@@ -104,17 +104,15 @@ a{color:var(--accent-deep);}
   .updated{justify-self:start;}
 }
 .hero .byline{
-  font-size:14px;
-  margin-top:0;
+  display:block;
+  font-size:14.5px;
   color:#AFC3E4;
-  border-top:1px solid rgba(255,255,255,0.18);
-  padding-top:14px;
-  display:inline-block;
+  margin:0 0 24px;
 }
 .hero .byline strong{color:#fff; font-weight:600;}
 
 .latex-note{
-  margin:0 0 26px;
+  margin:0;
   padding:14px 18px;
   background:rgba(255,255,255,0.08);
   border:1px solid rgba(255,255,255,0.22);
@@ -127,7 +125,7 @@ a{color:var(--accent-deep);}
 
 /* ---- Resource groups ------------------------------------------------------ */
 .resources{
-  margin-top:0;
+  margin-top:36px;
   padding:0 24px;
   display:grid;
   grid-template-columns:repeat(2, 1fr);
@@ -303,19 +301,20 @@ a.res-link:focus-visible{box-shadow:0 0 0 3px rgba(47,93,156,0.35);}
 
 /* ---- Deadlines ------------------------------------------------------------ */
 .deadlines{color:var(--ink);}
-.section-intro{padding:40px 24px 20px;}
+.section-intro{margin-top:16px;}
 .section-intro-inner{
   display:flex;
   align-items:center;
-  gap:16px;
-  padding:18px 22px;
-  background:var(--accent-deep);
+  gap:14px;
+  padding:14px 18px;
+  background:rgba(242,213,143,0.12);
+  border:1px solid rgba(242,213,143,0.45);
+  border-left:4px solid #F2D58F;
   color:#fff;
-  border-radius:12px;
-  box-shadow:0 8px 22px rgba(22,36,62,0.12);
+  border-radius:8px;
 }
-.section-intro-inner svg{flex:0 0 28px; width:28px; height:28px; color:#F2D58F;}
-.section-intro-inner p{margin:0; font-size:17px; font-weight:500; line-height:1.5;}
+.section-intro-inner svg{flex:0 0 24px; width:24px; height:24px; color:#F2D58F;}
+.section-intro-inner p{margin:0; font-size:15.5px; font-weight:500; line-height:1.5;}
 .section-intro-inner strong{color:#F2D58F; font-weight:600;}
 .deadlines-inner{
   background:var(--paper);
@@ -367,8 +366,6 @@ a.res-link:focus-visible{box-shadow:0 0 0 3px rgba(47,93,156,0.35);}
 .event-sub{display:block; font-size:12px; line-height:1.4; color:var(--ink-soft);}
 
 @media (max-width: 800px){
-  .section-intro{padding:32px 16px 16px;}
-  .section-intro-inner p{font-size:16px;}
 }
 
 footer{
@@ -402,8 +399,14 @@ footer{
     <div class="hero-main">
       <div class="kicker">BA Multimedia Studies · Special Project</div>
       <h1>MMS 200 Resource Hub</h1>
-      <p class="latex-note"><strong>Manuscript templates are provided in LaTeX.</strong> LaTeX preserves the required formatting (headings, numbering, table of contents, and citations) no matter how often the document is edited, unlike Word files, which tend to break as content changes.</p>
       <span class="byline">Prepared by: <strong>Dr. Reinald Adrian Pugoy</strong> — First Term, AY 2026–2027<br>Faculty of Information and Communication Studies, UP Open University</span>
+      <p class="latex-note"><strong>Manuscript templates are provided in LaTeX.</strong> LaTeX preserves the required formatting (headings, numbering, table of contents, and citations) no matter how often the document is edited, unlike Word files, which tend to break as content changes.</p>
+      <div class="section-intro" role="note">
+        <div class="section-intro-inner">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="m8 12 4 4 4-4"/></svg>
+          <p><strong>Choose the track that matches your project</strong>, read its guidelines first, then make a copy of the matching template to start writing.</p>
+        </div>
+      </div>
     </div>
     <div class="hero-side">
         <section class="deadlines" aria-labelledby="deadlines-title">
@@ -415,28 +418,28 @@ footer{
                 <span class="date multi"><span class="mon">Nov</span><span class="day">9 · 24</span></span>
                 <span class="event">
                   <span class="event-title">Checkpoint Meetings</span>
-                  <span class="event-sub">Monday, November 9 and Tuesday, November 24, 2026</span>
+                  <span class="event-sub">Mon, Nov 9 &amp; Tue, Nov 24, 2026</span>
                 </span>
               </li>
               <li>
                 <span class="date"><span class="mon">Dec</span><span class="day">9</span></span>
                 <span class="event">
                   <span class="event-title">Initial Proposal Document Submission</span>
-                  <span class="event-sub">Wednesday, December 9, 2026</span>
+                  <span class="event-sub">Wed, Dec 9, 2026</span>
                 </span>
               </li>
               <li class="key">
                 <span class="date"><span class="mon">Dec</span><span class="day">10</span></span>
                 <span class="event">
                   <span class="event-title">Initial Proposal Defense</span>
-                  <span class="event-sub">Thursday, December 10, 2026</span>
+                  <span class="event-sub">Thu, Dec 10, 2026</span>
                 </span>
               </li>
               <li>
                 <span class="date"><span class="mon">Dec</span><span class="day">19</span></span>
                 <span class="event">
                   <span class="event-title">Revised/Final Proposal Document Submission</span>
-                  <span class="event-sub">Saturday, December 19, 2026</span>
+                  <span class="event-sub">Sat, Dec 19, 2026</span>
                 </span>
               </li>
             </ol>
@@ -448,13 +451,6 @@ footer{
 
 <main>
   <div class="wrap">
-    <div class="section-intro" role="note">
-      <div class="section-intro-inner">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v8"/><path d="m8 12 4 4 4-4"/></svg>
-        <p><strong>Choose the track that matches your project</strong>, read its guidelines first, then make a copy of the matching template to start writing.</p>
-      </div>
-    </div>
-
     <section class="resources" aria-label="Course resources">
 
       <!-- Software Development Project -->

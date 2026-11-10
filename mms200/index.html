@@ -68,6 +68,26 @@ a{color:var(--accent-deep);}
   font-size:17px;
   margin:0 0 24px;
 }
+.hero .wrap{position:relative;}
+.updated{
+  position:absolute;
+  top:-6px;
+  right:0;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:7px 14px;
+  border-radius:999px;
+  background:rgba(242,213,143,0.14);
+  border:1px solid rgba(242,213,143,0.55);
+  color:#F2D58F;
+  font-size:13px;
+}
+.updated svg{width:16px; height:16px;}
+.updated strong{color:#fff; font-weight:600;}
+@media (max-width: 800px){
+  .updated{position:static; margin-bottom:18px;}
+}
 .hero .byline{
   font-size:14px;
   color:#AFC3E4;
@@ -361,6 +381,10 @@ footer{
 
 <header class="hero">
   <div class="wrap">
+    <div class="updated">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+      <span>Last updated <strong><time datetime="2026-11-10">November 10, 2026</time></strong></span>
+    </div>
     <div class="kicker">BA Multimedia Studies · Special Project</div>
     <h1>MMS 200 Resource Hub</h1>
     <p class="latex-note"><strong>Manuscript templates are provided in LaTeX.</strong> LaTeX preserves the required formatting (headings, numbering, table of contents, and citations) no matter how often the document is edited, unlike Word files, which tend to break as content changes.</p>
@@ -534,7 +558,7 @@ footer{
   </div>
 </main>
 
-<footer>MMS 200 · Course Resources · Dr. Reinald Adrian Pugoy<br>Last updated: November 10, 2026</footer>
+<footer>MMS 200 · Course Resources · Dr. Reinald Adrian Pugoy</footer>
 
 </body>
 </html>
